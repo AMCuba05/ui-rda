@@ -1,0 +1,14 @@
+.warning-container {
+    background-color: #E30613;
+    padding: 10px 10px;
+    border-radius: 40px;
+    border-width: 0px;
+    margin-bottom: 10px
+}
+
+.warning-text {
+    font-family: 'uni-sans-book';
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 600;
+}
