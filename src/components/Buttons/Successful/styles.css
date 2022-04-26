@@ -1,13 +1,13 @@
-.button-container {
+.button-successful-container {
     background-color: #27AE60;
     padding: 10px 10px;
     border-radius: 25px;
     border-width: 0px;
     margin-bottom: 10px;
-    
+
 }
 
-.button-text {
+.button-successful-text {
     font-family: 'uni-sans-book';
     color: #FFFFFF;
     font-size: 22px;

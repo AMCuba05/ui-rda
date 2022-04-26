@@ -1,4 +1,3 @@
-import garbageIcon from '../../assets/svg/redGarbageIcom.svg'
 import { FormTitle } from '../../components/FormTitle';
 import {Classroom} from "../../components/Classroom"
 import {FormItemLabel} from "../../components/FormItemLabel";
@@ -70,7 +69,7 @@ export const Request = () => {
                         <FormItemLabel label={'Conflicto con aulas:'}/>
                         <WarningButton title={'651'} />
                     </div>
-                    
+
                     <div className={'request-item-inputs-left-flex'}>
                         <FormItemLabel label={'Sugerencia de aulas:'}/>
                         <SuccessfulButton title={'653A'} />

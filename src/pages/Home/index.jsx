@@ -13,28 +13,17 @@ import { ModalSuccess } from '../../components/ModalSuccess/indes';
 import { useState } from 'react';
 
 import "./styles.css"
-import {useState} from "react";
-import {crearSolicitud} from "../../api/endpoints";
 
 export const Home = () => {
-<<<<<<< HEAD
 
     const [teachers, setTeachers] = useState([])
     const [assignments, setAssignments] = useState([])
     const [groups, setGroups] = useState([])
-    const [date,setDate] = useState()
 
-    const onSubmit = () => {
-        crearSolicitud()
-    }
-
-    return<div className={'form-content'}>
-=======
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => setOpen(!open);
 
     return <div className={'form-content'}>
->>>>>>> main
         <div className={'form-title'}>
             <FormTitle name={'Reserva de Aula(s):'}/>
             <Classroom name={'692B'} icon={garbageIcon}/>
@@ -99,7 +88,7 @@ export const Home = () => {
                 <div className={'form-submit-buttons'}>
                     <div onClick={handleOpen}>
                         <CommonButton title={'Enviar Reserva'}  />
-                        <ModalSuccess openModel={open}/>
+                        <ModalSuccess open={open} handleOpen={handleOpen}/>
                     </div>
                     <div>
                     <WarningButton title={'Cancelar Reserva'} />

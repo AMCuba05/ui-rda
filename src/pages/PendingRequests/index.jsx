@@ -3,6 +3,7 @@ import {CommonText} from "../../components/CommonText";
 import {BoldText} from "../../components/BoldText";
 import {ColoredTag} from "../../components/ColoredTag";
 import {CommonButton} from "../../components/Buttons/Common";
+import {useNavigate} from "react-router-dom";
 
 const data = [
     {
@@ -89,6 +90,7 @@ const data = [
 
 
 export const PendingRequests = () => {
+    const navigate = useNavigate();
     return<div>
         <div className={'pending-title'}>
             <div>
@@ -144,7 +146,7 @@ export const PendingRequests = () => {
             <div className={'table-Motivo'}>
                 <ColoredTag>{item.reason}</ColoredTag>
             </div>
-            <div className={'table-Respuesta'}>
+            <div className={'table-Respuesta'} onClick={()=> navigate('/admin/reserva', {replace: true})}>
                 <CommonButton title={'Ver más ...'}/>
             </div>
             </div>)}
