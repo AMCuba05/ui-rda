@@ -1,0 +1,39 @@
+.tag-free{
+    background-color: #6FCF97;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag-pending{
+    background-color: #F2994A;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag-reserved{
+    background-color: #EB5757;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag-default{
+    background-color: #E6E7E9;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
