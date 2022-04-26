@@ -11,27 +11,27 @@ export const Layout = ({children}) => {
     return<div className={'layout-container'} >
         <div className={'layout-menu-container'}>
             <div className={'layout-navbar-content'}>
-               <img className={'layout-img'} src={logo}/>
+               <img className={'layout-img'} src={logo} alt={''}/>
 
                 <div className={'layout-navbar'}>
                     <div className={'layout-navbar-item'}>
-                        <img src={home}/>
+                        <img src={home} alt={''}/>
                         <label> Inicio</label>
                     </div>
                     <div className={'layout-navbar-item'}>
-                        <img src={search}/>
+                        <img src={search} alt={''}/>
                         <label> Buscar Aula</label>
                     </div>
                     <div className={'layout-navbar-item'}>
-                        <img src={plus}/>
+                        <img src={plus} alt={''}/>
                         <label> Crear Reserva</label>
                     </div>
                     <div className={'layout-navbar-item'}>
-                        <img src={calendar}/>
+                        <img src={calendar} alt={''}/>
                         <label> Historial </label>
                     </div>
                     <div className={'layout-navbar-item'}>
-                        <img src={settings}/>
+                        <img src={settings} alt={''}/>
                         <label> Configurar </label>
                     </div>
                 </div>

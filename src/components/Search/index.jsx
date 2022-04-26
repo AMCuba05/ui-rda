@@ -6,13 +6,13 @@ import './styles.css'
 export const Search = () => {
     return<div className={'search-bar-container'}>
         <div className={'search-bar-input-container'}>
-            <img className={'search-icon'} src={searchIcon}/>
+            <img className={'search-icon'} src={searchIcon} alt={''}/>
             <input className={'search-bar-input'} placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}/>
-            <img className={'filter-icon'} src={filterIcon}/>
+            <img className={'filter-icon'} src={filterIcon} alt={''}/>
         </div>
         <div className={'search-bar-button'}>
             <text className={'search-bar-button-title'}>Buscar Aula</text>
-            <img className={'arrow-icon'} src={arrowIcon}/>
+            <img className={'arrow-icon'} src={arrowIcon} alt={''}/>
         </div>
     </div>
 }

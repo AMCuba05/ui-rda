@@ -9,8 +9,20 @@ import { FormItemValueDynamic } from '../../components/FormItemValueDynamic';
 import { FormItemValueAutoComplete } from '../../components/FormItemValueAutoComplete';
 import { FormItemDatePicker } from '../../components/FormItemDatePicker';
 import "./styles.css"
+import {useState} from "react";
+import {crearSolicitud} from "../../api/endpoints";
 
 export const Home = () => {
+
+    const [teachers, setTeachers] = useState([])
+    const [assignments, setAssignments] = useState([])
+    const [groups, setGroups] = useState([])
+    const [date,setDate] = useState()
+
+    const onSubmit = () => {
+        crearSolicitud()
+    }
+
     return<div className={'form-content'}>
         <div className={'form-title'}>
             <div>
@@ -39,7 +51,7 @@ export const Home = () => {
                     <div className={'form-item-inputs-left-flex'}>
                         <div className={'form-item-inputs-left-flex'}>
                             <FormItemLabel label={'Horario'}/>
-                            <FormItemValueDynamic options={['6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15', 
+                            <FormItemValueDynamic options={['6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15',
                             '11:15 - 12:45', '12:45 - 14:15', '14:15 - 15:45', '15:45 - 17:15', '17:15 - 18:45',
                             '18:45 - 20:15', '20:15 - 21:45']}/>
                         </div>
@@ -57,17 +69,17 @@ export const Home = () => {
                 <div className={'form-item-inputs-right'}>
                     <div className={'form-item-inputs-left-flex'}>
                         <FormItemLabel label={'Añadir Docentes'}/>
-                        <FormItemValueAutoComplete docentOptions={['Leticia Blanco', 'Americo Fiorilio', 'Yony Montaño']}/>
+                        <FormItemValueAutoComplete items={teachers} setItems={setTeachers} docentOptions={['Leticia Blanco', 'Americo Fiorilio', 'Yony Montaño']}/>
                     </div>
 
                     <div className={'form-item-inputs-left-flex'}>
                         <FormItemLabel label={'Materia'}/>
-                        <FormItemValueAutoComplete docentOptions={['Introduccion a la programación', 'Sistemas 1', 'Sistemas 2']}/>
+                        <FormItemValueAutoComplete items={assignments} setItems={setAssignments} docentOptions={['Introduccion a la programación', 'Sistemas 1', 'Sistemas 2']}/>
                     </div>
 
                     <div className={'form-item-inputs-left-flex'}>
                         <FormItemLabel label={'Grupo'}/>
-                        <FormItemValueAutoComplete docentOptions={['1','4','5']}/>
+                        <FormItemValueAutoComplete items={groups} setItems={setGroups} docentOptions={['1','4','5']}/>
                     </div>
                 </div>
             </div>
@@ -76,7 +88,7 @@ export const Home = () => {
                     <CommonText>Luego de enviar su reserva, usted recibirá un mensaje de confirmación en un lapso de 24 horas en caso su solicitud sea aceptada, o rechazada por el administrador.</CommonText>
                 </div>
                 <div className={'form-submit-buttons'}>
-                    <CommonButton title={'Enviar Reserva'} />
+                    <CommonButton onClick={()=>onSubmit()} title={'Enviar Reserva'} />
                     <WarningButton title={'Cancelar Reserva'} />
                 </div>
             </div>
