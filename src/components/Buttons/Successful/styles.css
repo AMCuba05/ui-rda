@@ -1,12 +1,13 @@
-.warning-container {
-    background-color: #E30613;
+.button-container {
+    background-color: #27AE60;
     padding: 10px 10px;
     border-radius: 25px;
     border-width: 0px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    
 }
 
-.warning-text {
+.button-text {
     font-family: 'uni-sans-book';
     color: #FFFFFF;
     font-size: 22px;

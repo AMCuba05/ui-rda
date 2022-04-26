@@ -7,7 +7,7 @@ export const AppRoutes = () => {
     return <Routes>
         <Route path="/" element={<Home />} />
         <Route exact path="/reservar" element={<Book />} />
-        <Route exact path="/request" element={<Request />} />
+        <Route exact path="/admin/reserva" element={<Request />} />
     </Routes>
 
 }
