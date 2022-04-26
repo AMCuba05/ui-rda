@@ -1,0 +1,76 @@
+.pending-title {
+    display: flex;
+    font-family: 'uni-sans-book';
+    font-size: 32px;
+    font-weight: bold;
+    margin-left: 20px;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+
+.table-header {
+    background: #01498E;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    flex: 1;
+}
+
+.table-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #F8FBFB;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+.table-N {
+    display: flex;
+    flex: 1;
+}
+
+.table-Docente {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+}
+
+.table-Aula {
+    display: flex;
+    flex: 3;
+    flex-wrap: wrap;
+}
+
+.table-Aula-item {
+    flex-wrap: wrap;
+}
+
+.table-Cantidad {
+    display: flex;
+    flex: 2;
+}
+
+.table-Horario {
+    display: flex;
+    flex: 2.5;
+}
+
+.table-Fecha {
+    display: flex;
+    flex: 2;
+}
+
+.table-Motivo {
+    display: flex;
+    flex: 2;
+}
+
+.table-Respuesta {
+    display: flex;
+    flex: 2;
+}

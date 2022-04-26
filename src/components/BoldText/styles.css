@@ -1,12 +1,12 @@
-.common-text {
+.bold-text {
     font-family: 'uni-sans-book';
-    font-weight: 400;
+    font-weight: bold;
     font-size: 22px;
 }
 
-.common-text-white {
+.bold-text-white {
     font-family: 'uni-sans-book';
-    font-weight: 400;
+    font-weight: bold;
     font-size: 22px;
     color: #FFFFFF;
 }
