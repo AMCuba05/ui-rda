@@ -1,0 +1,9 @@
+.form-item-value-autocomplete {
+  margin-bottom: 20px;
+}
+ .form-item-value-docents{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   
+ }
