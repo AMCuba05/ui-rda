@@ -1,4 +1,5 @@
 import garbageIcon from '../../assets/svg/redGarbageIcom.svg'
+import { FormTitle } from '../../components/FormTitle';
 import {Classroom} from "../../components/Classroom"
 import {FormItemLabel} from "../../components/FormItemLabel";
 import {FormItemValue} from "../../components/FormItemValue";
@@ -13,9 +14,7 @@ import "./styles.css"
 export const Home = () => {
     return<div className={'form-content'}>
         <div className={'form-title'}>
-            <div>
-                Reserva de Aula(s):
-            </div>
+            <FormTitle name={'Reserva de Aula(s):'}/>
             <Classroom name={'692B'} icon={garbageIcon}/>
         </div>
 
