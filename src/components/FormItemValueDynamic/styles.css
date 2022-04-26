@@ -1,0 +1,9 @@
+.form-item-value-dynamic{
+    font-weight: bold;
+    font-family: 'uni-sans-book';
+    font-size: 18px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
