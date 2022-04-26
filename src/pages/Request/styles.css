@@ -1,15 +1,16 @@
-.form-content{
+.request-content{
     padding-top: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.form-title{
+.request-title{
     display: flex;
     align-items: center;
 }
 
-.form-items{
+
+.request-items{
     display: flex;
     flex-direction: column;
     background-color: #F8FBFB;
@@ -17,52 +18,54 @@
     padding: 20px;
     border-radius: 20px;
 }
-.form-item-inputs{
+.request-item-inputs{
     display: flex;
 }
 
-.form-item-inputs-left{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1
-}
-
-.form-item-inputs-right{
+.request-item-inputs-left{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1
 }
 
-.form-item-inputs-left-flex{
+.request-item-inputs-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1
+}
+
+.request-item-inputs-left-flex{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 20px;
+    flex: 1;
+    gap: 10px;
 }
 
-.form-divider {
+.request-divider {
     width: 4px;
     height: 520px;
     background-color: #E6E7E9;
     margin: 0px 10px 0px 10px
 }
 
-.form-submit-container {
+.request-submit-container {
     display: flex;
     flex-direction: row;
     flex: 1;
 }
 
-.form-submit-buttons {
+.request-submit-buttons {
     display: flex;
     flex: 1;
     flex-direction: column;
 }
 
-.form-submit-description {
+.request-submit-description {
     display: flex;
     flex: 5;
     flex-direction: column;
