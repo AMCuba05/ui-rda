@@ -1,0 +1,14 @@
+.button-container {
+    background-color: #01498E;
+    padding: 10px 10px;
+    border-radius: 25px;
+    border-width: 0px;
+    margin-bottom: 10px;
+}
+
+.button-text {
+    font-family: 'uni-sans-book';
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 600;
+}

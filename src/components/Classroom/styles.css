@@ -1,0 +1,16 @@
+.button-class{
+    display: flex;
+    margin-left: 10px;
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #FBFBFB;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    border: 1px solid #FBFBFB;
+    align-items: start;
+}
+
+.button-class img{
+
+    margin-left: 5px;
+}

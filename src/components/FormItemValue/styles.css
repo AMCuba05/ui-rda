@@ -1,0 +1,15 @@
+.form-item-value{
+    font-weight: bold;
+    margin-right: 20px;
+    font-family: 'uni-sans-book';
+    font-size: 18px;
+    background-color: #E6E7E9;
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    
+}
+
+.form-item-value img{
+    margin-left: 10px;
+}
