@@ -1,4 +1,5 @@
 import garbageIcon from '../../assets/svg/redGarbageIcom.svg'
+import { FormTitle } from '../../components/FormTitle';
 import {Classroom} from "../../components/Classroom"
 import {FormItemLabel} from "../../components/FormItemLabel";
 import {FormItemValue} from "../../components/FormItemValue";
@@ -8,11 +9,15 @@ import {WarningButton} from "../../components/Buttons/Warning";
 import { FormItemValueDynamic } from '../../components/FormItemValueDynamic';
 import { FormItemValueAutoComplete } from '../../components/FormItemValueAutoComplete';
 import { FormItemDatePicker } from '../../components/FormItemDatePicker';
+import { ModalSuccess } from '../../components/ModalSuccess/indes';
+import { useState } from 'react';
+
 import "./styles.css"
 import {useState} from "react";
 import {crearSolicitud} from "../../api/endpoints";
 
 export const Home = () => {
+<<<<<<< HEAD
 
     const [teachers, setTeachers] = useState([])
     const [assignments, setAssignments] = useState([])
@@ -24,10 +29,14 @@ export const Home = () => {
     }
 
     return<div className={'form-content'}>
+=======
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+
+    return <div className={'form-content'}>
+>>>>>>> main
         <div className={'form-title'}>
-            <div>
-                Reserva de Aula(s):
-            </div>
+            <FormTitle name={'Reserva de Aula(s):'}/>
             <Classroom name={'692B'} icon={garbageIcon}/>
         </div>
 
@@ -88,8 +97,13 @@ export const Home = () => {
                     <CommonText>Luego de enviar su reserva, usted recibirá un mensaje de confirmación en un lapso de 24 horas en caso su solicitud sea aceptada, o rechazada por el administrador.</CommonText>
                 </div>
                 <div className={'form-submit-buttons'}>
-                    <CommonButton onClick={()=>onSubmit()} title={'Enviar Reserva'} />
+                    <div onClick={handleOpen}>
+                        <CommonButton title={'Enviar Reserva'}  />
+                        <ModalSuccess openModel={open}/>
+                    </div>
+                    <div>
                     <WarningButton title={'Cancelar Reserva'} />
+                    </div>
                 </div>
             </div>
 
