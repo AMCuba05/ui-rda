@@ -20,58 +20,60 @@
     flex: 1;
 }
 
-.table-item {
+.table-suggest-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #F8FBFB;
+    padding: 4px 20px;
+    align-items: center;
+    border: 2px solid #E6E7E9;
+}
+.table-suggest-footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     background-color: #F8FBFB;
-    padding: 20px;
-    align-items: flex-start;
+    padding: 4px 20px;
+    align-items: center;
     border: 2px solid #E6E7E9;
 }
 
-.table-N {
+.table-suggest-footer-items {
     display: flex;
-    flex: 1;
+    flex-direction: row;
 }
 
-.table-Docente {
+.table-suggest-Aula {
     display: flex;
-    flex-direction: column;
+    flex: 1.8;
+}
+
+.table-suggest-vacio {
+    display: flex;
+    flex: 2;
+}
+
+.table-suggest-Lugar {
+    display: flex;
     flex: 3;
 }
 
-.table-Aula {
+.table-suggest-Cantidad {
     display: flex;
     flex: 3;
-    flex-wrap: wrap;
 }
 
-.table-Aula-item {
-    flex-wrap: wrap;
-}
-
-.table-Cantidad {
+.table-suggest-Horario {
     display: flex;
     flex: 2;
 }
 
-.table-Horario {
-    display: flex;
-    flex: 2.5;
-}
-
-.table-Fecha {
+.table-suggest-Fecha {
     display: flex;
     flex: 2;
 }
-
-.table-Motivo {
-    display: flex;
-    flex: 2;
-}
-
-.table-Respuesta {
+.table-suggest-Estado {
     display: flex;
     flex: 2;
 }

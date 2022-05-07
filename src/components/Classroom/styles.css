@@ -7,9 +7,14 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     border-radius: 30px;
     border: 1px solid #FBFBFB;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 }
 
 .button-class img{
     margin-left: 5px;
+}
+
+.classroom-name {
+    font-family: uni-sans-book;
 }

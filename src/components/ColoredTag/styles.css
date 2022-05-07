@@ -1,11 +1,12 @@
 .tag-free{
-    background-color: #6FCF97;
+    background-color: #01B574;
     border-radius: 20px;
     padding: 5px 15px;
     margin: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #FFFFFF;
 }
 
 .tag-pending{
@@ -36,4 +37,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #686869;
+    font-weight: 400;
 }
