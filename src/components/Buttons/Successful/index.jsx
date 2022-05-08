@@ -1,7 +1,7 @@
 import './styles.css'
 
 export const SuccessfulButton = ({title}) => {
-    return<button className={'button-container'}>
-        <text className={'button-text'}>{title}</text>
+    return<button className={'button-container-success'}>
+        <text className={'button-text-success'}>{title}</text>
     </button>
 }

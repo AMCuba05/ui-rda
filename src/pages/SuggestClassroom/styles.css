@@ -1,0 +1,79 @@
+.pending-title {
+    display: flex;
+    font-family: 'uni-sans-book';
+    font-size: 32px;
+    font-weight: bold;
+    margin-left: 20px;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+
+.table-header {
+    background: #005BBD;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    flex: 1;
+}
+
+.table-suggest-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #F8FBFB;
+    padding: 4px 20px;
+    align-items: center;
+    border: 2px solid #E6E7E9;
+}
+.table-suggest-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #F8FBFB;
+    padding: 4px 20px;
+    align-items: center;
+    border: 2px solid #E6E7E9;
+}
+
+.table-suggest-footer-items {
+    display: flex;
+    flex-direction: row;
+}
+
+.table-suggest-Aula {
+    display: flex;
+    flex: 1.8;
+}
+
+.table-suggest-vacio {
+    display: flex;
+    flex: 2;
+}
+
+.table-suggest-Lugar {
+    display: flex;
+    flex: 3;
+}
+
+.table-suggest-Cantidad {
+    display: flex;
+    flex: 3;
+}
+
+.table-suggest-Horario {
+    display: flex;
+    flex: 2;
+}
+
+.table-suggest-Fecha {
+    display: flex;
+    flex: 2;
+}
+.table-suggest-Estado {
+    display: flex;
+    flex: 2;
+}

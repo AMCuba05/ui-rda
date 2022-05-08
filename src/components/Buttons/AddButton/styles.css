@@ -1,0 +1,17 @@
+.add-button-container {
+    background-color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 30px;
+    border-width: 0px;
+}
+
+.add-button-text {
+    font-family: 'uni-sans-book';
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 600;
+    margin-left: 4px;
+}
