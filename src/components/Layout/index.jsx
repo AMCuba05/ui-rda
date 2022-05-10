@@ -4,6 +4,7 @@ import search from '../../assets/svg/whiteSearchIcon.svg'
 import plus from '../../assets/svg/PlusIcon.svg'
 import calendar from '../../assets/svg/History.svg'
 import settings from '../../assets/svg/Settings.svg'
+import notification from '../../assets/svg/bell-icon.svg'
 import './styles.css'
 import {Search} from "../Search";
 
@@ -43,9 +44,14 @@ export const Layout = ({children}) => {
 
         </div>
         <div className={'layout-content'}>
+          <div className={'layout-header-with-icon'}>
             <div className={'layout-header'}>
                 <Search/>
             </div>
+            <div className={'layout-header-icon'}>
+                  <img src={notification} alt={''}/>
+            </div>
+          </div>
             {children}
         </div>
     </div>
