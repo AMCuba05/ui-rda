@@ -7,16 +7,18 @@ import {AddButton} from "../../components/Buttons/AddButton";
 import {Classroom} from "../../components/Classroom";
 import {useEffect, useState} from "react";
 import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
-import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setRequest} from "../../redux/reducers/crearSolicitud";
 
 
-export const Home = () => {
+export const CreateBooking = () => {
 
     const [aulas, setAulas] = useState()
     const [reserva, setReserva] = useState([])
     const today = new Date()
-    const data = useSelector(state => state.request)
-    console.log(data)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const getAulas = async () => {
         const data = await obtenerAulasDisponibles(today.toISOString().substring(0,10))
@@ -33,6 +35,13 @@ export const Home = () => {
         })
     }
 
+    const goToBooking = () => {
+        if (reserva.length > 0) {
+            dispatch(setRequest(reserva))
+            navigate('/reservar', {replace: true})
+        }
+    }
+
     const agregarReserva = (item) => {
         const nuevaReserva = [...reserva]
         if ( !nuevaReserva.includes(item) ) {
@@ -46,9 +55,10 @@ export const Home = () => {
     }, [])
 
     return<div>
-        <div className={'pending-title'}>
+        <div className={'create-booking-title'}>
             <div>
-                Aulas sin reserva actualmente
+                Para empezar la reserva puede escoger
+                una de las siguientes aulas o busca un aula
             </div>
         </div>
         <div className={'table-header'}>
@@ -76,31 +86,31 @@ export const Home = () => {
         </div>
         {aulas ? aulas.map((item, index)  => {
             return(
-            <div className={'table-suggest-item'}>
-                <div className={'table-suggest-Aula'} >
-                    <ColoredTag >{item.nombre}</ColoredTag>
+                <div className={'table-suggest-item'}>
+                    <div className={'table-suggest-Aula'} >
+                        <ColoredTag >{item.nombre}</ColoredTag>
+                    </div>
+                    <div className={'table-suggest-Cantidad'}>
+                        <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
+                    </div>
+                    <div className={'table-suggest-Horario'}>
+                        <ColoredTag>{item.hora_inicio.substring(0,5)} - {item.hora_fin.substring(0,5)}</ColoredTag>
+                    </div>
+                    <div className={'table-suggest-Fecha'}>
+                        <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>
+                    </div>
+                    <div className={'table-suggest-Lugar'}>
+                        <ColoredTag>{item.ubicacion}</ColoredTag>
+                    </div>
+                    <div className={'table-suggest-Estado'}>
+                        <ColoredTag state={'free'}>Disponible</ColoredTag>
+                    </div>
+                    <div className={'table-suggest-vacio'}>
+                        <AddButton onClick={() => agregarReserva(item)} title={'Añadir'}/>
+                    </div>
                 </div>
-                <div className={'table-suggest-Cantidad'}>
-                    <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
-                </div>
-                <div className={'table-suggest-Horario'}>
-                    <ColoredTag>{item.hora_inicio.substring(0,5)} - {item.hora_fin.substring(0,5)}</ColoredTag>
-                </div>
-                <div className={'table-suggest-Fecha'}>
-                    <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>
-                </div>
-                <div className={'table-suggest-Lugar'}>
-                    <ColoredTag>{item.ubicacion}</ColoredTag>
-                </div>
-                <div className={'table-suggest-Estado'}>
-                    <ColoredTag state={'free'}>Disponible</ColoredTag>
-                </div>
-                <div className={'table-suggest-vacio'}>
-                    <AddButton onClick={() => agregarReserva(item)} title={'Añadir'}/>
-                </div>
-            </div>
             )}
-            ) : null}
+        ) : null}
         <div className={'table-suggest-footer'}>
             <div className={'table-suggest-footer-items'} >
                 <BoldText>Aulas Seleccionadas: </BoldText>
@@ -112,7 +122,7 @@ export const Home = () => {
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Iniciar reserva'} />
+                <CommonButton title={'Iniciar reserva'} onClick={goToBooking} />
             </div>
         </div>
     </div>

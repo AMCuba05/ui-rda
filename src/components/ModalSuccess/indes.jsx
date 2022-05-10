@@ -6,15 +6,13 @@ import { FormTitle } from "../FormTitle";
 import './styles.css'
 import 'rsuite/dist/rsuite-rtl.css';
 
-export const ModalSuccess = ({openModel}) =>{
-    const [open, setOpen] = useState(openModel);
-    const handleClose = () => setOpen(false);
+export const ModalSuccess = ({openModel, handleOpen}) =>{
 
     return <div >
-        <Modal className={"modal"} open={open} onClose={handleClose}>
+        <Modal className={"modal"} open={openModel} onClose={handleOpen}>
         <div className={"modal-title"}>
             <FormTitle name={'Solicitud Enviada Con Exito'}/>
-            <div onClick={handleClose}>
+            <div onClick={handleOpen}>
             <WarningButton title={'x'}/>
             </div>
         </div>

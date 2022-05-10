@@ -1,8 +1,8 @@
-.pending-title {
+.create-booking-title {
     display: flex;
     font-family: 'uni-sans-book';
-    font-size: 32px;
-    font-weight: bold;
+    font-size: 22px;
+    font-weight: 400;
     margin-left: 20px;
     flex-direction: column;
     margin-bottom: 20px;
@@ -42,6 +42,7 @@
 .table-suggest-footer-items {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .table-suggest-Aula {

@@ -48,7 +48,6 @@
     font-family: 'uni-sans-book';
     display: flex;
     flex-direction: column;
-    padding-left: 2em;
 }
 .layout-navbar-item{
     color: white;
@@ -56,9 +55,28 @@
     padding-bottom: 20px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    padding-left: 2em;
+}
+
+.layout-navbar-item-active{
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255, 0.2);
+    cursor: pointer;
+    padding-left: 2em;
 }
 
 .layout-navbar-item img{
+    margin-right: 10px;
+    width: 1.8em;
+    height: 1.8em;
+}
+
+.layout-navbar-item-active img{
     margin-right: 10px;
     width: 1.8em;
     height: 1.8em;
