@@ -126,14 +126,15 @@ export const Layout = ({children}) => {
 
         </div>
         <div className={'layout-content'}>
-            { logged ?
-                <div className={'layout-header'}>
-                    <Search/>
-                </div>
-                :
-                null
-            }
+
           <div className={'layout-header-with-icon'}>
+              { logged ?
+                  <div className={'layout-header'}>
+                      <Search/>
+                  </div>
+                  :
+                  null
+              }
             <div className={'layout-header-icon'}>
                   <img src={notification} alt={''}/>
             </div>
