@@ -13,40 +13,65 @@ import { ModalSuccess } from '../../components/ModalSuccess/indes';
 import { useState } from 'react';
 
 import "./styles.css"
+import {BackButton} from "../../components/Buttons/BackButton";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {crearSolicitud} from "../../api/crearSolicitud";
 
 export const Book = () => {
 
     const [teachers, setTeachers] = useState([])
     const [assignments, setAssignments] = useState([])
     const [groups, setGroups] = useState([])
-    const [date,setDate] = useState()
-
+    const [date,setDate] = useState(false)
+    const navigate = useNavigate()
+    const {data} = useSelector(state => state.request)
+    console.log(data[0])
+    const {materias} = useSelector(state => state.materias)
+    const nombreMaterias = materias.flatMap(item => ({ label: item.nombre, value: item.id }));
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => setOpen(!open);
+
+    const onSubmit = async () => {
+        await crearSolicitud({
+            numero_estimado: data[0].capacidad,
+            fecha: "2022-05-13",
+            aulasId: [data[0].id],
+            gruposId: [1],
+            justificacionesLista: ['lista'],
+            periodosId: ['24bcbcb2-f178-4214-be53-5a11d8289b22']
+        })
+        setOpen(true)
+    }
+    const goToCreate = () => {
+        navigate('/crear', {replace: true})
+    }
 
     return <div className={'form-content'}>
-        <div className={'form-title'}>
-            <FormTitle name={'Reserva de Aula(s):'}/>
-            <Classroom name={'692B'} icon={garbageIcon}/>
+        <div className={'form-title-column'}>
+            <BackButton title={'Atras'} onClick={goToCreate} />
+            <div className={'form-title'}>
+                <FormTitle name={'Reserva de Aula(s):'}/>
+                {
+                    data.map( item => <Classroom name={item.nombre} icon={garbageIcon}/> )
+                }
+            </div>
         </div>
 
         <div className={'form-items'}>
             <div className={'form-item-inputs'}>
                 <div className={'form-item-inputs-left'}>
-                    <div className={'form-item-inputs-left-flex'}>
-                        <FormItemLabel label={'Docente'}/>
-                        <FormItemValue value={'Esteban Quito R.'}/>
-                    </div>
+
 
                     <div className={'form-item-inputs-left-flex'}>
                         <FormItemLabel label={'Lugar'}/>
-                        <FormItemValue value={'Edificio Nuevo'}/>
+                        <FormItemValue value={data[0].ubicacion}/>
                     </div>
 
                     <div className={'form-item-inputs-left-flex'}>
                         <FormItemLabel label={'Capacidad'}/>
-                        <FormItemValue value={'150 Estudiantes'}/>
+                        <FormItemValue value={`${data[0].capacidad} estudiantes`}/>
                     </div>
                     <div className={'form-item-inputs-left-flex'}>
                         <div className={'form-item-inputs-left-flex'}>
@@ -67,10 +92,6 @@ export const Book = () => {
                 </div>
                 <div className={'form-divider'} />
                 <div className={'form-item-inputs-right'}>
-                    <div className={'form-item-inputs-left-flex'}>
-                        <FormItemLabel label={'Añadir Docentes'}/>
-                        <FormItemValueAutoComplete items={teachers} setItems={setTeachers} docentOptions={['Leticia Blanco', 'Americo Fiorilio', 'Yony Montaño']}/>
-                    </div>
 
                     <div className={'form-item-inputs-left-flex'}>
                         <FormItemLabel label={'Materia'}/>
@@ -81,6 +102,11 @@ export const Book = () => {
                         <FormItemLabel label={'Grupo'}/>
                         <FormItemValueAutoComplete items={groups} setItems={setGroups} docentOptions={['1','4','5']}/>
                     </div>
+
+                    <div className={'form-item-inputs-left-flex'}>
+                        <FormItemLabel label={'Añadir Docentes'}/>
+                        <FormItemValueAutoComplete items={teachers} setItems={setTeachers} docentOptions={['Leticia Blanco', 'Americo Fiorilio', 'Yony Montaño']}/>
+                    </div>
                 </div>
             </div>
             <div className={'form-submit-container'}>
@@ -88,9 +114,9 @@ export const Book = () => {
                     <CommonText>Luego de enviar su reserva, usted recibirá un mensaje de confirmación en un lapso de 24 horas en caso su solicitud sea aceptada, o rechazada por el administrador.</CommonText>
                 </div>
                 <div className={'form-submit-buttons'}>
-                    <div onClick={handleOpen}>
-                        <CommonButton title={'Enviar Reserva'}  />
-                        <ModalSuccess openModel={open}/>
+                    <div>
+                        <CommonButton title={'Enviar Reserva'}  onClick={onSubmit} />
+                        <ModalSuccess openModel={open} handleOpen={handleOpen}/>
                     </div>
                     <div>
                         <WarningButton title={'Cancelar Reserva'} />

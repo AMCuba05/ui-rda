@@ -1,0 +1,17 @@
+.back-button-container {
+    background-color: #007AFC00;
+    padding: 10px 10px;
+    border-radius: 25px;
+    border-width: 0px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.back-button-text {
+    font-family: 'uni-sans-book';
+    color: #000000;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: left;
+}
