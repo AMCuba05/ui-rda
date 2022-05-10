@@ -1,0 +1,69 @@
+.notification-warning-container{
+  position: absolute;
+  width: 420px;
+  display: flex;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  right: 30px;
+  top: 80px;
+}
+
+.notification-warning-color{
+  background-color: #F00717;
+  flex: 1;
+}
+
+.notification-warning-content{
+  flex: 20;
+  background-color: white;
+  display: flex;
+  padding-left: 10px;
+  gap: 10px;
+}
+
+.notification-warning-content-icon{
+  margin-top: 10px;
+}
+
+.notification-warning-content-text{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'uni-sans-book';
+}
+
+.notification-warning-title{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.notification-warning-description{
+  font-size: 16px;
+}
+
+.notification-warning-date{
+  font-size: 16px;
+  align-self: flex-end;
+  font-weight: bold;
+}
+
+.hide{
+  display: none;
+}
+
+.hide-transform{
+  animation-duration: 10s;
+  animation-name: desapeir;
+}
+
+
+@keyframes desapeir {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

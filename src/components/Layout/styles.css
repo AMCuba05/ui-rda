@@ -17,6 +17,7 @@
     margin-bottom: 10vh;
 }
 
+
 .layout-content {
     display: flex;
     flex: 1;
@@ -24,12 +25,25 @@
     padding: 2em;
 }
 
+.layout-header-with-icon{
+  display: flex;
+  flex-direction: row;
+}
+
+.layout-header-icon{
+  cursor: pointer;
+}
+
 .layout-header {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     margin-bottom: 4vh;
+    flex: 1;
 }
+
+
+
 .layout-navbar{
     font-family: 'uni-sans-book';
     display: flex;

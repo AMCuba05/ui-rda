@@ -9,7 +9,6 @@ import {WarningButton} from "../../components/Buttons/Warning";
 import { FormItemValueDynamic } from '../../components/FormItemValueDynamic';
 import { FormItemValueAutoComplete } from '../../components/FormItemValueAutoComplete';
 import { FormItemDatePicker } from '../../components/FormItemDatePicker';
-import { ModalSuccess } from '../../components/ModalSuccess/indes';
 import { useState } from 'react';
 
 import "./styles.css"
@@ -17,6 +16,8 @@ import {BackButton} from "../../components/Buttons/BackButton";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {crearSolicitud} from "../../api/crearSolicitud";
+import { NotificationsSuccessful } from '../../components/Notifications/Successful';
+import { NotificationsWarning } from '../../components/Notifications/warning';
 
 export const Book = () => {
 
@@ -48,6 +49,17 @@ export const Book = () => {
         navigate('/crear', {replace: true})
     }
 
+    const hideNotification = () => {
+      let classNotification = document.getElementById('notifications-hide');
+      classNotification.classList.remove('hide');
+      classNotification.classList.add('hide-transform');
+      setTimeout(() => {
+
+        classNotification.classList.remove('hide-transform');
+        classNotification.classList.add('hide');
+      }, "10000")
+    }
+
     return <div className={'form-content'}>
         <div className={'form-title-column'}>
             <BackButton title={'Atras'} onClick={goToCreate} />
@@ -57,6 +69,8 @@ export const Book = () => {
                     data.map( item => <Classroom name={item.nombre} icon={garbageIcon}/> )
                 }
             </div>
+        <NotificationsSuccessful/>
+        <NotificationsWarning/>
         </div>
 
         <div className={'form-items'}>
@@ -114,9 +128,8 @@ export const Book = () => {
                     <CommonText>Luego de enviar su reserva, usted recibirá un mensaje de confirmación en un lapso de 24 horas en caso su solicitud sea aceptada, o rechazada por el administrador.</CommonText>
                 </div>
                 <div className={'form-submit-buttons'}>
-                    <div>
-                        <CommonButton title={'Enviar Reserva'}  onClick={onSubmit} />
-                        <ModalSuccess openModel={open} handleOpen={handleOpen}/>
+                    <div onClick={hideNotification}>
+                        <CommonButton title={'Enviar Reserva'}  />
                     </div>
                     <div>
                         <WarningButton title={'Cancelar Reserva'} />

@@ -4,8 +4,12 @@ import search from '../../assets/svg/whiteSearchIcon.svg'
 import plus from '../../assets/svg/PlusIcon.svg'
 import calendar from '../../assets/svg/History.svg'
 import settings from '../../assets/svg/Settings.svg'
+
 import logout from '../../assets/svg/LogOut.svg'
 import clipboard from '../../assets/svg/Clipboard.svg'
+
+import notification from '../../assets/svg/bell-icon.svg'
+
 import './styles.css'
 import {Search} from "../Search";
 import {LoginModal} from "../LoginModal";
@@ -129,6 +133,11 @@ export const Layout = ({children}) => {
                 :
                 null
             }
+          <div className={'layout-header-with-icon'}>
+            <div className={'layout-header-icon'}>
+                  <img src={notification} alt={''}/>
+            </div>
+          </div>
             {children}
         </div>
     </div>
