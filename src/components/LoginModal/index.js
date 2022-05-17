@@ -1,10 +1,10 @@
 import {CommonText} from "../CommonText";
-import './styles.css'
 import {CommonButton} from "../Buttons/Common";
 import {WhiteButton} from "../Buttons/WhiteButton";
 import {CommonInput} from "../Inputs/Common";
 import { useState } from "react";
 import { WarningText } from "../WarningText";
+import './styles.css'
 
 export const LoginModal = ({onAction}) => {
 
@@ -23,6 +23,10 @@ export const LoginModal = ({onAction}) => {
         localStorage.setItem('logged', '1')
         onAction()
       }
+    }
+
+    const close = () => {
+      onAction()
     }
 
     const verifications = () => {
@@ -101,7 +105,7 @@ export const LoginModal = ({onAction}) => {
                <WarningText text={'La contraseña es invalida '}/> : null}
             <CommonButton title={'Iniciar sesión'} onClick={goToAdmin} />
             <WhiteButton title={'Registrarse'} onClick={goToUser} />
-            <CommonText>Volver atras</CommonText>
+            <a onClick={close}>Volver atras</a>
         </div>
     </div>
 }
