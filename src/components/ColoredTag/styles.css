@@ -5,6 +5,7 @@
     margin: 5px;
     display: flex;
     align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     justify-content: center;
     color: #FFFFFF;
 }
@@ -16,7 +17,9 @@
     margin: 5px;
     display: flex;
     align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     justify-content: center;
+    color: #FFFFFF;
 }
 
 .tag-reserved{
@@ -26,7 +29,9 @@
     margin: 5px;
     display: flex;
     align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     justify-content: center;
+    color: #FFFFFF;
 }
 
 .tag-default{
@@ -38,5 +43,6 @@
     align-items: center;
     justify-content: center;
     color: #686869;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     font-weight: 400;
 }
