@@ -5,6 +5,7 @@ import {ColoredTag} from "../../components/ColoredTag";
 import {CommonButton} from "../../components/Buttons/Common";
 import {WarningButton} from "../../components/Buttons/Warning";
 import {BlackButton} from "../../components/Buttons/BlackButton";
+import {useNavigate} from "react-router-dom";
 
 const data = [
     {
@@ -91,6 +92,11 @@ const data = [
 
 
 export const PendingRequests = () => {
+  const navigate = useNavigate()
+  const goToOptions = () => {
+    navigate('/admin/reserva', {replace: true});
+    }
+
     return<div>
         <div className={'pending-title'}>
             <div>
@@ -147,7 +153,7 @@ export const PendingRequests = () => {
                 <ColoredTag>{item.reason}</ColoredTag>
             </div>
             <div className={'table-Respuesta'}>
-                <BlackButton title={'Opciones'}/>
+                <BlackButton title={'Opciones'} onClick={goToOptions}/>
             </div>
             </div>)}
     </div>
