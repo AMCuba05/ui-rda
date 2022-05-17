@@ -3,6 +3,8 @@ import {CommonText} from "../../components/CommonText";
 import {BoldText} from "../../components/BoldText";
 import {ColoredTag} from "../../components/ColoredTag";
 import {CommonButton} from "../../components/Buttons/Common";
+import {WarningButton} from "../../components/Buttons/Warning";
+import {BlackButton} from "../../components/Buttons/BlackButton";
 
 const data = [
     {
@@ -130,7 +132,7 @@ export const PendingRequests = () => {
                 {item.names.map( (name, index) => index === 0 ?  <BoldText >{name}</BoldText> : <CommonText >{name}</CommonText>)}
             </div>
             <div className={'table-Aula'}>
-                {item.classrooms.map( (classroom, index) => <ColoredTag >{classroom.id}</ColoredTag>)}
+                {item.classrooms.map( (classroom, index) => <ColoredTag state={classroom.state} >{classroom.id}</ColoredTag>)}
             </div>
             <div className={'table-Cantidad'}>
                 <ColoredTag>{item.quantity} est.</ColoredTag>
@@ -145,7 +147,7 @@ export const PendingRequests = () => {
                 <ColoredTag>{item.reason}</ColoredTag>
             </div>
             <div className={'table-Respuesta'}>
-                <CommonButton title={'Ver más ...'}/>
+                <BlackButton title={'Opciones'}/>
             </div>
             </div>)}
     </div>

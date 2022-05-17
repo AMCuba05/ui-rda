@@ -1,0 +1,15 @@
+.button-container-black {
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    background-color: #333333;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    border: 1px solid #FBFBFB;
+}
+
+.button-text-black {
+    font-family: 'uni-sans-book';
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 600;
+}
