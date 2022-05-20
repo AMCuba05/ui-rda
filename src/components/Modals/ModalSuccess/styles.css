@@ -1,0 +1,27 @@
+.modal{
+    width: 500px;
+    border-radius: 20px;
+}
+
+.modal-title{
+  margin-bottom: 10px;
+}
+
+.modal-text{
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.modal-classroom{
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.modal-buttons{
+  display: flex;
+  gap: 30px;
+}
+
+.modal-buttons-btn{
+  flex: 1;
+}
