@@ -63,12 +63,14 @@
 
 .form-submit-buttons {
     display: flex;
-    flex: 1;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 20px;
 }
+
+
 
 .form-submit-description {
     display: flex;
     flex: 5;
-    flex-direction: column;
+    flex-direction: row;
 }
