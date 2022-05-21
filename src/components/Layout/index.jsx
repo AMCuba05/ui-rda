@@ -21,9 +21,11 @@ import { setMaterias } from "../../redux/reducers/materias";
 import { Title } from "../Title/indes";
 import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
+import { RegisterModal } from "../RegisterModal";
 
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(localStorage.getItem("logged") != "0");
+  const [register, setRegister] = useState(false);
   const [logged, setLogged] = useState(localStorage.getItem("logged") === "1");
   const [user, setUser] = useState(localStorage.getItem("role"));
   const navigate = useNavigate();
@@ -39,9 +41,13 @@ export const Layout = ({ children }) => {
     void setup();
   }, [user]);
 
-  const showModal = () => {
+  const showModalLogin = () => {
     setLogin(!login);
   };
+
+  const showModalRegister = () =>{
+    setRegister(!register);
+  }
 
   const onLogout = () => {
     localStorage.setItem("logged", "0");
@@ -58,7 +64,8 @@ export const Layout = ({ children }) => {
   return (
     <div className={"layout-container"}>
       <div className={"layout-menu-container"}>
-        {login ? <LoginModal onAction={showModal} /> : null}
+        {login ? <LoginModal onAction={showModalLogin} /> : null}
+        {register ? <RegisterModal onAction={showModalRegister}/> : null}
         <div className={"layout-navbar-content"}>
           <img className={"layout-img"} src={logo} alt={""} />
 
@@ -159,16 +166,26 @@ export const Layout = ({ children }) => {
               </div>
             </div>
           ) : (
-            <div className={'layout-header-home'}>
-              <div className={'layout-buttons'}>
-                  <WhiteButton title={'Registrarse'}/>
-                  <CommonButton title={'Iniciar Sesion'} onClick={() => {
-                    setLogin(true);
+            <div className={"layout-header-home"}>
+              <div className={"layout-buttons"}>
+                <div>
+                  <WhiteButton title={"Registrarse"}
+                  onClick= {() => {
+                    setRegister(true);
                   }}/>
+                </div>
+                <div>
+                  <CommonButton
+                    title={"Iniciar Sesion"}
+                    onClick={() => {
+                      setLogin(true);
+                    }}
+                  />
+                </div>
               </div>
-              <div className={'layout-title'}>
-                <Title title={'Que aula le gustaria reservar?'}/>
-                <Search/>
+              <div className={"layout-title"}>
+                <Title title={"Que aula le gustaria reservar?"} />
+                <Search />
               </div>
             </div>
           )}

@@ -1,0 +1,52 @@
+.fullscreen-register-modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-modal-container {
+  background-color: #F4F7FE;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  width: 50vw;
+}
+
+.register-modal-title{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.register-modal-content-flex{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-modal-content-left{
+  flex: 1;
+}
+
+.register-modal-content-right{
+  flex: 1;
+}
+
+.register-modal-footer{
+  margin-top: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
