@@ -84,7 +84,8 @@ export const Home = () => {
                     <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                 </div>
                 <div className={'table-suggest-Horario'}>
-                    <ColoredTag>{item.hora_inicio.substring(0,5)} - {item.hora_fin.substring(0,5)}</ColoredTag>
+                    <ColoredTag>{item.hora_inicio} - {item.hora_fin}</ColoredTag>
+                    {console.log(item)}
                 </div>
                 <div className={'table-suggest-Fecha'}>
                     <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>

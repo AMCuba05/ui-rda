@@ -5,15 +5,24 @@ import {CommonInput} from "../Inputs/Common";
 import { useState } from "react";
 import { WarningText } from "../WarningText";
 import './styles.css'
+import {loginDocentes} from "../../api/loginDocentes";
 
 export const LoginModal = ({onAction}) => {
 
-    const goToAdmin = () => {
+    const onLogin = async () => {
         if(verifications()){
+            try {
+                const data = await loginDocentes(codSis, password)
+                localStorage.setItem('role', 'admin')
+                localStorage.setItem('logged', '1')
+                localStorage.setItem('id', data.id)
+                onAction()
+            }
+            catch ( e ) {
+                alert('Código SIS o contraseña incorrectos')
+            }
 
-        localStorage.setItem('role', 'admin')
-        localStorage.setItem('logged', '1')
-        onAction()
+
         }
     }
 
@@ -31,7 +40,7 @@ export const LoginModal = ({onAction}) => {
 
     const verifications = () => {
       let validation = false;
-      if (verificationEmail() && verificationPassword()){
+      if (verificationPassword()){
         validation = true;
       }
       return validation;
@@ -92,18 +101,27 @@ export const LoginModal = ({onAction}) => {
       setPassword(newPassword);
     }
 
+    const [codSis, setCodSis] = useState()
+    const handleCodSis = (newCodSis) => {
+        setCodSis(newCodSis)
+    }
+
 
     return<div className={'fullscreen-login-modal'}>
         <div className={'login-modal-container'}>
             <CommonText>¡Hola nos alegra verte!</CommonText>
-            <CommonInput input={email} inputChange={handleEmailChange} label={'Correo'}/>
+            {
+                /*
+                <CommonInput input={email} inputChange={handleEmailChange} label={'Correo'}/>
             {showEmail ?
                <WarningText text={'Introduce una dirección de correo electronico valido'}/> : null}
-
-            <CommonInput input={password} inputChange={handlePasswordChange} label={'Contraseña'}/>
+                */
+            }
+            <CommonInput input={codSis} inputChange={handleCodSis} label={'Código SIS'}/>
+            <CommonInput type={'password'} input={password} inputChange={handlePasswordChange} label={'Contraseña'}/>
             {showPassword ?
                <WarningText text={'La contraseña es invalida '}/> : null}
-            <CommonButton title={'Iniciar sesión'} onClick={goToAdmin} />
+            <CommonButton title={'Iniciar sesión'} onClick={onLogin} />
             <WhiteButton title={'Registrarse'} onClick={goToUser} />
             <a onClick={close}>Volver atras</a>
         </div>

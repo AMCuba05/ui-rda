@@ -2,10 +2,16 @@ import searchIcon from '../../assets/svg/SearchIcon.svg'
 import filterIcon from '../../assets/svg/filter.svg'
 import arrowIcon from '../../assets/svg/whiteRightArrow.svg'
 import './styles.css'
-import {FormItemLabel} from "../FormItemLabel";
-import {FormItemValueDynamic} from "../FormItemValueDynamic";
+import {FormItemValueDynamic} from '../FormItemValueDynamic';
+import {useState} from 'react';
 
 export const Search = () => {
+    const [ nombre, setNombre ] = useState()
+    const [ capacidadMax, setCapacidadMax ] = useState()
+    const [ capacidadMin, setCapacidadMin ] = useState()
+    const [ periodos, setPeriodos ] = useState()
+    const [ area, setArea ] = useState()
+
     return<div className={'search-bar-container'}>
         <div className={'search-bar-content'}>
             <div className={'search-bar-input-content'}>
@@ -21,7 +27,7 @@ export const Search = () => {
             </div>
             <div className={'search-bar-filters'}>
                 <div>
-                    <FormItemValueDynamic options={['Area', 'Sector Biología', 'Edificio Nuevo', 'Trencito', 'Laboratorios de Física']}/>
+                    <FormItemValueDynamic options={['Area', 'SECTOR BIOLOGIA', 'BLOQUE TALLERES CARPINT. PDTF', 'EDIF. ADMINISTRACION CENTRAL', 'Laboratorios de Física']}/>
                 </div>
                 <div>
                     <FormItemValueDynamic options={['Cantidad', '10 - 30 est.', '30 - 50 est.', '50 - 70 est.', '70 - 100 est.'
