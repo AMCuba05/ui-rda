@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import saveRequestReducer from './reducers/crearSolicitud';
-import saveMateriReducer from './reducers/materias';
+import saveMateriaReducer from './reducers/materias';
+import saveClassroom from './reducers/aulasFiltradas';
 
 export default configureStore({
     reducer: {
         request: saveRequestReducer,
-        materias: saveMateriReducer,
+        materias: saveMateriaReducer,
+        filtered: saveClassroom
     },
 })

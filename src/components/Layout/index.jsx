@@ -24,22 +24,11 @@ import { CommonButton } from "../Buttons/Common";
 import { RegisterModal } from "../RegisterModal";
 
 export const Layout = ({ children }) => {
-  const [login, setLogin] = useState(localStorage.getItem("logged") != "0");
+  const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
   const [register, setRegister] = useState(false);
-  const [logged, setLogged] = useState(localStorage.getItem("logged") === "1");
-  const [user, setUser] = useState(localStorage.getItem("role"));
+  const [logged, setLogged] = useState(sessionStorage.getItem("logged") === "1");
+  const [user, setUser] = useState(sessionStorage.getItem("role"));
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const setup = async () => {
-    const data = await obtenerMaterias();
-    console.log(data);
-    dispatch(setMaterias(data));
-  };
-
-  useEffect(() => {
-    void setup();
-  }, [user]);
 
   const showModalLogin = () => {
     setLogin(!login);
@@ -50,15 +39,15 @@ export const Layout = ({ children }) => {
   }
 
   const onLogout = () => {
-    localStorage.setItem("logged", "0");
-    localStorage.setItem("role", "none");
+    sessionStorage.setItem("logged", "0");
+    sessionStorage.setItem("role", "none");
     setLogged(false);
     navigate("/", { replace: true });
   };
 
   useEffect(() => {
-    setLogged(localStorage.getItem("logged") === "1");
-    setUser(localStorage.getItem("role"));
+    setLogged(sessionStorage.getItem("logged") === "1");
+    setUser(sessionStorage.getItem("role"));
   }, [login]);
 
   return (
