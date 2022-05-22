@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export const filtroGeneral = async (data) => {
+export const filtroGeneral = async (params) => {
     const { data } = await axios.post('http://reserva-aulas-stage.herokuapp.com/aula/general', {
-        fecha: data.fecha,
-        periodos: data.periodos,
-        capacidadMin: data.capacidadMin,
-        capacidadMax: data.capacidadMax,
-        area: data.area
+        fecha: params.fecha,
+        periodos: params.periodos,
+        capacidadMin: params.capacidadMin,
+        capacidadMax: params.capacidadMax,
+        area: params.area
     } )
-    console.log(data)
-    return data
+    console.log(params)
+    return params
 }

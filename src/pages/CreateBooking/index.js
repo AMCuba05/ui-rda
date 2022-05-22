@@ -94,7 +94,7 @@ export const CreateBooking = () => {
                         <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                     </div>
                     <div className={'table-suggest-Horario'}>
-                        <ColoredTag>{item.hora_inicio.substring(0,5)} - {item.hora_fin.substring(0,5)}</ColoredTag>
+                        <ColoredTag>{item.hora_inicio/*.substring(0,5)*/} - {item.hora_fin/*.substring(0,5)*/}</ColoredTag>
                     </div>
                     <div className={'table-suggest-Fecha'}>
                         <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>
@@ -116,7 +116,7 @@ export const CreateBooking = () => {
                 <BoldText>Aulas Seleccionadas: </BoldText>
                 {reserva.map((item)=>
                     <Classroom
-                        name={`${item.nombre} de ${item.hora_inicio.substring(0,5)} a ${item.hora_fin.substring(0,5)}`}
+                        name={`${item.nombre} de ${item.hora_inicio/*.substring(0,5)*/} a ${item.hora_fin/*.substring(0,5)*/}`}
                         icon={garbageIcon}
                         onClick={() => removerReserva(item) }/>
                 )}

@@ -8,6 +8,7 @@ import {Classroom} from "../../components/Classroom";
 import {useEffect, useState} from "react";
 import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
 import {useSelector} from "react-redux";
+import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
 
 
 export const Home = () => {
@@ -16,7 +17,6 @@ export const Home = () => {
     const [reserva, setReserva] = useState([])
     const today = new Date()
     const data = useSelector(state => state.request)
-    console.log(data)
 
     const getAulas = async () => {
         const data = await obtenerAulasDisponibles(today.toISOString().substring(0,10))
@@ -84,8 +84,9 @@ export const Home = () => {
                     <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                 </div>
                 <div className={'table-suggest-Horario'}>
-                    <ColoredTag>{item.hora_inicio} - {item.hora_fin}</ColoredTag>
-                    {console.log(item)}
+                    <FormItemValueDynamic options={['6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15',
+                        '11:15 - 12:45', '12:45 - 14:15', '14:15 - 15:45', '15:45 - 17:15', '17:15 - 18:45',
+                        '18:45 - 20:15', '20:15 - 21:45']}/>
                 </div>
                 <div className={'table-suggest-Fecha'}>
                     <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>

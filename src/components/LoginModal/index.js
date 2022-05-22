@@ -13,9 +13,9 @@ export const LoginModal = ({onAction}) => {
         if(verifications()){
             try {
                 const data = await loginDocentes(codSis, password)
-                localStorage.setItem('role', 'admin')
-                localStorage.setItem('logged', '1')
-                localStorage.setItem('id', data.id)
+                sessionStorage.setItem('role', 'user')
+                sessionStorage.setItem('logged', '1')
+                sessionStorage.setItem('id', data.id)
                 onAction()
             }
             catch ( e ) {
@@ -28,8 +28,8 @@ export const LoginModal = ({onAction}) => {
 
     const goToUser = () => {
       if(verifications()){
-        localStorage.setItem('role', 'user')
-        localStorage.setItem('logged', '1')
+          sessionStorage.setItem('role', 'user')
+          sessionStorage.setItem('logged', '1')
         onAction()
       }
     }
