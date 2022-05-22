@@ -4,7 +4,7 @@ import search from "../../assets/svg/whiteSearchIcon.svg";
 import plus from "../../assets/svg/PlusIcon.svg";
 import calendar from "../../assets/svg/History.svg";
 import settings from "../../assets/svg/Settings.svg";
-
+import userAdd from "../../assets/svg/user-add.svg"
 import logout from "../../assets/svg/LogOut.svg";
 import clipboard from "../../assets/svg/Clipboard.svg";
 
@@ -138,6 +138,15 @@ export const Layout = ({ children }) => {
             <div className={"layout-navbar-item"}>
               <img src={calendar} alt={""} />
               <label> Historial </label>
+            </div>
+            <div className={
+                  window.location.pathname === "/admin/solicitudRegistro"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+              onClick={() => navigate("/admin/solicitudRegistro", { replace: true })}>
+              <img src={userAdd} alt={""} />
+              <label> Solicitudes </label>
             </div>
             <div className={"layout-navbar-item"}>
               <img src={settings} alt={""} />
