@@ -66,11 +66,6 @@ export const Book = () => {
 
   return (
     <div className={"form-content"}>
-      {/** TODO: implementar backend para que se muestre el modal de
-       * sucess o el modal de warning cuando las aulas tienen conflicto
-       */}
-      <ModalSuccess openModel={open} handleOpen={handleOpen} />
-      <ModalWarning openModel={false} />
       <div className={"form-title-column"}>
         <BackButton title={"Atras"} onClick={goToCreate} />
         <div className={"form-title"}>
@@ -215,7 +210,7 @@ export const Book = () => {
             <div>
               <WarningButton title={"Cancelar Reserva"} />
             </div>
-            <div onClick={handleOpen /*hideNotification*/}>
+            <div onClick={hideNotification}>
               <CommonButton title={"Enviar Reserva"} />
             </div>
 

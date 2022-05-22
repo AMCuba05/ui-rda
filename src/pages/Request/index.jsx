@@ -3,19 +3,35 @@ import { Classroom } from "../../components/Classroom";
 import { FormItemLabel } from "../../components/FormItemLabel";
 import { FormItemValue } from "../../components/FormItemValue";
 import { FormItemValueDynamic } from "../../components/FormItemValueDynamic";
-import { CommonText } from "../../components/CommonText";
+import { ModalSuccess } from "../../components/Modals/ModalSuccess";
 import { CommonButton } from "../../components/Buttons/Common";
-import { WarningButton } from "../../components/Buttons/Warning";
+import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { SuccessfulButton } from "../../components/Buttons/Successful";
 import "./styles.css";
+import { useState } from "react";
 import { ColoredTag } from "../../components/ColoredTag";
 import { BlackButton } from "../../components/Buttons/BlackButton";
 import garbageIcon from "../../assets/svg/redGarbageIcom.svg";
 import { WhiteButton } from "../../components/Buttons/WhiteButton";
 
 export const Request = () => {
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const handleOpenSuccess = () => setOpenSuccess(!openSuccess);
+
+  const [openWarning, setOpenWarning] = useState(false);
+  const handleOpenWarning = () => setOpenWarning(!openWarning);
+
   return (
+
     <div className={"request-content"}>
+
+      {/** TODO: implementar backend para que se muestre el modal de
+       * sucess o el modal de warning cuando las aulas tienen conflicto
+       */}
+      <ModalSuccess openModel={openSuccess} handleOpen={handleOpenSuccess} />
+      <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning} />
+
       <div className={"request-title"}>
         <FormTitle name={"Reserva de Aula(s):"} />
         <Classroom name={"651"} />
@@ -147,8 +163,8 @@ export const Request = () => {
 
               </div>
               <div className="request-sugestions-button-flex">
-                <WhiteButton title={"Enviar Sugerencias"} />
-                <CommonButton title={"Confirmar Reserva"} />
+                <WhiteButton title={"Enviar Sugerencias"} onClick={handleOpenWarning}/>
+                <CommonButton title={"Confirmar Reserva"} onClick={handleOpenSuccess} />
               </div>
             </div>
           </div>
