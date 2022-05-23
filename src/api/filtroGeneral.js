@@ -8,7 +8,8 @@ export const filtroGeneral = async (params) => {
     } else {
         formatoPeriodo = `${periodo}:00`
     }
-    const { data } = await axios.post('http://reserva-aulas-stage.herokuapp.com/aula/general', {
+    console.log(params, formatoPeriodo)
+    const { data } = await axios.post('https://reserva-aulas-stage.herokuapp.com/aula/general', {
         fecha: params.fecha,
         periodos: [formatoPeriodo],
         capacidadMin: parseInt(params.capacidadMin),

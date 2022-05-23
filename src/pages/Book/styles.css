@@ -29,14 +29,14 @@
 .form-item-inputs-left{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 1
 }
 
 .form-item-inputs-right{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 1
 }
 

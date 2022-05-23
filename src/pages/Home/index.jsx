@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
 import {useSelector} from "react-redux";
 import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
+import {useNavigate} from "react-router-dom";
 
 
 export const Home = () => {
@@ -16,6 +17,7 @@ export const Home = () => {
     const [aulas, setAulas] = useState()
     const [reserva, setReserva] = useState([])
     const today = new Date()
+    const navigate = useNavigate()
     const data = useSelector(state => state.request)
 
     const getAulas = async () => {
@@ -114,7 +116,9 @@ export const Home = () => {
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Iniciar reserva'} />
+                <CommonButton title={'Iniciar reserva'} onClick={()=> {
+                    navigate('/crear', {replace: true})
+                }} />
             </div>
         </div>
     </div>

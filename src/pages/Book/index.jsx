@@ -119,7 +119,6 @@ export const Book = () => {
 
   useEffect(() => {
     const groups = []
-    console.log(teachersList)
     teachers.map(item =>
         teachersList.map( (data) => {
           if (data.nombre_docente === item ){
@@ -154,11 +153,9 @@ export const Book = () => {
         justificacionesLista: ["test"],
         periodosId: [periodo],
       });
-      alert('success')
-      console.log(solicitud)
-      handleOpen()
+      hideNotification()
     } catch (e) {
-      alert('error')
+      alert('Ha ocurrido un error')
       setOpenError(true)
     }
   };
@@ -178,9 +175,6 @@ export const Book = () => {
 
   return (
     <div className={"form-content"}>
-
-      <ModalSuccess openModel={open} handleOpen={handleOpen} onSubmit={onSubmit} />
-      <ModalWarning openModel={openError} handleOpen={handleOpenError} />
       <div className={"form-title-column"}>
         <BackButton title={"Atras"} onClick={goToCreate} />
         <div className={"form-title"}>
@@ -189,7 +183,7 @@ export const Book = () => {
             <Classroom name={item.nombre} icon={garbageIcon} />
           ))}
         </div>
-        <NotificationsSuccessful />
+        <NotificationsSuccessful date={formatDate} />
         <NotificationsWarning />
       </div>
 
@@ -288,7 +282,7 @@ export const Book = () => {
             <div>
               <WarningButton title={"Cancelar Reserva"} />
             </div>
-            <div onClick={handleOpen /*hideNotification*/}>
+            <div onClick={onSubmit /*hideNotification*/}>
               <CommonButton title={"Enviar Reserva"} />
             </div>
           </div>

@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setRequest} from "../../redux/reducers/crearSolicitud";
 import {setMaterias} from "../../redux/reducers/materias";
 import {docenteMaterias} from "../../api/docenteMaterias";
+import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
 
 
 export const CreateBooking = () => {
@@ -99,7 +100,9 @@ export const CreateBooking = () => {
                         <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                     </div>
                     <div className={'table-suggest-Horario'}>
-                        <ColoredTag>{item.hora_inicio/*.substring(0,5)*/} - {item.hora_fin/*.substring(0,5)*/}</ColoredTag>
+                        <FormItemValueDynamic options={['6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15',
+                            '11:15 - 12:45', '12:45 - 14:15', '14:15 - 15:45', '15:45 - 17:15', '17:15 - 18:45',
+                            '18:45 - 20:15', '20:15 - 21:45']}/>
                     </div>
                     <div className={'table-suggest-Fecha'}>
                         <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>

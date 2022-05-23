@@ -48,7 +48,6 @@ export const Search = () => {
             area: area
         }
         const response = await filtroGeneral(data)
-        console.log(response)
         dispatch(setFilter(response))
     }
 
