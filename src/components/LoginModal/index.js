@@ -6,6 +6,7 @@ import { useState } from "react";
 import { WarningText } from "../WarningText";
 import './styles.css'
 import {loginDocentes} from "../../api/loginDocentes";
+import {currentUser} from "../../api/currentUser";
 
 export const LoginModal = ({onAction}) => {
 
@@ -15,7 +16,9 @@ export const LoginModal = ({onAction}) => {
                 const data = await loginDocentes(codSis, password)
                 sessionStorage.setItem('role', 'user')
                 sessionStorage.setItem('logged', '1')
-                sessionStorage.setItem('id', data.id)
+                sessionStorage.setItem('token', data.access_token)
+                const user = await currentUser(data.access_token)
+                sessionStorage.setItem('user', JSON.stringify(user))
                 onAction()
             }
             catch ( e ) {
@@ -28,7 +31,7 @@ export const LoginModal = ({onAction}) => {
 
     const goToUser = () => {
       if(verifications()){
-          sessionStorage.setItem('role', 'user')
+          sessionStorage.setItem('role', 'admin')
           sessionStorage.setItem('logged', '1')
         onAction()
       }

@@ -108,7 +108,7 @@ export const Home = () => {
                 <BoldText>Aulas Seleccionadas: </BoldText>
                 {reserva.map((item)=>
                     <Classroom
-                        name={`${item.nombre} de ${item.hora_inicio.substring(0,5)} a ${item.hora_fin.substring(0,5)}`}
+                        name={`${item.nombre}`}
                         icon={garbageIcon}
                         onClick={() => removerReserva(item) }/>
                 )}

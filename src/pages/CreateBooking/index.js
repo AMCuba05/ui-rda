@@ -10,6 +10,8 @@ import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setRequest} from "../../redux/reducers/crearSolicitud";
+import {setMaterias} from "../../redux/reducers/materias";
+import {docenteMaterias} from "../../api/docenteMaterias";
 
 
 export const CreateBooking = () => {
@@ -35,8 +37,11 @@ export const CreateBooking = () => {
         })
     }
 
-    const goToBooking = () => {
+    const goToBooking = async () => {
         if (reserva.length > 0) {
+            const user = JSON.parse(sessionStorage.getItem('user'))
+            const data = await docenteMaterias(user.id)
+            dispatch(setMaterias(data))
             dispatch(setRequest(reserva))
             navigate('/reservar', {replace: true})
         }
@@ -116,7 +121,7 @@ export const CreateBooking = () => {
                 <BoldText>Aulas Seleccionadas: </BoldText>
                 {reserva.map((item)=>
                     <Classroom
-                        name={`${item.nombre} de ${item.hora_inicio/*.substring(0,5)*/} a ${item.hora_fin/*.substring(0,5)*/}`}
+                        name={`${item.nombre}`}
                         icon={garbageIcon}
                         onClick={() => removerReserva(item) }/>
                 )}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const obtenerMaterias = async () => {
-    const { data } = await axios.get('https://reserva-aulas-stage.herokuapp.com/materia' )
+export const obtenerTodosDocentes = async (id) => {
+    const { data } = await axios.get(`https://reserva-aulas-stage.herokuapp.com/materia/docentes7${id}` )
     return data
 }

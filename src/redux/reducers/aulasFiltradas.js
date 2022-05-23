@@ -13,6 +13,6 @@ export const filterClassroom = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setRequest } = filterClassroom.actions
+export const { setFilter } = filterClassroom.actions
 
 export default filterClassroom.reducer

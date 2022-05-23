@@ -15,9 +15,6 @@ import { Search } from "../Search";
 import { LoginModal } from "../LoginModal";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { obtenerMaterias } from "../../api/materias";
-import { setMaterias } from "../../redux/reducers/materias";
 import { Title } from "../Title/indes";
 import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
@@ -41,6 +38,7 @@ export const Layout = ({ children }) => {
   const onLogout = () => {
     sessionStorage.setItem("logged", "0");
     sessionStorage.setItem("role", "none");
+    sessionStorage.setItem("token", '0')
     setLogged(false);
     navigate("/", { replace: true });
   };

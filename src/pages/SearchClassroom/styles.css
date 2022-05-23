@@ -1,4 +1,6 @@
 .search-classroom-container {
     display: flex;
-    height: 90vh;
+    flex-direction: column;
+    min-height: 85vh;
 }
+
