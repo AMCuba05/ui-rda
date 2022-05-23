@@ -1,0 +1,52 @@
+.registration-request-title{
+  display: flex;
+  font-family: 'uni-sans-book';
+  font-size: 32px;
+  font-weight: bold;
+  margin-left: 20px;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.table-registration-header {
+  background: #005BBD;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  flex: 1;
+}
+
+.table-registration-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #F8FBFB;
+  padding: 20px;
+  align-items: center;
+  border: 2px solid #E6E7E9;
+  flex: 1;
+}
+
+.registration-response{
+  font-family: 'uni-sans-book';
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
+
+.registration-response img{
+  cursor: pointer;
+}
+
+.align-flex2{
+  flex: 2;
+}
+
+.align-flex{
+  flex: 1;
+}

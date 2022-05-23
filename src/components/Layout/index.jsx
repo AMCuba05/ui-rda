@@ -4,7 +4,7 @@ import search from "../../assets/svg/whiteSearchIcon.svg";
 import plus from "../../assets/svg/PlusIcon.svg";
 import calendar from "../../assets/svg/History.svg";
 import settings from "../../assets/svg/Settings.svg";
-
+import userAdd from "../../assets/svg/user-add.svg"
 import logout from "../../assets/svg/LogOut.svg";
 import clipboard from "../../assets/svg/Clipboard.svg";
 
@@ -15,9 +15,6 @@ import { Search } from "../Search";
 import { LoginModal } from "../LoginModal";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { obtenerMaterias } from "../../api/materias";
-import { setMaterias } from "../../redux/reducers/materias";
 import { Title } from "../Title/indes";
 import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
@@ -41,6 +38,7 @@ export const Layout = ({ children }) => {
   const onLogout = () => {
     sessionStorage.setItem("logged", "0");
     sessionStorage.setItem("role", "none");
+    sessionStorage.setItem("token", '0')
     setLogged(false);
     navigate("/", { replace: true });
   };
@@ -127,6 +125,15 @@ export const Layout = ({ children }) => {
             <div className={"layout-navbar-item"}>
               <img src={calendar} alt={""} />
               <label> Historial </label>
+            </div>
+            <div className={
+                  window.location.pathname === "/admin/solicitudRegistro"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+              onClick={() => navigate("/admin/solicitudRegistro", { replace: true })}>
+              <img src={userAdd} alt={""} />
+              <label> Solicitudes </label>
             </div>
             <div className={"layout-navbar-item"}>
               <img src={settings} alt={""} />

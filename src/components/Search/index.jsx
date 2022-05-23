@@ -5,13 +5,38 @@ import './styles.css'
 import {FormItemValueDynamic} from '../FormItemValueDynamic';
 import {useState} from 'react';
 import {filtroGeneral} from "../../api/filtroGeneral";
+import {useDispatch, useSelector} from "react-redux";
+import {setFilter} from '../../redux/reducers/aulasFiltradas'
+
+const AREAS = [
+    'Area',
+    'AREA VIRTUAL CERCADO',
+    'BLOQUE ANTIGUO PROG. AGROQUIM.',
+    'BLOQUE INGENIERIA INDUSTRIAL',
+    'BLOQUE TALLERES CARPINT. PDTF',
+    'BLOQUE TINGLADOS',
+    'BLOQUE TRENCITO',
+    'CAMPUS FCYT',
+    'EDIF. ADMINISTRACION CENTRAL',
+    'EDIF. FACULTATIVO LAB. BASICOS',
+    'EDIF. NUEVO FCYT',
+    'EDIFICIO ELEKTRO',
+    'EDIFICIO MEMI',
+    'NUEVO EDIF. ACADEMICO 2 (FCYT)',
+    'NUEVO PDTF',
+    'SECTOR BIOLOGIA',
+    'SECTOR FISICA',
+    'SECTOR INFORMATICA',
+    'SECTOR QUIMICA'
+]
 
 export const Search = () => {
     const [ nombre, setNombre ] = useState()
-    const [ capacidadMax, setCapacidadMax ] = useState()
-    const [ capacidadMin, setCapacidadMin ] = useState()
-    const [ periodos, setPeriodos ] = useState()
-    const [ area, setArea ] = useState()
+    const [ capacidadMax, setCapacidadMax ] = useState(200)
+    const [ capacidadMin, setCapacidadMin ] = useState(0)
+    const [ periodos, setPeriodos ] = useState('')
+    const [ area, setArea ] = useState('')
+    const dispatch = useDispatch()
 
     const onFilter = async () => {
         const date = new Date()
@@ -23,11 +48,16 @@ export const Search = () => {
             area: area
         }
         const response = await filtroGeneral(data)
-        console.log(response)
+        dispatch(setFilter(response))
     }
 
     const onChangeArea = e => {
-        setArea(e.target.value)
+        if (area === 'Area' ){
+            setArea('')
+        } else {
+            setArea(e.target.value)
+        }
+
     }
 
     const onChangePeriodo = e => {
@@ -35,10 +65,15 @@ export const Search = () => {
     }
 
     const onChangeCapacidad = e => {
-        const capacidad = e.target.value
-        const capacidades = capacidad.split(' ')
-        setCapacidadMin(capacidades[0])
-        setCapacidadMax(capacidades[2])
+        if (e.target.value == 'Cantidad') {
+            setCapacidadMin(0)
+            setCapacidadMax(200)
+        } else {
+            const capacidad = e.target.value
+            const capacidades = capacidad.split(' ')
+            setCapacidadMin(capacidades[0])
+            setCapacidadMax(capacidades[2])
+        }
     }
 
     return<div className={'search-bar-container'}>
@@ -56,7 +91,7 @@ export const Search = () => {
             </div>
             <div className={'search-bar-filters'}>
                 <div>
-                    <FormItemValueDynamic onChange={onChangeArea} options={['Area', 'SECTOR BIOLOGIA', 'BLOQUE TALLERES CARPINT. PDTF', 'EDIF. ADMINISTRACION CENTRAL', 'Laboratorios de Física']}/>
+                    <FormItemValueDynamic onChange={onChangeArea} options={AREAS}/>
                 </div>
                 <div>
                     <FormItemValueDynamic onChange={onChangeCapacidad} options={['Cantidad', '10 - 30 est.', '30 - 50 est.', '50 - 70 est.', '70 - 100 est.'

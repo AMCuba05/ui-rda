@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
 import {useSelector} from "react-redux";
 import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
+import {useNavigate} from "react-router-dom";
 
 
 export const Home = () => {
@@ -16,6 +17,7 @@ export const Home = () => {
     const [aulas, setAulas] = useState()
     const [reserva, setReserva] = useState([])
     const today = new Date()
+    const navigate = useNavigate()
     const data = useSelector(state => state.request)
 
     const getAulas = async () => {
@@ -108,13 +110,15 @@ export const Home = () => {
                 <BoldText>Aulas Seleccionadas: </BoldText>
                 {reserva.map((item)=>
                     <Classroom
-                        name={`${item.nombre} de ${item.hora_inicio.substring(0,5)} a ${item.hora_fin.substring(0,5)}`}
+                        name={`${item.nombre}`}
                         icon={garbageIcon}
                         onClick={() => removerReserva(item) }/>
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Iniciar reserva'} />
+                <CommonButton title={'Iniciar reserva'} onClick={()=> {
+                    navigate('/crear', {replace: true})
+                }} />
             </div>
         </div>
     </div>

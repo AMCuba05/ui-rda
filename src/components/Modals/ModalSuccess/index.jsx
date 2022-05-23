@@ -7,7 +7,7 @@ import { BoldText } from "../../BoldText";
 import "./styles.css";
 import "rsuite/dist/rsuite-rtl.css";
 
-export const ModalSuccess = ({ openModel, handleOpen }) => {
+export const ModalSuccess = ({ openModel, handleOpen, onSubmit }) => {
   return (
     <div>
       <Modal className={"modal"} open={openModel} onClose={handleOpen}>
@@ -28,7 +28,7 @@ export const ModalSuccess = ({ openModel, handleOpen }) => {
             <WhiteButton title={"Retroceder"} />
           </div>
           <div className={'modal-buttons-btn'}>
-            <CommonButton title={"Confirmar"} />
+            <CommonButton title={"Confirmar"} onClick={onSubmit} />
           </div>
         </div>
       </Modal>
