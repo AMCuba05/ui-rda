@@ -6,103 +6,31 @@ import {CommonButton} from "../../components/Buttons/Common";
 import {WarningButton} from "../../components/Buttons/Warning";
 import {BlackButton} from "../../components/Buttons/BlackButton";
 import {useNavigate} from "react-router-dom";
-
-const data = [
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz', 'Esteban Quito'],
-        classrooms: [ {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: 'Auditorio', state: 'free'}, {id: '653A', state: 'free'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-    {
-        names: ['Emery Septimus', 'Cooper Lipshutz'],
-        classrooms: [{id: '651', state: 'free'}, {id: '653', state: 'pending'}, {id: '651', state: 'reserved'}],
-        quantity: 50,
-        time: '9:45 - 11:15',
-        date: '24/05/2022',
-        reason: 'Clases',
-    },
-]
-
+import {useEffect, useState} from "react";
+import {obtenerPendientes} from "../../api/obtenerPendientes";
 
 export const PendingRequests = () => {
   const navigate = useNavigate()
-  const goToOptions = () => {
-    navigate('/admin/reserva', {replace: true});
+  const [aulas, setAulas] = useState([])
+  const goToOptions = (item) => {
+      localStorage.setItem('pendingItem', JSON.stringify(item))
+      navigate('/admin/reserva', {replace: true});
     }
 
-    return<div>
+    const getAulas = async () => {
+      const data = await obtenerPendientes()
+      setAulas(data)
+    }
+
+    useEffect(() => {
+        void getAulas()
+    })
+
+    return<div className={'pending-page'}>
         <div className={'pending-title'}>
             <div>
                 Lista de Solicitudes Pendientes
             </div>
-            <CommonText>Del día 21 de abril al 30 de mayo de 2022</CommonText>
         </div>
         <div className={'table-header'}>
             <div className={'table-N'} >
@@ -130,30 +58,30 @@ export const PendingRequests = () => {
                 <BoldText white={true}>Respuesta</BoldText>
             </div>
         </div>
-        {data.map((item, index)  => <div className={'table-item'}>
+        {aulas.map((item, index)  => <div className={'table-item'}>
             <div className={'table-N'} >
                 <BoldText >{index + 1}</BoldText>
             </div>
             <div className={'table-Docente'}>
-                {item.names.map( (name, index) => index === 0 ?  <BoldText >{name}</BoldText> : <CommonText >{name}</CommonText>)}
+                {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombre}</BoldText> : <CommonText >{name.nombre}</CommonText>)}
             </div>
             <div className={'table-Aula'}>
-                {item.classrooms.map( (classroom, index) => <ColoredTag state={classroom.state} >{classroom.id}</ColoredTag>)}
+                {item.aulas.map( (aula, index) => <ColoredTag state={aula.disponible_para_uso} >{aula.nombre}</ColoredTag>)}
             </div>
             <div className={'table-Cantidad'}>
-                <ColoredTag>{item.quantity} est.</ColoredTag>
+                <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
             <div className={'table-Horario'}>
-                <ColoredTag>{item.time}</ColoredTag>
+                <ColoredTag>{item.horarios[0].hora_inicio.substring(0,5)} - {item.horarios[0].hora_fin.substring(0,5)}</ColoredTag>
             </div>
             <div className={'table-Fecha'}>
-                <ColoredTag>{item.date}</ColoredTag>
+                <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={'table-Motivo'}>
-                <ColoredTag>{item.reason}</ColoredTag>
+                <ColoredTag>motivo</ColoredTag>
             </div>
             <div className={'table-Respuesta'}>
-                <BlackButton title={'Opciones'} onClick={goToOptions}/>
+                <BlackButton title={'Opciones'} onClick={() => goToOptions(item)}/>
             </div>
             </div>)}
     </div>

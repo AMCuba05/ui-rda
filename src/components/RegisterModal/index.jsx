@@ -8,6 +8,7 @@ import { WarningText } from "../WarningText";
 import { BoldText } from "../BoldText";
 import { FormItemValueAutoCompleteOne } from "../FormItemValueAutoCompleteOne";
 import "./styles.css";
+import {registroDocentes} from "../../api/loginDocentes";
 
 export const RegisterModal = ({ onAction }) => {
   const [teachers, setTeachers] = useState([]);
@@ -74,7 +75,7 @@ export const RegisterModal = ({ onAction }) => {
         validation = false;
       }
     }
-    return validation;
+    return true;
   }
 
   const verificationCellphone = () => {
@@ -137,9 +138,6 @@ export const RegisterModal = ({ onAction }) => {
     setShowPasswordRepeatError(newShowPasswordRepeatError);
   };
 
-
-
-
   const [codSis, setCodSis] = useState("");
   const handleCodSisChange = (newCodSis) => {
     setCodSis(newCodSis);
@@ -165,6 +163,24 @@ export const RegisterModal = ({ onAction }) => {
     setCellphone(newCellphone);
   }
 
+  const [name, setName] = useState()
+  const handleNameChange = (newName) => {
+    setName(newName)
+  }
+
+  const onRegister = async () => {
+    if (verifications()) {
+      try {
+        await registroDocentes(codSis, name, cellphone, email, password)
+        alert('Solicitud de creacion de usuario enviada')
+      } catch (e) {
+        alert('Algo salió mal, inténtalo más tarde')
+      }
+    } else {
+      alert('Debe llenar todos los campos')
+    }
+  }
+
   return (
     <div className={"fullscreen-register-modal"}>
       <div className={"register-modal-container"}>
@@ -174,16 +190,10 @@ export const RegisterModal = ({ onAction }) => {
         <div className={'register-modal-content-flex'}>
           <div className={'register-modal-content-left'}>
             <div>
-              <CommonText>Nombre Completo</CommonText>
-              <FormItemValueAutoCompleteOne
-                items={teachers}
-                setItems={setTeachers}
-                docentOptions={[
-                  "Leticia Blanco",
-                  "Americo Fiorilio",
-                  "Yony Montaño",
-                ]}
-                add={false}
+              <CommonInput
+                  input={name}
+                  inputChange={handleNameChange}
+                  label={"Nombre Completo"}
               />
             </div>
             <div>
@@ -229,7 +239,7 @@ export const RegisterModal = ({ onAction }) => {
         </div>
         <div className={'register-modal-footer'}>
           <div>
-            <CommonButton onClick={verifications} title={'Registrarse'} />
+            <CommonButton onClick={onRegister} title={'Registrarse'} />
           </div>
           <div>
             <a onClick={close}>Volver atras</a>

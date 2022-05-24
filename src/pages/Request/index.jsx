@@ -2,37 +2,66 @@ import { FormTitle } from "../../components/FormTitle";
 import { Classroom } from "../../components/Classroom";
 import { FormItemLabel } from "../../components/FormItemLabel";
 import { FormItemValue } from "../../components/FormItemValue";
-import { FormItemValueDynamic } from "../../components/FormItemValueDynamic";
-import { CommonText } from "../../components/CommonText";
 import { CommonButton } from "../../components/Buttons/Common";
 import { WarningButton } from "../../components/Buttons/Warning";
-import { SuccessfulButton } from "../../components/Buttons/Successful";
 import "./styles.css";
 import { ColoredTag } from "../../components/ColoredTag";
-import { BlackButton } from "../../components/Buttons/BlackButton";
 import garbageIcon from "../../assets/svg/redGarbageIcom.svg";
-import { WhiteButton } from "../../components/Buttons/WhiteButton";
+import {BackButton} from "../../components/Buttons/BackButton";
+import {useNavigate} from "react-router-dom";
+import {aceptarReserva, rechazarReserva} from "../../api/reserva";
+import {enviarMailRechazo} from "../../api/servicioMail";
 
 export const Request = () => {
+  const data = JSON.parse(localStorage.getItem('pendingItem'))
+  console.log(data)
+  const onReject = async () => {
+    try {
+      console.log(data.solicitud.id)
+      await rechazarReserva(data.solicitud.id)
+      alert('Se rechazó la solicitud de reserva')
+      navigate('/admin/pendientes', {replace: true})
+      //await enviarMailRechazo(data.docentes[0].email)
+    } catch (e) {
+      alert('Algo salió mal intentalo más tarde')
+    }
+  }
+
+  const onAccept = async () => {
+    try {
+      console.log(data.solicitud.id)
+      await aceptarReserva(data.solicitud.id)
+      alert('Se acepto la solicitud de reserva')
+      //await enviarMailRechazo(data.docentes[0].email)
+      navigate('/admin/pendientes', {replace: true})
+    } catch (e) {
+      alert('Algo salió mal intentalo más tarde')
+    }
+  }
+  const navigate = useNavigate()
   return (
     <div className={"request-content"}>
+      <BackButton title={'Atras'} onClick={() => navigate('/admin/pendientes', {replace: true})} />
       <div className={"request-title"}>
         <FormTitle name={"Reserva de Aula(s):"} />
-        <Classroom name={"651"} />
-        <Classroom name={"652"} />
+        {
+          data.aulas.map( aula => <Classroom name={aula.nombre} /> )
+        }
       </div>
 
       <div className={"request-items"}>
         <div className={"request-item-inputs"}>
           <div className={"request-item-inputs-left"}>
             <div className={"request-item-inputs-left-flex"}>
-              <FormItemLabel label={"Hora de Solicitud"} />
-              <FormItemValue value={"12:00 - 20/05/2022"} />
+              <FormItemLabel label={"Fecha de Solicitud"} />
+              <FormItemValue value={data.solicitud.fecha_creacion} />
             </div>
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Docente"} />
-              <FormItemValue value={"Esteban Quito R."} />
-              <FormItemValue value={"Esteban Quito R."} />
+              {
+                data.docentes.map( docente => <FormItemValue value={docente.nombre} /> )
+              }
+
             </div>
 
             <div className={"request-item-inputs-left-flex"}>
@@ -45,7 +74,6 @@ export const Request = () => {
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Materia"} />
               <FormItemValue value={"Calculo 1"} />
-              <FormItemValue value={"Calculo 2"} />
             </div>
 
             <div className={"request-item-inputs-left-flex"}>
@@ -61,7 +89,7 @@ export const Request = () => {
               </div>
               <div className={"request-item-inputs-left-flex"}>
                 <FormItemLabel label={"Capacidad"} />
-                <FormItemValue value={"150 Estudiantes"} />
+                <FormItemValue value={`${data.numero_estimado} Estudiantes`} />
               </div>
             </div>
             <div className={"request-item-inputs-left-flex"}>
@@ -88,11 +116,18 @@ export const Request = () => {
         </div>
 
         <div className="request-suggestions">
-          <div>
+          {
+            /*
+            <div>
           <FormItemLabel label={"Sugerencia de aulas:"} />
           </div>
+            */
+          }
+
           <div className="request-sugestions-items">
-            <div className="request-sugestions-items-item">
+            {
+              /*
+              <div className="request-sugestions-items-item">
               <FormItemValue value={"AUDITORIO"} />
               <FormItemValue value={"270 estudiantes"} />
 
@@ -136,6 +171,9 @@ export const Request = () => {
               <SuccessfulButton title={"Disponible"} />
               <BlackButton title={"Añadir"} />
             </div>
+              */
+            }
+
             <div className="request-sugestions-items-sugestion">
               <div className="request-sugestions-items-sugestion-flex">
                 <div className="items-sugestion-flex-label">
@@ -144,11 +182,11 @@ export const Request = () => {
                 <div>
                 <Classroom name={"651"} icon={garbageIcon} />
                 </div>
-
               </div>
               <div className="request-sugestions-button-flex">
-                <WhiteButton title={"Enviar Sugerencias"} />
-                <CommonButton title={"Confirmar Reserva"} />
+                <WarningButton title={"Rechazar Reserva"} onClick={onReject} />
+
+                <CommonButton title={"Confirmar Reserva"} onClick={onAccept} />
               </div>
             </div>
           </div>
