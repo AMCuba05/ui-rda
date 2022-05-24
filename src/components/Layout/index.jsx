@@ -56,7 +56,7 @@ export const Layout = ({ children }) => {
         {register ? <RegisterModal onAction={showModalRegister}/> : null}
         <div className={"layout-navbar-content"}>
           <img className={"layout-img"} src={logo} alt={""} />
-          <UserCard />
+
 
           <div className={"layout-navbar"}>
             {user === "user" ? (
