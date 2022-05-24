@@ -1,4 +1,4 @@
-.tag-free{
+.tag-1{
     background-color: #01B574;
     border-radius: 20px;
     padding: 5px 15px;
@@ -10,7 +10,7 @@
     color: #FFFFFF;
 }
 
-.tag-pending{
+.tag-2{
     background-color: #F2994A;
     border-radius: 20px;
     padding: 5px 15px;
@@ -22,7 +22,7 @@
     color: #FFFFFF;
 }
 
-.tag-reserved{
+.tag-3{
     background-color: #EB5757;
     border-radius: 20px;
     padding: 5px 15px;

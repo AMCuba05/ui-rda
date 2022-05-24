@@ -1,0 +1,8 @@
+.user-card-container {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 30px;
+}

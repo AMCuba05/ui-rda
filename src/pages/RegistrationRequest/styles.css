@@ -8,6 +8,10 @@
   margin-bottom: 20px;
 }
 
+.registration-request-page {
+  min-height: 95vh;
+}
+
 .table-registration-header {
   background: #005BBD;
   display: flex;
