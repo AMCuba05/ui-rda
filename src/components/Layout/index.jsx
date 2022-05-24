@@ -19,6 +19,7 @@ import { Title } from "../Title/indes";
 import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
 import { RegisterModal } from "../RegisterModal";
+import {UserCard} from "../UserCard";
 
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
@@ -55,6 +56,7 @@ export const Layout = ({ children }) => {
         {register ? <RegisterModal onAction={showModalRegister}/> : null}
         <div className={"layout-navbar-content"}>
           <img className={"layout-img"} src={logo} alt={""} />
+          <UserCard />
 
           <div className={"layout-navbar"}>
             {user === "user" ? (
@@ -126,15 +128,19 @@ export const Layout = ({ children }) => {
               <img src={calendar} alt={""} />
               <label> Historial </label>
             </div>
-            <div className={
-                  window.location.pathname === "/admin/solicitudRegistro"
-                    ? "layout-navbar-item-active"
-                    : "layout-navbar-item"
-                }
-              onClick={() => navigate("/admin/solicitudRegistro", { replace: true })}>
-              <img src={userAdd} alt={""} />
-              <label> Solicitudes </label>
-            </div>
+            {
+              user !== "user" ?
+                  <div className={
+                    window.location.pathname === "/admin/solicitudRegistro"
+                        ? "layout-navbar-item-active"
+                        : "layout-navbar-item"
+                  }
+                       onClick={() => navigate("/admin/solicitudRegistro", { replace: true })}>
+                    <img src={userAdd} alt={""} />
+                    <label> Solicitudes </label>
+                  </div>
+                  : null
+            }
             <div className={"layout-navbar-item"}>
               <img src={settings} alt={""} />
               <label> Configurar </label>

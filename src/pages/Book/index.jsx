@@ -81,6 +81,7 @@ export const Book = () => {
   const navigate = useNavigate();
   const { data } = useSelector((state) => state.request);
   const { materias } = useSelector((state) => state.materias);
+  console.log(materias)
   const nombreMaterias = materias.flatMap((item) => (item.nombre_materia));
 
   const [open, setOpen] = useState(false);
@@ -137,6 +138,7 @@ export const Book = () => {
     await materias.map( async (materia, index) => {
       if (materia.nombre_materia === item) {
         const response = await obtenerDocentes(materia.idMateria)
+        console.log(response)
         setTeachersList(response)
       }
     })
@@ -154,6 +156,7 @@ export const Book = () => {
         periodosId: [periodo],
       });
       hideNotification()
+      navigate("/crear", { replace: true });
     } catch (e) {
       alert('Ha ocurrido un error')
       setOpenError(true)
