@@ -119,3 +119,19 @@
     flex: 1;
     flex-direction: column;
 }
+
+@media screen and (max-width: 768px){
+
+  .layout-menu-container{
+    display: inline-block;
+    width: 100%;
+    height: 10%;
+    background-color: blueviolet;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .layout-menu-container img{
+      display: none;
+  }
+}
