@@ -159,12 +159,12 @@
   }
 
   .layout-navbar-item img{
-    width: 60%;
-    height: 60%;
+    width: 55%;
+    height: 55%;
   }
 
   .layout-navbar-item-active img{
-      width: 60%;
-      height: 60%;
+    width: 55%;
+    height: 55%;
   }
 }
