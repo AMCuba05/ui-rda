@@ -50,3 +50,26 @@
   flex-direction: column;
   gap: 10px;
 }
+
+@media screen and (max-width: 768px){
+  .register-modal-container{
+    border-radius: 30px;
+    display: flex;
+    width: 90%;
+    height: 90%;
+    overflow-y: auto;
+  }
+
+  .register-modal-content-flex{
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .register-modal-content-left{
+    width: 100%;
+  }
+
+  .register-modal-content-right{
+    width: 100%;
+  }
+}
