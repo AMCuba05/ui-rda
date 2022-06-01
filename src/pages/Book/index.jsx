@@ -155,7 +155,7 @@ export const Book = () => {
         justificacionesLista: ["test"],
         periodosId: [periodo],
       });
-      hideNotification()
+
       navigate("/crear", { replace: true });
     } catch (e) {
       alert('Ha ocurrido un error')
@@ -166,15 +166,7 @@ export const Book = () => {
     navigate("/crear", { replace: true });
   };
 
-  const hideNotification = () => {
-    let classNotification = document.getElementById("notifications-hide");
-    classNotification.classList.remove("hide");
-    classNotification.classList.add("hide-transform");
-    setTimeout(() => {
-      classNotification.classList.remove("hide-transform");
-      classNotification.classList.add("hide");
-    }, "10000");
-  };
+
 
   return (
     <div className={"form-content"}>
@@ -285,7 +277,7 @@ export const Book = () => {
             <div>
               <WarningButton title={"Cancelar Reserva"} />
             </div>
-            <div onClick={onSubmit /*hideNotification*/}>
+            <div onClick={onSubmit }>
               <CommonButton title={"Enviar Reserva"} />
             </div>
           </div>

@@ -1,14 +1,13 @@
-.notification-container{
+.notification-pending-container{
   display: flex;
-
 }
 
-.notification-color{
-  background-color: #01B574;
+.notification-pending-color{
+  background-color: #FFB547;
   flex: 1;
 }
 
-.notification-content{
+.notification-pending-content{
   flex: 20;
   background-color: white;
   display: flex;
@@ -16,11 +15,11 @@
   gap: 10px;
 }
 
-.notification-content-icon{
+.notification-pending-content-icon{
   margin-top: 10px;
 }
 
-.notification-content-text{
+.notification-pending-content-text{
   width: 100%;
   margin-top: 10px;
   display: flex;
@@ -28,20 +27,19 @@
   font-family: 'uni-sans-book';
 }
 
-.notification-title{
+.notification-pending-title{
   font-weight: bold;
   font-size: 18px;
 }
 
-.notification-description{
+.notification-pending-description{
   font-size: 16px;
 }
 
-.notification-date{
+.notification-pending-date{
   font-size: 16px;
   align-self: flex-end;
   font-weight: bold;
 }
-
 
 
