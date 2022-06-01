@@ -19,7 +19,9 @@ import { Title } from "../Title/indes";
 import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
 import { RegisterModal } from "../RegisterModal";
-import { UserCard } from "../UserCard";
+import {UserCard} from "../UserCard";
+import { NotificationsLayout } from "../Notifications/NotificationsLayout";
+
 
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
@@ -50,6 +52,9 @@ export const Layout = ({ children }) => {
     setLogged(sessionStorage.getItem("logged") === "1");
     setUser(sessionStorage.getItem("role"));
   }, [login]);
+
+  const [openNotifications, setOpenNotifications] = useState(false);
+  const handleOpenNotifications = () => setOpenNotifications(!openNotifications);
 
   return (
     <div className={"layout-container"}>
@@ -181,11 +186,17 @@ export const Layout = ({ children }) => {
             <div className={"layout-header"}>
               {/*<Search />*/}
 
+
               {user === "user" ? (
-                <div className={"layout-header-icon"}>
-                  <img src={notification} alt={""} />
-                </div>
+                <div className={"layout-header-icon"} onClick={handleOpenNotifications}>
+                <img src={notification} alt={""} />
+              </div>
+                {openNotifications ? (
+                   <NotificationsLayout/>
+                ): (null)
+                }
               ) : null}
+
             </div>
           ) : (
             <div className={"layout-header-home"}>

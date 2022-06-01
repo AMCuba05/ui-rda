@@ -1,0 +1,37 @@
+.modal-reject{
+  width: 500px;
+  border-radius: 20px;
+}
+
+.modal-reject-title{
+margin-bottom: 10px;
+}
+
+.modal-reject-text{
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.modal-reject-classroom{
+display: flex;
+gap: 20px;
+justify-content: center;
+align-items: center;
+margin-bottom: 20px;
+}
+
+
+.modal-reject-options{
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex: 1;
+}
+.modal-reject-buttons{
+display: flex;
+gap: 30px;
+}
+
+.modal-reject-buttons-btn{
+flex: 1;
+}

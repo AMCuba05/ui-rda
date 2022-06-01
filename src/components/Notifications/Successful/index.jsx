@@ -3,16 +3,16 @@ import "./styles.css"
 
 export const NotificationsSuccessful = ({date}) =>{
 
-  return <div className={'notification-container hide'} id={'notifications-hide'}>
+  return <div className={'notification-container'}>
     <div className={'notification-color'}></div>
     <div className={'notification-content'}>
         <div className={'notification-content-icon'}>
           <img src={faceGrennIcon} alt="" />
         </div>
         <div className={'notification-content-text'}>
-          <span className={'notification-title'}>Su Solicitud de Reserva fue enviada</span>
-          <span className={'notification-description'}>Acaba de enviar satisfactoriamente una solicitud de reserva </span>
-          <span className={'notification-date'}>{date}</span>
+          <span className={'notification-title'}>Su reserva fue aceptada</span>
+          <span className={'notification-description'}> <b>Motivo:</b> aula aceptada por el administrador</span>
+          <span className={'notification-date'}>14:00 10/5/2022 </span>
         </div>
     </div>
   </div>
