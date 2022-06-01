@@ -4,7 +4,7 @@ import search from "../../assets/svg/whiteSearchIcon.svg";
 import plus from "../../assets/svg/PlusIcon.svg";
 import calendar from "../../assets/svg/History.svg";
 import settings from "../../assets/svg/Settings.svg";
-import userAdd from "../../assets/svg/user-add.svg"
+import userAdd from "../../assets/svg/user-add.svg";
 import logout from "../../assets/svg/LogOut.svg";
 import clipboard from "../../assets/svg/Clipboard.svg";
 
@@ -22,10 +22,13 @@ import { RegisterModal } from "../RegisterModal";
 import {UserCard} from "../UserCard";
 import { NotificationsLayout } from "../Notifications/NotificationsLayout";
 
+
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
   const [register, setRegister] = useState(false);
-  const [logged, setLogged] = useState(sessionStorage.getItem("logged") === "1");
+  const [logged, setLogged] = useState(
+    sessionStorage.getItem("logged") === "1"
+  );
   const [user, setUser] = useState(sessionStorage.getItem("role"));
   const navigate = useNavigate();
 
@@ -33,14 +36,14 @@ export const Layout = ({ children }) => {
     setLogin(!login);
   };
 
-  const showModalRegister = () =>{
+  const showModalRegister = () => {
     setRegister(!register);
-  }
+  };
 
   const onLogout = () => {
     sessionStorage.setItem("logged", "0");
     sessionStorage.setItem("role", "none");
-    sessionStorage.setItem("token", '0')
+    sessionStorage.setItem("token", "0");
     setLogged(false);
     navigate("/", { replace: true });
   };
@@ -57,10 +60,9 @@ export const Layout = ({ children }) => {
     <div className={"layout-container"}>
       <div className={"layout-menu-container"}>
         {login ? <LoginModal onAction={showModalLogin} /> : null}
-        {register ? <RegisterModal onAction={showModalRegister}/> : null}
+        {register ? <RegisterModal onAction={showModalRegister} /> : null}
         <div className={"layout-navbar-content"}>
           <img className={"layout-img"} src={logo} alt={""} />
-
 
           <div className={"layout-navbar"}>
             {user === "user" ? (
@@ -128,23 +130,40 @@ export const Layout = ({ children }) => {
                 <label> Crear Reserva</label>
               </div>
             ) : null}
-            <div className={"layout-navbar-item"}>
-              <img src={calendar} alt={""} />
-              <label> Historial </label>
-            </div>
-            {
-              user !== "user" ?
-                  <div className={
-                    window.location.pathname === "/admin/solicitudRegistro"
-                        ? "layout-navbar-item-active"
-                        : "layout-navbar-item"
-                  }
-                       onClick={() => navigate("/admin/solicitudRegistro", { replace: true })}>
-                    <img src={userAdd} alt={""} />
-                    <label> Solicitudes </label>
-                  </div>
-                  : null
-            }
+            {user === "user" ? (
+              <div className={"layout-navbar-item"}>
+                <img src={calendar} alt={""} />
+                <label> Historiall </label>
+              </div>
+            ) : (
+              <div
+                className={
+                  window.location.pathname === "/admin/history"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+                onClick={() => navigate("/admin/history", { replace: true })}
+              >
+                <img src={calendar} alt={""} />
+                <label> Historial </label>
+              </div>
+            )}
+
+            {user !== "user" ? (
+              <div
+                className={
+                  window.location.pathname === "/admin/solicitudRegistro"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+                onClick={() =>
+                  navigate("/admin/solicitudRegistro", { replace: true })
+                }
+              >
+                <img src={userAdd} alt={""} />
+                <label> Solicitudes </label>
+              </div>
+            ) : null}
             <div className={"layout-navbar-item"}>
               <img src={settings} alt={""} />
               <label> Configurar </label>
@@ -165,24 +184,30 @@ export const Layout = ({ children }) => {
         <div className={"layout-header-with-icon"}>
           {logged ? (
             <div className={"layout-header"}>
-              <Search />
+              {/*<Search />*/}
 
-              <div className={"layout-header-icon"} onClick={handleOpenNotifications}>
+
+              {user === "user" ? (
+                <div className={"layout-header-icon"} onClick={handleOpenNotifications}>
                 <img src={notification} alt={""} />
               </div>
-              {openNotifications ? (
+                {openNotifications ? (
                    <NotificationsLayout/>
                 ): (null)
                 }
+              ) : null}
+
             </div>
           ) : (
             <div className={"layout-header-home"}>
               <div className={"layout-buttons"}>
                 <div>
-                  <WhiteButton title={"Registrarse"}
-                  onClick= {() => {
-                    setRegister(true);
-                  }}/>
+                  <WhiteButton
+                    title={"Registrarse"}
+                    onClick={() => {
+                      setRegister(true);
+                    }}
+                  />
                 </div>
                 <div>
                   <CommonButton

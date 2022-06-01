@@ -1,6 +1,7 @@
 import "./styles.css";
 import { BoldText } from "../../components/BoldText";
 import { ColoredTag } from "../../components/ColoredTag";
+import {TitlePage} from "../../components/TitlePage"
 import checkIcon from "../../assets/svg/Check.svg";
 import xIcon from "../../assets/svg/x-red.svg";
 import {useEffect, useState} from "react";
@@ -45,9 +46,8 @@ export const RegistrationRequest = () => {
 
   return (
     <div className={'registration-request-page'}>
-      <div className={"registration-request-title"}>
-        <div>Solicitud de registro al sistema</div>
-      </div>
+
+      <TitlePage title={'Solicitud de registro al sistema'}/>
       <div className={"table-registration-header"}>
         <div className={'align-flex2'}>
           <BoldText white={true}>Nombre docente</BoldText>
