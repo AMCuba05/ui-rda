@@ -5,12 +5,16 @@ import { FormItemValue } from "../../components/FormItemValue";
 import { CommonButton } from "../../components/Buttons/Common";
 import { WarningButton } from "../../components/Buttons/Warning";
 import "./styles.css";
+import { useState } from "react";
 import { ColoredTag } from "../../components/ColoredTag";
 import garbageIcon from "../../assets/svg/redGarbageIcom.svg";
 import {BackButton} from "../../components/Buttons/BackButton";
 import {useNavigate} from "react-router-dom";
 import {aceptarReserva, rechazarReserva} from "../../api/reserva";
 import {enviarMailRechazo} from "../../api/servicioMail";
+import { ModalSuccess } from "../../components/Modals/ModalSuccess";
+import { ModalWarning } from "../../components/Modals/ModalWarning";
+import { ModalReject } from "../../components/Modals/ModalReject";
 
 export const Request = () => {
   const data = JSON.parse(localStorage.getItem('pendingItem'))
@@ -32,15 +36,32 @@ export const Request = () => {
       console.log(data.solicitud.id)
       await aceptarReserva(data.solicitud.id)
       alert('Se acepto la solicitud de reserva')
+      //handleOpenSucces();
       //await enviarMailRechazo(data.docentes[0].email)
       navigate('/admin/pendientes', {replace: true})
+
     } catch (e) {
       alert('Algo salió mal intentalo más tarde')
     }
   }
+
+  const [openSucces, setOpenSuccess] = useState(false);
+  const handleOpenSucces = () => setOpenSuccess(!openSucces);
+
+  const [openWarning, setOpenWarning] = useState(false);
+  const handleOpenWarning = () => setOpenWarning(!openWarning);
+
+  const [openReject, setOpenReject] = useState(false);
+  const handleOpenReject = () => setOpenReject(!openReject);
+
+
   const navigate = useNavigate()
   return (
     <div className={"request-content"}>
+      {/**TODO: implementr backend  */}
+      <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces}/>
+      <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning}/>
+      <ModalReject openModel={openReject} handleOpen={handleOpenReject}/>
       <BackButton title={'Atras'} onClick={() => navigate('/admin/pendientes', {replace: true})} />
       <div className={"request-title"}>
         <FormTitle name={"Reserva de Aula(s):"} />
