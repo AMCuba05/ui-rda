@@ -8,6 +8,7 @@ import {Book} from "../pages/Book";
 import {SearchClassroom} from "../pages/SearchClassroom";
 import {CreateBooking} from "../pages/CreateBooking";
 import { RegistrationRequest } from "../pages/RegistrationRequest";
+import { HistoryAdmin } from "../pages/HistoryAdmin";
 
 export const AppRoutes = () => {
     return <Routes>
@@ -20,6 +21,7 @@ export const AppRoutes = () => {
         <Route exact path="/admin/sugerir" element={<SuggestClassroom />} />
         <Route exact path="/admin/reserva" element={<Request />} />
         <Route exact path="/admin/solicitudRegistro" element={<RegistrationRequest/>}/>
+        <Route exact path="/admin/history" element={<HistoryAdmin/>}/>
     </Routes>
 
 }

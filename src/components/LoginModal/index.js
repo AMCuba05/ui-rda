@@ -6,7 +6,8 @@ import { useState } from "react";
 import { WarningText } from "../WarningText";
 import './styles.css'
 import {loginDocentes} from "../../api/loginDocentes";
-import {currentUser} from "../../api/currentUser";
+import {currentUser, currentUserAdmin} from "../../api/currentUser";
+import {loginAdmin} from "../../api/loginAdmin";
 
 export const LoginModal = ({onAction}) => {
 
@@ -22,7 +23,17 @@ export const LoginModal = ({onAction}) => {
                 onAction()
             }
             catch ( e ) {
-                alert('Código SIS o contraseña incorrectos')
+                try {
+                    const data = await loginAdmin(codSis, password)
+                    sessionStorage.setItem('role', 'admin')
+                    sessionStorage.setItem('logged', '1')
+                    sessionStorage.setItem('token', data.access_token)
+                    const user = await currentUserAdmin(data.access_token)
+                    sessionStorage.setItem('user', JSON.stringify(user))
+                    onAction()
+                } catch (e) {
+                    alert('Código SIS o contraseña incorrectos')
+                }
             }
 
 

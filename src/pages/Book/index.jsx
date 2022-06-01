@@ -81,6 +81,7 @@ export const Book = () => {
   const navigate = useNavigate();
   const { data } = useSelector((state) => state.request);
   const { materias } = useSelector((state) => state.materias);
+  console.log(materias)
   const nombreMaterias = materias.flatMap((item) => (item.nombre_materia));
 
   const [open, setOpen] = useState(false);
@@ -137,6 +138,7 @@ export const Book = () => {
     await materias.map( async (materia, index) => {
       if (materia.nombre_materia === item) {
         const response = await obtenerDocentes(materia.idMateria)
+        console.log(response)
         setTeachersList(response)
       }
     })
@@ -153,7 +155,8 @@ export const Book = () => {
         justificacionesLista: ["test"],
         periodosId: [periodo],
       });
-      hideNotification()
+
+      navigate("/crear", { replace: true });
     } catch (e) {
       alert('Ha ocurrido un error')
       setOpenError(true)
@@ -163,15 +166,7 @@ export const Book = () => {
     navigate("/crear", { replace: true });
   };
 
-  const hideNotification = () => {
-    let classNotification = document.getElementById("notifications-hide");
-    classNotification.classList.remove("hide");
-    classNotification.classList.add("hide-transform");
-    setTimeout(() => {
-      classNotification.classList.remove("hide-transform");
-      classNotification.classList.add("hide");
-    }, "10000");
-  };
+
 
   return (
     <div className={"form-content"}>
@@ -282,7 +277,7 @@ export const Book = () => {
             <div>
               <WarningButton title={"Cancelar Reserva"} />
             </div>
-            <div onClick={onSubmit /*hideNotification*/}>
+            <div onClick={onSubmit }>
               <CommonButton title={"Enviar Reserva"} />
             </div>
           </div>
