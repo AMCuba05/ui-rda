@@ -1,0 +1,137 @@
+
+.search-admin-page{
+  min-height: 95vh;
+}
+
+.search-admin-bar-input-content {
+  display: flex;
+  flex: 1;
+  margin-right: 200px;
+}
+
+.search-admin-bar-input-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+  -webkit-box-shadow: 9px 4px 14px 2px rgba(0,0,0,0.22);
+  -moz-box-shadow: 9px 4px 14px 2px rgba(0,0,0,0.22);
+  box-shadow: 9px 4px 14px 2px rgba(0,0,0,0.22);
+}
+.search-admin-icon {
+  width: 2.3em;
+  height: 2.3em;
+}
+.search-admin-bar-input{
+  display: flex;
+  flex: 1;
+  margin-right: 10px;
+  font-family: 'uni-sans-book';
+  border-width: 0px;
+  font-size: 1.2em;
+  outline: none;
+}
+.search-admin-bar-button {
+  display: flex;
+  background-color: #007AFC;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  align-items: center;
+  -webkit-box-shadow: 9px 4px 14px 2px rgba(0,0,0,0.22);
+  -moz-box-shadow: 9px 4px 14px 2px rgba(0,0,0,0.22);
+  box-shadow: 9px 4px 14px 2px rgba(0,0,0,0.22);
+  cursor: pointer;
+}
+.search-admin-bar-button-title {
+  font-family: 'uni-sans-book';
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.arrow-admin-icon{
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 10px;
+}
+
+
+
+.search-admin-title{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+.search-admin-title-filter{
+  font-size: 18px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.search-admin-bar{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.table-search-admin-header {
+  background: #005BBD;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  flex: 1;
+  gap: 20px;
+}
+
+.table-search-admin-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #F8FBFB;
+  padding: 20px;
+  align-items: center;
+  border: 2px solid #E6E7E9;
+  flex: 1;
+  gap: 20px;
+}
+
+.search-admin-response{
+  font-family: 'uni-sans-book';
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
+
+
+.search-admin-class-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.align-flex5{
+  flex: 5;
+}
+
+.align-flex6{
+  flex: 6;
+}
+
+.align-flex{
+  flex: 1;
+}
+
+.align-flex7{
+  flex: 7;
+}
