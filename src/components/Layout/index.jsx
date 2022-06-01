@@ -181,7 +181,7 @@ export const Layout = ({ children }) => {
         </div>
       </div>
       <div className={"layout-content"}>
-        <div className={"layout-header-with-icon"}>
+
           {logged ? (
             <div className={"layout-header"}>
               {/*<Search />*/}
@@ -190,12 +190,15 @@ export const Layout = ({ children }) => {
               {user === "user" ? (
                 <div className={"layout-header-icon"} onClick={handleOpenNotifications}>
                 <img src={notification} alt={""} />
-              </div>
-                {openNotifications ? (
+                </div>
+
+              ) : (null)
+              }
+              {
+                openNotifications ? (
                    <NotificationsLayout/>
                 ): (null)
                 }
-              ) : null}
 
             </div>
           ) : (
@@ -224,7 +227,7 @@ export const Layout = ({ children }) => {
               </div>
             </div>
           )}
-        </div>
+
         {children}
       </div>
     </div>
