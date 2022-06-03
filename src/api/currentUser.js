@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+//const url = 'https://localhost:8000/';
+const url = 'https://reserva-aulas-stage.herokuapp.com/';
 export const currentUser = async (token) => {
-    const { data } = await axios.get(`https://reserva-aulas-stage.herokuapp.com/auth/meDocente`, {
+    const { data } = await axios.get(url + `auth/meDocente`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -10,7 +11,7 @@ export const currentUser = async (token) => {
 }
 
 export const currentUserAdmin = async (token) => {
-    const { data } = await axios.get(`https://reserva-aulas-stage.herokuapp.com/auth/meAdmin`, {
+    const { data } = await axios.get(url + `auth/meAdmin`, {
         headers: {
             Authorization: `Bearer ${token}`
         }

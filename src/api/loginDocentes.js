@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+//const url = 'https://localhost:8000/';
+const url = 'https://reserva-aulas-stage.herokuapp.com/';
 export const loginDocentes = async (codSis, contrasenia) => {
-    const { data } = await axios.post('https://reserva-aulas-stage.herokuapp.com/auth/loginDocente', {
+    const { data } = await axios.post(url+'auth/loginDocente', {
         cod_SIS: parseInt(codSis),
         contrasenia: contrasenia
     } )
@@ -11,7 +12,7 @@ export const loginDocentes = async (codSis, contrasenia) => {
 
 export const registroDocentes = async (codSis, nombre, celular, email ,contrasenia) => {
 
-    const { data } = await axios.post('https://reserva-aulas-stage.herokuapp.com/auth/activarDocente', {
+    const { data } = await axios.post(url+'auth/activarDocente', {
         cod_SIS: parseInt(codSis),
         nombre : nombre,
         celular : parseInt(celular),
@@ -23,16 +24,16 @@ export const registroDocentes = async (codSis, nombre, celular, email ,contrasen
 }
 
 export const getSolicitudesCreacion = async (codSis, contrasenia) => {
-    const { data } = await axios.get('https://reserva-aulas-stage.herokuapp.com/docente/cuentas')
+    const { data } = await axios.get(url+'docente/cuentas')
     return data
 }
 
 export const aceptarSolicitudesCreacion = async (id) => {
-    const { data } = await axios.put(`https://reserva-aulas-stage.herokuapp.com/docente/verificar/${id}`)
+    const { data } = await axios.put(url+`docente/verificar/${id}`)
     return data
 }
 
 export const rechazarSolicitudesCreacion = async (id) => {
-    const { data } = await axios.put(`https://reserva-aulas-stage.herokuapp.com/docente/verificar/${id}`)
+    const { data } = await axios.put(url+`docente/verificar/${id}`)
     return data
 }
