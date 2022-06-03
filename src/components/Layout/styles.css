@@ -27,11 +27,6 @@
     padding: 2em;
 }
 
-.layout-header-with-icon{
-  display: flex;
-  flex-direction: row;
-}
-
 .layout-header-icon{
   cursor: pointer;
 }
@@ -39,9 +34,9 @@
 .layout-header {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
     margin-bottom: 4vh;
     flex: 1;
+    align-self: flex-end;
 }
 
 .layout-header-home{
