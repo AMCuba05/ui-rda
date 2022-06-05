@@ -22,6 +22,7 @@ import "./styles.css";
 import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { BoldText } from "../../components/BoldText";
 import {obtenerDocentes} from "../../api/obtenerDocentes";
+import {WhiteButton} from "../../components/Buttons/WhiteButton";
 
 const periodos = [
   {
@@ -81,7 +82,7 @@ export const Book = () => {
   const navigate = useNavigate();
   const { data } = useSelector((state) => state.request);
   const { materias } = useSelector((state) => state.materias);
-  console.log(materias)
+  const [currentUser, setCurrentUser] = useState()
   const nombreMaterias = materias.flatMap((item) => (item.nombre_materia));
 
   const [open, setOpen] = useState(false);
@@ -101,6 +102,9 @@ export const Book = () => {
 
   useEffect(() => {
     sumCapacidad()
+    setCurrentUser(JSON.parse(sessionStorage.getItem('user')))
+    setTeachers([JSON.parse(sessionStorage.getItem('user')).nombre])
+
   }, [])
 
   useEffect(() => {
@@ -116,6 +120,8 @@ export const Book = () => {
       }
     }))
     setCodeGroup(codes)
+    console.log('grupos')
+    console.log(groups)
   }, [groups])
 
   useEffect(() => {
@@ -127,18 +133,22 @@ export const Book = () => {
           }
         }))
     setGroupName(groups)
+    console.log('docentes')
+    console.log(teachers)
   }, [teachers])
 
   useEffect( () => {
     const arrDocente = teachersList.flatMap((item) => (item.nombre_docente));
     setTeachersNameList(arrDocente)
+    console.log('nombres docentes')
+    console.log(arrDocente)
   },[teachersList])
 
   const findItem = async (item) => {
+    console.log(1)
     await materias.map( async (materia, index) => {
       if (materia.nombre_materia === item) {
         const response = await obtenerDocentes(materia.idMateria)
-        console.log(response)
         setTeachersList(response)
       }
     })
@@ -162,9 +172,10 @@ export const Book = () => {
       setOpenError(true)
     }
   };
-  const goToCreate = () => {
-    navigate("/crear", { replace: true });
-  };
+
+  const goToBooking = () => {
+    navigate("/reservar", { replace: true });
+  }
 
   const hideNotification = () => {
     let classNotification = document.getElementById("notifications-hide");
@@ -179,21 +190,29 @@ export const Book = () => {
   return (
     <div className={"form-content"}>
       <div className={"form-title-column"}>
-        <BackButton title={"Atras"} onClick={goToCreate} />
         <div className={"form-title"}>
-          <FormTitle name={"Reserva de Aula(s):"} />
-          {data.map((item) => (
-            <Classroom name={item.nombre} icon={garbageIcon} />
-          ))}
+          <FormTitle name={"Crear Reserva:"} />
+          <text className={'book-subtitle'}>Llenado de datos</text>
+          <CommonText>Para empezar con la reserva, llene los siguientes campos correspondientes
+            en caso de que participen 1 o mas docentes extra, puede añadirlos en la reserva.
+
+            Una vez llenado todos los datos presione botón siguiente, si necesita realizar una modificación podra volver
+            a modificarlos aprentendo el boton volver atrás.</CommonText>
         </div>
         <NotificationsSuccessful date={formatDate} />
         <NotificationsWarning />
       </div>
 
       <div className={"form-items"}>
+        <div className={"form-item-inputs-title"}>
+          <FormItemLabel label={"Docente"} />
+          <FormItemValue value={currentUser ? currentUser.nombre: 'Docente'} />
+        </div>
         <div className={"form-item-inputs"}>
           <div className={"form-item-inputs-left"}>
-            <div className={"form-item-inputs-left-flex"}>
+
+
+              <div className={"form-item-inputs-left-flex"}>
               <FormItemLabel label={"Materia"} />
               <FormItemValueAutoComplete
                 items={assignments}
@@ -201,6 +220,18 @@ export const Book = () => {
                 docentOptions={nombreMaterias}
               />
             </div>
+
+{
+              /*
+            <div className={"form-item-inputs-left-flex"}>
+              <FormItemLabel label={"Materia"} />
+              <FormItemValueDynamic
+                  options={nombreMaterias}
+
+              />
+            </div>
+            */
+            }
 
             {
               teachersList.length > 0 ?
@@ -216,34 +247,14 @@ export const Book = () => {
                   : null
             }
 
-            {
-              groupName.length > 0 ?
-                  <div className={"form-item-inputs-left-flex"}>
-                    <FormItemLabel label={"Grupo"} />
-                    <FormItemValueAutoComplete
-                        items={groups}
-                        setItems={setGroups}
-                        docentOptions={groupName}
-                    />
-                  </div>
-                  : null
-            }
-            {
-              groupName.length > 0 ?
-                  <div className={"form-item-inputs-left-flex"}>
-                    <FormItemLabel label={"Motivo"} />
-                    <FormItemValueDynamic
-                        options={["Examen", "Clase", "Laboratorio"]}
-                    />
-                  </div>
-                  : null
-            }
-
 
           </div>
-          <div className={"form-divider"} />
           <div className={"form-item-inputs-right"}>
-            <div className={"form-item-inputs-left-flex"}>
+            <div className={"form-item-inputs-left-flex-row"}>
+              <div className={"form-item-inputs-left-flex"}>
+                <FormItemLabel label={"Fecha"} />
+                <FormItemDatePicker />
+              </div>
               <div className={"form-item-inputs-left-flex"}>
                 <FormItemLabel label={"Horario"} />
                 <FormItemValueDynamic
@@ -251,42 +262,50 @@ export const Book = () => {
                   onChange={onChangePeriodo}
                 />
               </div>
-              <div className={"form-item-inputs-left-flex"}>
-                <FormItemLabel label={"Fecha"} />
-                <FormItemDatePicker />
-              </div>
             </div>
-
-
-              {data.map(item => <div className={"form-item-inputs-left-flex"}>
-                <div className={"form-item-inputs-left-flex"}>
-                  <FormItemLabel label={"Capacidad Aula 1:"} />
-                  <FormItemValue value={`${item.capacidad} estudiantes`} />
-                </div>
-                <div className={"form-item-inputs-left-flex"}>
-                  <FormItemLabel label={"Lugar"} />
-                  <FormItemValue value={item.ubicacion} />
-                </div>
-              </div>)}
-
-            <div className={"form-item-inputs-left-flex"}>
-              <FormItemLabel label={"Capacidad Total:"} />
-              <FormItemValue value={`${total} estudiantes`} />
+            <div className={"form-item-inputs-left-flex-row"}>
+              {
+                teachersList.length > 0 ?
+                    <div className={"form-item-inputs-left-flex"}>
+                      <FormItemLabel label={"Motivo"} />
+                      <FormItemValueDynamic
+                          options={["Examen", "Clase", "Laboratorio"]}
+                      />
+                    </div>
+                    : null
+              }
+              {
+                teachersList.length > 0 ?
+                    <div className={"form-item-inputs-left-flex"}>
+                      <FormItemLabel label={"Grupo"} />
+                      {
+                        /*
+                        <FormItemValueAutoComplete
+                          items={groups}
+                          setItems={setGroups}
+                          docentOptions={groupName}
+                      />
+                         */
+                      }
+                      <FormItemValueDynamic
+                          options={groupName}
+                      />
+                    </div>
+                    : null
+              }
             </div>
           </div>
         </div>
         <div className={"form-submit-container"}>
           <div className={"form-submit-description"}>
-            <div>
-            <BoldText>Acepto Recibir Sugerencias: </BoldText>
-            </div>
+
           </div>
           <div className={"form-submit-buttons"}>
             <div>
-              <WarningButton title={"Cancelar Reserva"} />
+              <WhiteButton title={"Volver atras"} />
             </div>
-            <div onClick={onSubmit /*hideNotification*/}>
-              <CommonButton title={"Enviar Reserva"} />
+            <div onClick={goToBooking /*hideNotification*/}>
+              <CommonButton title={"Siguiente"} />
             </div>
           </div>
         </div>

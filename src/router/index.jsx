@@ -12,10 +12,10 @@ import { RegistrationRequest } from "../pages/RegistrationRequest";
 export const AppRoutes = () => {
     return <Routes>
         <Route path="/" element={<Home />} />
-        <Route exact path="/reservar" element={<Book />} />
+        <Route exact path="/reservar" element={<CreateBooking />} />
         <Route exact path="/buscar" element={<SearchClassroom />} />
         <Route exact path="/admin/buscar" element={<SearchClassroom />} />
-        <Route exact path="/crear" element={<CreateBooking />} />
+        <Route exact path="/crear" element={<Book />} />
         <Route exact path="/admin/pendientes" element={<PendingRequests />} />
         <Route exact path="/admin/sugerir" element={<SuggestClassroom />} />
         <Route exact path="/admin/reserva" element={<Request />} />
