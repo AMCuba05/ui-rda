@@ -16,9 +16,9 @@ export const HistoryAdmin = () => {
       navigate('/admin/reserva', {replace: true});
     }
 
-    const getHistorial = async () => {
-      const data = await obtenerHistorial("4c189b09-2c0d-43ed-b9ce-2dba3262145c")
-      console.log(data[0].docentes);
+  const getHistorial = async () => {
+      const data = await obtenerHistorial(sessionStorage.user.id)
+      console.log(data);
       setHistorial(data)
     }
 
@@ -65,30 +65,33 @@ export const HistoryAdmin = () => {
         </div>
 
       </div>
-      {solicitudes.map((item, index)  => <div className={'table-item'}>
-            <div className={'table-N'} >
+      {solicitudes.map((item, index)  => <div className={"table-history-item"}>
+      <div className={"align-flex"}>
                 <BoldText >{index + 1}</BoldText>
             </div>
-            <div className={'table-Docente'}>
+            <div className={"align-flex6 history-docents"}>
                 {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombreDocente}</BoldText> : <CommonText >{name.nombreDocente}</CommonText>)}
             </div>
-            <div className={'table-Aula'}>
+            <div className={"history-class-list  align-flex7"}>
                 {item.aulas.map( (aula, index) => <ColoredTag>{aula.nombre}</ColoredTag>)}
             </div>
-            <div className={'table-Cantidad'}>
+            <div className={"align-flex5"}>
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
-            <div className={'table-Horario'}>
+            <div className={"align-flex5"}>
                 <ColoredTag>{item.periodos[0].hora_inicio.substring(0,5)} - {item.periodos[0].hora_fin.substring(0,5)}</ColoredTag>
             </div>
-            <div className={'table-Fecha'}>
+            <div className={"align-flex5"}>
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
-            <div className={'table-Motivo'}>
+            <div className={"align-flex5"}>
                 <ColoredTag>motivo</ColoredTag>
             </div>
-            <div className={"align-flex2"}>
-              <ColoredTag state={1}>{item.estado}</ColoredTag>
+            <div className={"align-flex5"}>
+              {(item.estado === 'ACEPTADO' ? <ColoredTag state={1}>{item.estado}</ColoredTag>:
+                item.estado === 'pendiente' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
+                <ColoredTag state={3}>{item.estado}</ColoredTag>)}
+            
             </div>
             </div>)}
       <div className={"table-history-item"}>
@@ -118,7 +121,6 @@ export const HistoryAdmin = () => {
         <div className={"align-flex5"}>
           <ColoredTag> Examen</ColoredTag>
         </div>
-
         <div className={"align-flex5"}>
           <ColoredTag state={3}> Rechazado</ColoredTag>
         </div>
