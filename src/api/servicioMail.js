@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-//const url = 'http://localhost:8000/';
-const url = 'https://reserva-aulas-stage.herokuapp.com/';
+import { url } from './url';
 export const enviarMailPersonalizado = async (email) => {
     console.log(email);
     const { data } = await axios.post(url + 'mail/notificacionPersonalizada',email)
