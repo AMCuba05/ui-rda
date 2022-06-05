@@ -1,7 +1,7 @@
 import faceRedIcon from '../../../assets/svg/face-red.svg'
 import "./styles.css"
 
-export const NotificationsWarning = () =>{
+export const NotificationsWarning = ({date}) =>{
   const dateNotification = new Date();
 
   return <div className={'notification-warning-container'}>
@@ -13,7 +13,7 @@ export const NotificationsWarning = () =>{
         <div className={'notification-warning-content-text'}>
           <span className={'notification-warning-title'}>Su reserva esta fue rechazada</span>
           <span className={'notification-warning-description'}> <b> Motivo: </b> Aula no disponible </span>
-          <span className={'notification-warning-date'}>14:00 10/5/2022 </span>
+          <span className={'notification-warning-date'}>{date} </span>
         </div>
     </div>
   </div>
