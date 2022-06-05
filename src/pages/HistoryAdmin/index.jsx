@@ -1,10 +1,31 @@
 import { TitlePage } from "../../components/TitlePage";
 import { BoldText } from "../../components/BoldText";
 import { ColoredTag } from "../../components/ColoredTag";
+import {CommonText} from "../../components/CommonText";
 import FilterIcon from "../../assets/svg/filter.svg";
 import "./styles.css";
+import { obtenerHistorial } from "../../api/historialDocente";
+import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 export const HistoryAdmin = () => {
+  const navigate = useNavigate()
+  const [solicitudes, setHistorial] = useState([])
+  const goToOptions = (item) => {
+      localStorage.setItem('pendingItem', JSON.stringify(item))
+      navigate('/admin/reserva', {replace: true});
+    }
+
+    const getHistorial = async () => {
+      const data = await obtenerHistorial("4c189b09-2c0d-43ed-b9ce-2dba3262145c")
+      console.log(data[0].docentes);
+      setHistorial(data)
+    }
+
+    useEffect(() => {
+        void getHistorial()
+    },[])
+
   return (
     <div className={"history-admin-page"}>
       <div className={"history-admin-title"}>
@@ -44,6 +65,32 @@ export const HistoryAdmin = () => {
         </div>
 
       </div>
+      {solicitudes.map((item, index)  => <div className={'table-item'}>
+            <div className={'table-N'} >
+                <BoldText >{index + 1}</BoldText>
+            </div>
+            <div className={'table-Docente'}>
+                {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombreDocente}</BoldText> : <CommonText >{name.nombreDocente}</CommonText>)}
+            </div>
+            <div className={'table-Aula'}>
+                {item.aulas.map( (aula, index) => <ColoredTag>{aula.nombre}</ColoredTag>)}
+            </div>
+            <div className={'table-Cantidad'}>
+                <ColoredTag>{item.numero_estimado} est.</ColoredTag>
+            </div>
+            <div className={'table-Horario'}>
+                <ColoredTag>{item.periodos[0].hora_inicio.substring(0,5)} - {item.periodos[0].hora_fin.substring(0,5)}</ColoredTag>
+            </div>
+            <div className={'table-Fecha'}>
+                <ColoredTag>{item.fecha}</ColoredTag>
+            </div>
+            <div className={'table-Motivo'}>
+                <ColoredTag>motivo</ColoredTag>
+            </div>
+            <div className={"align-flex2"}>
+              <ColoredTag state={1}>{item.estado}</ColoredTag>
+            </div>
+            </div>)}
       <div className={"table-history-item"}>
       <div className={"align-flex"}>
           <BoldText> 1</BoldText>

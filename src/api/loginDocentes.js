@@ -1,5 +1,5 @@
 import axios from 'axios';
-//const url = 'https://localhost:8000/';
+//const url = 'http://localhost:8000/';
 const url = 'https://reserva-aulas-stage.herokuapp.com/';
 export const loginDocentes = async (codSis, contrasenia) => {
     const { data } = await axios.post(url+'auth/loginDocente', {
