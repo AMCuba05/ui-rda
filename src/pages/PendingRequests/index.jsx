@@ -38,9 +38,12 @@ export const PendingRequests = () => {
         <div className={'pending-title'}>
             <div>
                 Lista de Solicitudes Pendientes
-                <div>
+                <div className={'toggle-texto'}>
+                Proximidad
                 < ToggleButton onChange={state => state === true ?getAulasAntiguas():getAulasProximas()}/>
-                </div> 
+               
+                Antiguedad
+                </div>
             </div>
             
         </div>

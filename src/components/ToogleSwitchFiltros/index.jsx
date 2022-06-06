@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './styles.css'
 
-const CheckedIcon = () => <>🌜</>;
-const UncheckedIcon = () => <>🌞</>;
+const CheckedIcon = () => <></>;
+const UncheckedIcon = () => <></>;
 
 const ToggleButton = ( props ) => {
 
