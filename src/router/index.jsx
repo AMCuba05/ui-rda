@@ -22,7 +22,7 @@ export const AppRoutes = () => {
         <Route exact path="/admin/sugerir" element={<SuggestClassroom />} />
         <Route exact path="/admin/reserva" element={<Request />} />
         <Route exact path="/admin/solicitudRegistro" element={<RegistrationRequest/>}/>
-        <Route exact path="/admin/history" element={<HistoryAdmin/>}/>
+        <Route exact path="/history" element={<HistoryAdmin/>}/>
     </Routes>
 
 }
