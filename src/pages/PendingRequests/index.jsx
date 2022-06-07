@@ -2,12 +2,13 @@ import './styles.css'
 import {CommonText} from "../../components/CommonText";
 import {BoldText} from "../../components/BoldText";
 import {ColoredTag} from "../../components/ColoredTag";
+import ToggleButton from "../../components/ToogleSwitchFiltros"
 import {CommonButton} from "../../components/Buttons/Common";
 import {WarningButton} from "../../components/Buttons/Warning";
 import {BlackButton} from "../../components/Buttons/BlackButton";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {obtenerPendientes} from "../../api/obtenerPendientes";
+import {obtenerPendientes, obtenerAntiguas, obtenerProximas} from "../../api/obtenerPendientes";
 
 export const PendingRequests = () => {
   const navigate = useNavigate()
@@ -22,8 +23,16 @@ export const PendingRequests = () => {
       console.log(data);
       setAulas(data)
     }
-
+    const getAulasProximas = async () => {
+        const data = await obtenerProximas()
+        setAulas(data)
+    }
+    const getAulasAntiguas = async () => {
+        const data = await obtenerAntiguas()
+        setAulas(data)
+    }
     useEffect(() => {
+        void getAulasProximas()
         void getAulas()
     },[])
 
@@ -31,7 +40,14 @@ export const PendingRequests = () => {
         <div className={'pending-title'}>
             <div>
                 Lista de Solicitudes Pendientes
+                <div className={'toggle-texto'}>
+                Proximidad
+                < ToggleButton onChange={state => state === true ?getAulasAntiguas():getAulasProximas()}/>
+               
+                Antiguedad
+                </div>
             </div>
+            
         </div>
         <div className={'table-header'}>
             <div className={'table-N'} >
