@@ -32,7 +32,7 @@ export const CreateBooking = () => {
 
     const getAulas = async () => {
         const data = await obtenerAulasDisponibles(today.toISOString().substring(0,10))
-        setAulas(data.slice(0,10))
+        setAulas(data.slice(0,15))
     }
 
     const removerReserva = (item) => {
