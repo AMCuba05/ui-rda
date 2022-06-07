@@ -16,12 +16,11 @@ import { BackButton } from "../../components/Buttons/BackButton";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { crearSolicitud } from "../../api/crearSolicitud";
-import { NotificationsSuccessful } from "../../components/Notifications/Successful";
-import { NotificationsWarning } from "../../components/Notifications/warning";
 import "./styles.css";
 import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { BoldText } from "../../components/BoldText";
 import {obtenerDocentes} from "../../api/obtenerDocentes";
+
 
 const periodos = [
   {
@@ -81,13 +80,18 @@ export const Book = () => {
   const navigate = useNavigate();
   const { data } = useSelector((state) => state.request);
   const { materias } = useSelector((state) => state.materias);
-  console.log(materias)
   const nombreMaterias = materias.flatMap((item) => (item.nombre_materia));
 
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
   const handleOpen = () => setOpen(!open);
   const handleOpenError = () => setOpenError(!openError);
+
+
+  const [openModalS, setOpenModalS ] = useState(false);
+  const handleOpenModalS = () => {
+    setOpenModalS(!openModalS);
+  }
 
   const sumCapacidad = () => {
     let count = 0
@@ -170,6 +174,8 @@ export const Book = () => {
 
   return (
     <div className={"form-content"}>
+      <ModalSuccess openModel={openModalS} handleOpen={handleOpenModalS} onSubmit={onSubmit} dataClassrooms={data} />
+      <ModalWarning/>
       <div className={"form-title-column"}>
         <BackButton title={"Atras"} onClick={goToCreate} />
         <div className={"form-title"}>
@@ -178,8 +184,6 @@ export const Book = () => {
             <Classroom name={item.nombre} icon={garbageIcon} />
           ))}
         </div>
-        <NotificationsSuccessful date={formatDate} />
-        <NotificationsWarning />
       </div>
 
       <div className={"form-items"}>
@@ -241,6 +245,7 @@ export const Book = () => {
                 <FormItemValueDynamic
                   options={periodos}
                   onChange={onChangePeriodo}
+                  addOption={true}
                 />
               </div>
               <div className={"form-item-inputs-left-flex"}>
@@ -277,7 +282,7 @@ export const Book = () => {
             <div>
               <WarningButton title={"Cancelar Reserva"} />
             </div>
-            <div onClick={onSubmit }>
+            <div onClick={handleOpenModalS }>
               <CommonButton title={"Enviar Reserva"} />
             </div>
           </div>
