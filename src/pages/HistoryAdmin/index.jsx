@@ -78,23 +78,23 @@ export const HistoryAdmin = () => {
             <div className={"align-flex5"}>
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
-            <div className={"align-flex5"}>
-            {item.periodos.map((horario,index) => 
+            <div className={"history-admin-hours"}>
+            {item.periodos.map((horario,index) =>
                 <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
-          
-           
+
+
             </div>
             <div className={"align-flex5"}>
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={"align-flex5"}>
-                <ColoredTag>{item.justificaciones[0].justificacion}</ColoredTag>
+                <ColoredTag></ColoredTag>
             </div>
             <div className={"align-flex5"}>
               {(item.estado === 'ACEPTADO' ? <ColoredTag state={1}>{item.estado}</ColoredTag>:
-                item.estado === 'pendiente' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
+                item.estado === 'PENDIENTE' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
                 <ColoredTag state={3}>{item.estado}</ColoredTag>)}
-            
+
             </div>
             </div>)}
       <div className={"table-history-item"}>

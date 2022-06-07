@@ -1,20 +1,19 @@
-
-.history-admin-page{
+.history-admin-page {
   min-height: 95vh;
 }
 
-.history-admin-title{
+.history-admin-title {
   display: flex;
   justify-content: space-between;
   margin-right: 20px;
 }
-.history-admin-title-filter{
+.history-admin-title-filter {
   font-size: 18px;
   cursor: pointer;
 }
 
 .table-history-header {
-  background: #005BBD;
+  background: #005bbd;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,16 +28,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #F8FBFB;
+  background-color: #f8fbfb;
   padding: 20px;
   align-items: center;
-  border: 2px solid #E6E7E9;
+  border: 2px solid #e6e7e9;
   flex: 1;
   gap: 20px;
 }
 
-.history-response{
-  font-family: 'uni-sans-book';
+.history-response {
+  font-family: "uni-sans-book";
   font-size: 18px;
   display: flex;
   flex-direction: row;
@@ -46,28 +45,35 @@
   justify-content: center;
 }
 
-.history-docents{
+.history-docents {
   display: flex;
   flex-direction: column;
   font-size: 15px;
 }
 
-.history-class-list{
+.history-class-list {
   display: flex;
   flex-wrap: wrap;
 }
-.align-flex5{
+.align-flex5 {
   flex: 5;
 }
 
-.align-flex6{
+.align-flex6 {
   flex: 6;
 }
 
-.align-flex{
+.align-flex {
   flex: 1;
 }
 
-.align-flex7{
+.align-flex7 {
   flex: 7;
+}
+
+.history-admin-hours {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
