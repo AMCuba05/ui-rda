@@ -9,3 +9,7 @@ export const obtenerAulasDisponibles = async (date) => {
     })
     return data
 }
+export const obtenerTodasAulas = async ()=>{
+    const { data } = await axios.get(url + 'aula' , {})
+    return data
+}
