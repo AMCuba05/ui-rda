@@ -226,7 +226,7 @@ export const Book = () => {
                     <div className={"form-item-inputs-left-flex"}>
                       <FormItemLabel label={"Motivo"} />
                       <FormItemValueDynamic
-                          options={["Motivo", "Examen", "Clase", "Laboratorio"]}
+                          options={["Motivo", "Examen", "Clase", "Laboratorio", "Taller", "Defensa de Grado"]}
                           onChange={e => setReason(e.target.value)}
                       />
                     </div>

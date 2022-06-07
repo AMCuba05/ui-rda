@@ -9,9 +9,6 @@ import {useEffect, useState} from "react";
 import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {setRequest} from "../../redux/reducers/crearSolicitud";
-import {setMaterias} from "../../redux/reducers/materias";
-import {docenteMaterias} from "../../api/docenteMaterias";
 import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
 import {FormTitle} from "../../components/FormTitle";
 import {CommonText} from "../../components/CommonText";
@@ -20,11 +17,13 @@ import {CommonInput} from "../../components/Inputs/Common";
 import {crearSolicitud} from "../../api/crearSolicitud";
 import { ModalSuccess } from '../../components/Modals/ModalSuccess';
 import { ModalWarning } from '../../components/Modals/ModalWarning';
+import {estadoAula} from "../../api/estadoAula";
 
 export const CreateBooking = () => {
 
     const [aulas, setAulas] = useState()
     const [reserva, setReserva] = useState([])
+    const [conflicto, setConflicto] = useState([])
     const [cantidad, setCantidad] = useState(0)
     const [estimado, setEstimado] = useState(0)
     const today = new Date()
@@ -100,10 +99,34 @@ export const CreateBooking = () => {
       setOpenModalW(!openModalW);
     }
 
+    const openModal = async () => {
+        const data = JSON.parse(sessionStorage.getItem('solicitud'))
+        reserva.map( async item => {
+            const params = {
+                fecha: data.fecha,
+                periodo: data.periodosId[0],
+                nombreAula: item.nombre,
+                ubicacionAula: item.ubicacion
+            }
+            const libre = await estadoAula(params)
+            console.log(item.nombre, libre)
+            if (!libre) {
+                let newConflicto = [...conflicto]
+                newConflicto.push(reserva.nombre)
+                setConflicto(newConflicto)
+            }
+        })
+        if (conflicto.length > 0){
+            handleOpenModalW()
+        } else {
+            handleOpenModalS()
+        }
+    }
+
     return<div>
         <div className={'create-booking-title'}>
             <ModalSuccess openModel={openModalS} handleOpen={handleOpenModalS} onSubmit={onSubmit} dataClassrooms={reserva}/>
-            <ModalWarning openModel={openModalW} handleOpen={handleOpenModalW} dataClassrooms={reserva} />
+            <ModalWarning openModel={openModalW} handleOpen={handleOpenModalW} onSubmit={onSubmit} dataClassrooms={reserva} />
             <BackButton title={"Atras"} onClick={goToCreate} />
             <div className={"form-title-column"}>
                 <FormTitle name={"Crear Reserva:"} />
@@ -165,7 +188,7 @@ export const CreateBooking = () => {
                         <ColoredTag>{item.ubicacion}</ColoredTag>
                     </div>
                     <div className={'table-suggest-Estado'}>
-                        <ColoredTag state={'free'}>Disponible</ColoredTag>
+                        <ColoredTag state={'1'} >Disponible</ColoredTag>
                     </div>
                     <div className={'table-suggest-vacio'}>
                         <AddButton onClick={() => agregarReserva(item)} title={'Añadir'}/>
@@ -184,7 +207,7 @@ export const CreateBooking = () => {
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Confirmar Reserva'} onClick={handleOpenModalS} />
+                <CommonButton title={'Confirmar Reserva'} onClick={openModal} />
             </div>
         </div>
         <div className={'table-suggest-footer'}>
