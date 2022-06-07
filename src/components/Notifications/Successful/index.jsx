@@ -12,7 +12,7 @@ export const NotificationsSuccessful = ({date}) =>{
         <div className={'notification-content-text'}>
           <span className={'notification-title'}>Su reserva fue aceptada</span>
           <span className={'notification-description'}> <b>Motivo:</b> aula aceptada por el administrador</span>
-          <span className={'notification-date'}>14:00 10/5/2022 </span>
+          <span className={'notification-date'}>{date} </span>
         </div>
     </div>
   </div>

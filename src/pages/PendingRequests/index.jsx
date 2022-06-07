@@ -20,6 +20,7 @@ export const PendingRequests = () => {
 
     const getAulas = async () => {
       const data = await obtenerPendientes()
+      console.log(data);
       setAulas(data)
     }
     const getAulasProximas = async () => {
@@ -32,6 +33,7 @@ export const PendingRequests = () => {
     }
     useEffect(() => {
         void getAulasProximas()
+        void getAulas()
     },[])
 
     return<div className={'pending-page'}>
@@ -87,13 +89,14 @@ export const PendingRequests = () => {
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
             <div className={'table-Horario'}>
-                <ColoredTag>{item.horarios[0].hora_inicio.substring(0,5)} - {item.horarios[0].hora_fin.substring(0,5)}</ColoredTag>
+            {item.horarios.map((horario,index) => 
+                <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
             </div>
             <div className={'table-Fecha'}>
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={'table-Motivo'}>
-                <ColoredTag>motivo</ColoredTag>
+                <ColoredTag>{item.justificaciones[0].justificacion}</ColoredTag>
             </div>
             <div className={'table-Respuesta'}>
                 <BlackButton title={'Opciones'} onClick={() => goToOptions(item)}/>

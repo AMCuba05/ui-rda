@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+import { url } from './url';
 export const obtenerPendientes = async (date) => {
-    const { data } = await axios.get('https://reserva-aulas-stage.herokuapp.com/solicitud-reserva/pendientes' , )
+    const { data } = await axios.get(url + 'solicitud-reserva/pendientes' , )
     return data
 }
 
