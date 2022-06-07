@@ -16,14 +16,13 @@ import { BackButton } from "../../components/Buttons/BackButton";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { crearSolicitud } from "../../api/crearSolicitud";
-import { NotificationsSuccessful } from "../../components/Notifications/Successful";
-import { NotificationsWarning } from "../../components/Notifications/warning";
 import "./styles.css";
 import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { BoldText } from "../../components/BoldText";
-import {obtenerDocentes} from "../../api/obtenerDocentes";
+
 import {WhiteButton} from "../../components/Buttons/WhiteButton";
 import {obtenerPeriodos} from "../../api/obtenerPeriodos";
+
 
 export const Book = () => {
   const [teachers, setTeachers] = useState([]);
@@ -42,12 +41,23 @@ export const Book = () => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('user')))
   const nombreMaterias = ['Selecciona una Materia' , ...materias.flatMap((item) => (item.nombre_materia))]
   const [periodos, setPeriodos] = useState([])
+  const nombreMaterias = materias.flatMap((item) => (item.nombre_materia));
 
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
   const handleOpen = () => setOpen(!open);
   const handleOpenError = () => setOpenError(!openError);
 
+  const [openModalS, setOpenModalS ] = useState(false);
+  const handleOpenModalS = () => {
+    setOpenModalS(!openModalS);
+  }
+
+  const sumCapacidad = () => {
+    let count = 0
+    data.forEach(item => count += item.capacidad)
+    setTotal(count)
+  }
   const onChangePeriodo = e => {
     setPeriodo(e.target.value)
   }
@@ -157,6 +167,8 @@ export const Book = () => {
 
   return (
     <div className={"form-content"}>
+      <ModalSuccess openModel={openModalS} handleOpen={handleOpenModalS} onSubmit={onSubmit} dataClassrooms={data} />
+      <ModalWarning/>
       <div className={"form-title-column"}>
         <div className={"form-title"}>
           <FormTitle name={"Crear Reserva:"} />
@@ -167,8 +179,6 @@ export const Book = () => {
             Una vez llenado todos los datos presione botón siguiente, si necesita realizar una modificación podra volver
             a modificarlos aprentendo el boton volver atrás.</CommonText>
         </div>
-        <NotificationsSuccessful date={formatDate} />
-        <NotificationsWarning />
       </div>
       <div className={"form-items"}>
 
@@ -215,6 +225,7 @@ export const Book = () => {
                 <FormItemValueDynamic
                   options={periodos}
                   onChange={onChangePeriodo}
+                  addOption={true}
                 />
               </div>
             </div>

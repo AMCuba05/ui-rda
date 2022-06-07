@@ -194,6 +194,7 @@ export const RegisterModal = ({ onAction }) => {
                   input={name}
                   inputChange={handleNameChange}
                   label={"Nombre Completo"}
+
               />
             </div>
             <div>
@@ -201,6 +202,7 @@ export const RegisterModal = ({ onAction }) => {
                 input={email}
                 inputChange={handleEmailChange}
                 label={"Correo"}
+                type={"email"}
               />
               {showEmailError ? (
                 <WarningText
@@ -209,7 +211,7 @@ export const RegisterModal = ({ onAction }) => {
               ) : null}
             </div>
             <div>
-            <CommonInput input={password} inputChange={handlePasswordChange} label={'Contraseña'}/>
+            <CommonInput input={password} inputChange={handlePasswordChange} label={'Contraseña'} type={"password"}/>
             {showPasswordError ?
                <WarningText text={'La contraseña es invalida '}/> : null}
 
@@ -217,20 +219,20 @@ export const RegisterModal = ({ onAction }) => {
           </div>
           <div className={'register-modal-content-right'}>
             <div>
-            <CommonInput input={codSis} inputChange={handleCodSisChange}  label={'Codigo Sis.'}/>
+            <CommonInput input={codSis} inputChange={handleCodSisChange}  label={'Codigo Sis.'} type={'number'}/>
             {showCodSisError ?
                 <WarningText text={'Codigo Sis invalido '}/> : null}
 
             </div>
             <br />
             <div>
-            <CommonInput input={cellphone} inputChange={handleCellphoneChange}  label={'Celular'}/>
+            <CommonInput input={cellphone} inputChange={handleCellphoneChange}  label={'Celular'} type={'number'}/>
             {showCellphoneError?
               <WarningText text={'Numero de celular invalido '}/> : null}
 
             </div>
             <div>
-            <CommonInput input={repeatPassword} inputChange={handleRepeatPasswordChange} label={'Repetir Contraseña'}/>
+            <CommonInput input={repeatPassword} inputChange={handleRepeatPasswordChange} label={'Repetir Contraseña'} type={"password"}/>
             {showPasswordRepeatError ?
                <WarningText text={'La contraseña no es igual '}/> : null}
 
