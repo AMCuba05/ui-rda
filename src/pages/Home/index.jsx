@@ -117,7 +117,7 @@ export const Home = () => {
             </div>
             <div className={'table-suggest-footer-items'}>
                 <CommonButton title={'Iniciar reserva'} onClick={()=> {
-                    navigate('/crear', {replace: true})
+                    alert('Necesita una cuenta para realizar esta accion')//navigate('/crear', {replace: true})
                 }} />
             </div>
         </div>

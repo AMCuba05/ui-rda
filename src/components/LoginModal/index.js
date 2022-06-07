@@ -9,7 +9,7 @@ import {loginDocentes} from "../../api/loginDocentes";
 import {currentUser, currentUserAdmin} from "../../api/currentUser";
 import {loginAdmin} from "../../api/loginAdmin";
 
-export const LoginModal = ({onAction}) => {
+export const LoginModal = ({onAction, registermodal}) => {
 
     const onLogin = async () => {
         if(verifications()){
@@ -40,12 +40,14 @@ export const LoginModal = ({onAction}) => {
         }
     }
 
-    const goToUser = () => {
-      if(verifications()){
+    const goToRegister = () => {
+      /*if(verifications()){
           sessionStorage.setItem('role', 'admin')
           sessionStorage.setItem('logged', '1')
         onAction()
-      }
+      }*/
+        registermodal();
+        close();
     }
 
     const close = () => {
@@ -136,7 +138,7 @@ export const LoginModal = ({onAction}) => {
             {showPassword ?
                <WarningText text={'La contraseña es invalida '}/> : null}
             <CommonButton title={'Iniciar sesión'} onClick={onLogin} />
-            <WhiteButton title={'Registrarse'} onClick={goToUser} />
+            <WhiteButton title={'Registrarse'} onClick={goToRegister} />
             <a onClick={close}>Volver atras</a>
         </div>
     </div>
