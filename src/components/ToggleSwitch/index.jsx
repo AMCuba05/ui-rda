@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cambiarEstadoAula } from "../../api/cambioEstadoAula";
 import "./styles.css"
 
 export const ToggleSwitch = () => {
@@ -6,7 +7,7 @@ export const ToggleSwitch = () => {
   const handleToogle = () => {
     setToogle(!toogle)
   }
-  return(<div onClick={handleToogle}>
+  return(<div onClick={() => {cambiarEstadoAula(id) }}>
     <span class="switch">
       <input type="checkbox" checked={toogle} />
       <span class="slider round"></span>
