@@ -1,0 +1,8 @@
+.title-page{
+  font-family: 'uni-sans-book';
+  font-size: 32px;
+  font-weight: bold;
+  margin-left: 20px;
+  flex-direction: column;
+  margin-bottom: 20px;
+}

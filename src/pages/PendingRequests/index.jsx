@@ -2,12 +2,13 @@ import './styles.css'
 import {CommonText} from "../../components/CommonText";
 import {BoldText} from "../../components/BoldText";
 import {ColoredTag} from "../../components/ColoredTag";
+import ToggleButton from "../../components/ToogleSwitchFiltros"
 import {CommonButton} from "../../components/Buttons/Common";
 import {WarningButton} from "../../components/Buttons/Warning";
 import {BlackButton} from "../../components/Buttons/BlackButton";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {obtenerPendientes} from "../../api/obtenerPendientes";
+import {obtenerPendientes, obtenerAntiguas, obtenerProximas} from "../../api/obtenerPendientes";
 
 export const PendingRequests = () => {
   const navigate = useNavigate()
@@ -19,18 +20,34 @@ export const PendingRequests = () => {
 
     const getAulas = async () => {
       const data = await obtenerPendientes()
+      console.log(data);
       setAulas(data)
     }
-
+    const getAulasProximas = async () => {
+        const data = await obtenerProximas()
+        setAulas(data)
+    }
+    const getAulasAntiguas = async () => {
+        const data = await obtenerAntiguas()
+        setAulas(data)
+    }
     useEffect(() => {
+        void getAulasProximas()
         void getAulas()
-    })
+    },[])
 
     return<div className={'pending-page'}>
         <div className={'pending-title'}>
             <div>
                 Lista de Solicitudes Pendientes
+                <div className={'toggle-texto'}>
+                Proximidad
+                < ToggleButton onChange={state => state === true ?getAulasAntiguas():getAulasProximas()}/>
+               
+                Antiguedad
+                </div>
             </div>
+            
         </div>
         <div className={'table-header'}>
             <div className={'table-N'} >
@@ -72,13 +89,14 @@ export const PendingRequests = () => {
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
             <div className={'table-Horario'}>
-                <ColoredTag>{item.horarios[0].hora_inicio.substring(0,5)} - {item.horarios[0].hora_fin.substring(0,5)}</ColoredTag>
+            {item.horarios.map((horario,index) => 
+                <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
             </div>
             <div className={'table-Fecha'}>
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={'table-Motivo'}>
-                <ColoredTag>motivo</ColoredTag>
+                <ColoredTag>{item.justificaciones[0].justificacion}</ColoredTag>
             </div>
             <div className={'table-Respuesta'}>
                 <BlackButton title={'Opciones'} onClick={() => goToOptions(item)}/>

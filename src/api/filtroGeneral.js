@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { url } from './url';
 
 export const filtroGeneral = async (params) => {
     let formatoPeriodo
@@ -9,7 +10,7 @@ export const filtroGeneral = async (params) => {
         formatoPeriodo = `${periodo}:00`
     }
     console.log(params, formatoPeriodo)
-    const { data } = await axios.post('https://reserva-aulas-stage.herokuapp.com/aula/general', {
+    const { data } = await axios.post(url + 'aula/general', {
         fecha: params.fecha,
         periodos: [formatoPeriodo],
         capacidadMin: parseInt(params.capacidadMin),

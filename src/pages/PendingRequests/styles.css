@@ -59,7 +59,7 @@
 }
 
 .table-Horario {
-    display: flex;
+    
     flex: 2.5;
 }
 
@@ -76,4 +76,10 @@
 .table-Respuesta {
     display: flex;
     flex: 2;
+}
+
+.toggle-texto{
+    font-size: 20px;
+    margin: 45px 0px 0px 0px;
+    float: right;   
 }

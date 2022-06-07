@@ -1,0 +1,73 @@
+
+.history-admin-page{
+  min-height: 95vh;
+}
+
+.history-admin-title{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+.history-admin-title-filter{
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.table-history-header {
+  background: #005BBD;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  flex: 1;
+  gap: 20px;
+}
+
+.table-history-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #F8FBFB;
+  padding: 20px;
+  align-items: center;
+  border: 2px solid #E6E7E9;
+  flex: 1;
+  gap: 20px;
+}
+
+.history-response{
+  font-family: 'uni-sans-book';
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+}
+
+.history-docents{
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+
+.history-class-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.align-flex5{
+  flex: 5;
+}
+
+.align-flex6{
+  flex: 6;
+}
+
+.align-flex{
+  flex: 1;
+}
+
+.align-flex7{
+  flex: 7;
+}
