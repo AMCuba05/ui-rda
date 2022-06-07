@@ -7,11 +7,11 @@ export const obtenerPendientes = async (date) => {
 }
 
 export const obtenerProximas = async (date) => {
-    const { data } = await axios.get('http://reserva-aulas-stage.herokuapp.com/solicitud-reserva/proximos' , )
+    const { data } = await axios.get(url + 'solicitud-reserva/proximos' , )
     return data
 }
 
 export const obtenerAntiguas = async (date) => {
-    const { data } = await axios.get('http://reserva-aulas-stage.herokuapp.com/solicitud-reserva/antiguedad' , )
+    const { data } = await axios.get(url + 'solicitud-reserva/antiguedad' , )
     return data
 }

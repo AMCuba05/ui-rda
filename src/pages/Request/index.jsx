@@ -5,7 +5,7 @@ import { FormItemValue } from "../../components/FormItemValue";
 import { CommonButton } from "../../components/Buttons/Common";
 import { WarningButton } from "../../components/Buttons/Warning";
 import "./styles.css";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { ColoredTag } from "../../components/ColoredTag";
 import garbageIcon from "../../assets/svg/redGarbageIcom.svg";
 import {BackButton} from "../../components/Buttons/BackButton";
@@ -15,13 +15,24 @@ import {enviarMailRechazo} from "../../api/servicioMail";
 import { ModalSuccess } from "../../components/Modals/ModalSuccess";
 import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { ModalReject } from "../../components/Modals/ModalReject";
+import {obtenerMateriaDatosReserva} from "../../api/docenteMaterias";
 
 export const Request = () => {
   const data = JSON.parse(localStorage.getItem('pendingItem'))
-  console.log(data)
+  const [materia, setMateria] = useState('')
+  const [conflictos, setConflictos] = useState([])
+
+  useEffect(()=> {
+    void getMateria()
+    searchConflicts()
+  },[])
+
+  const getMateria = async () => {
+    const res = await obtenerMateriaDatosReserva(data.solicitud.datos_reserva_id)
+    setMateria(res.nombre)
+  }
   const onReject = async () => {
     try {
-      console.log(data.solicitud.id)
       await rechazarReserva(data.solicitud.id)
       alert('Se rechazó la solicitud de reserva')
       navigate('/admin/pendientes', {replace: true})
@@ -31,12 +42,21 @@ export const Request = () => {
     }
   }
 
+  const searchConflicts = () => {
+    let newConflictos = []
+    data.conflictos.map(item => {
+      if(item.estado != 'libre'){
+        newConflictos.push(item.nombreAula)
+      }
+    })
+    setConflictos(newConflictos)
+  }
+
   const onAccept = async () => {
     try {
-      console.log(data.solicitud.id)
       await aceptarReserva(data.solicitud.id)
       alert('Se acepto la solicitud de reserva')
-      //handleOpenSucces();
+
       //await enviarMailRechazo(data.docentes[0].email)
       navigate('/admin/pendientes', {replace: true})
 
@@ -59,9 +79,9 @@ export const Request = () => {
   return (
     <div className={"request-content"}>
       {/**TODO: implementr backend  */}
-      <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces}/>
-      <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning}/>
-      <ModalReject openModel={openReject} handleOpen={handleOpenReject}/>
+      <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces} onSubmit={onAccept} dataClassrooms={data.aulas}/>
+      <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning} />
+      <ModalReject openModel={openReject} handleOpen={handleOpenReject} onSubmit={onReject}/>
       <BackButton title={'Atras'} onClick={() => navigate('/admin/pendientes', {replace: true})} />
       <div className={"request-title"}>
         <FormTitle name={"Reserva de Aula(s):"} />
@@ -75,7 +95,7 @@ export const Request = () => {
           <div className={"request-item-inputs-left"}>
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Fecha de Solicitud"} />
-              <FormItemValue value={data.solicitud.fecha_creacion} />
+              <FormItemValue value={data.solicitud.fecha_creacion.substring(0,10)} />
             </div>
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Docente"} />
@@ -87,26 +107,24 @@ export const Request = () => {
 
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Lugar"} />
-              <FormItemValue value={"Edificio Nuevo"} />
+              {data.aulas.map(item => <FormItemValue value={item.ubicacion} /> )}
             </div>
           </div>
           <div className={"request-divider"} />
           <div className={"request-item-inputs-right"}>
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Materia"} />
-              <FormItemValue value={"Calculo 1"} />
+              <FormItemValue value={materia} />
             </div>
 
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Grupo (s)"} />
-              <FormItemValue value={"1"} />
-              <FormItemValue value={"3"} />
-              <FormItemValue value={"4"} />
+              {data.grupos.map(item => <FormItemValue value={item.nombre} /> )}
             </div>
             <div className={"request-item-inputs-left-flex"}>
               <div className={"request-item-inputs-left-flex"}>
                 <FormItemLabel label={"Motivo"} />
-                <FormItemValue value={"examen"} />
+                <FormItemValue value={data.justificaciones[0].justificacion} />
               </div>
               <div className={"request-item-inputs-left-flex"}>
                 <FormItemLabel label={"Capacidad"} />
@@ -115,26 +133,26 @@ export const Request = () => {
             </div>
             <div className={"request-item-inputs-left-flex"}>
               <div className={"request-item-inputs-left-flex"}>
-                <FormItemLabel label={"Horario"} />
-                <FormItemValue value={"14:15 - 15:45"} />
-              </div>
-              <div className={"request-item-inputs-left-flex"}>
                 <FormItemLabel label={"Fecha"} />
-                <FormItemValue value={"20/05/2022"} />
+                <FormItemValue value={data.fecha} />
               </div>
+            </div>
+            <div className={"request-item-inputs-left-flex"}>
+              <FormItemLabel label={"Horario(s)"} />
+              {data.horarios.map(item =>  <FormItemValue value={`${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`} /> )}
             </div>
           </div>
         </div>
+        {conflictos.length > 0 ?
+            <div className={"request-item-inputs-left-flex"}>
 
-        <div className={"request-item-inputs-left-flex"}>
-          <div>
-          <FormItemLabel label={"Conflicto de aulas:"} />
-          </div>
-
-          <ColoredTag state={"reserved"}>651</ColoredTag>
-          <ColoredTag state={"reserved"}>625C</ColoredTag>
-          <ColoredTag state={"reserved"}>606</ColoredTag>
-        </div>
+              <div>
+                <FormItemLabel label={"Conflicto de aulas:"} />
+              </div>
+              {conflictos.map(item =>  <ColoredTag state={"3"}>{item}</ColoredTag> )}
+            </div>
+            : null
+        }
 
         <div className="request-suggestions">
           {
@@ -200,14 +218,17 @@ export const Request = () => {
                 <div className="items-sugestion-flex-label">
                 <FormItemLabel label={"Aulas seleccionadas:"} />
                 </div>
-                <div>
-                <Classroom name={"651"} icon={garbageIcon} />
+                <div className="request-sugestions-button-flex">
+                  {
+                  data.aulas.map( aula => <Classroom name={aula.nombre} /> )
+                  }
+
                 </div>
               </div>
               <div className="request-sugestions-button-flex">
-                <WarningButton title={"Rechazar Reserva"} onClick={onReject} />
+                <WarningButton title={"Rechazar Reserva"} onClick={handleOpenReject} />
 
-                <CommonButton title={"Confirmar Reserva"} onClick={onAccept} />
+                <CommonButton title={"Confirmar Reserva"} onClick={handleOpenSucces} />
               </div>
             </div>
           </div>

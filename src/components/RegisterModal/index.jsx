@@ -225,6 +225,7 @@ export const RegisterModal = ({ onAction }) => {
         </div>
         <div className={'register-modal-content-flex'}>
           <div className={'register-modal-content-left'}>
+
             <div  onClick={teacherShow}>
               <CommonText>Nombre: </CommonText>
               <FormItemValueAutoCompleteOne
@@ -244,6 +245,8 @@ export const RegisterModal = ({ onAction }) => {
                 inputChange={handleEmailChange}
                 label={"Correo"}
                 type={'email'}
+
+
               />
               {showEmailError ? (
                 <WarningText
@@ -252,7 +255,8 @@ export const RegisterModal = ({ onAction }) => {
               ) : null}
             </div>
             <div>
-            <CommonInput input={password} inputChange={handlePasswordChange} label={'Contraseña'} type={'password'}/>
+            <CommonInput input={password} inputChange={handlePasswordChange} label={'Contraseña'} type={"password"}/>
+
             {showPasswordError ?
                <WarningText text={'La contraseña es invalida '}/> : null}
 
@@ -273,7 +277,8 @@ export const RegisterModal = ({ onAction }) => {
 
             </div>
             <div>
-            <CommonInput input={repeatPassword} inputChange={handleRepeatPasswordChange} label={'Repetir Contraseña'} type={'password'}/>
+            <CommonInput input={repeatPassword} inputChange={handleRepeatPasswordChange} label={'Repetir Contraseña'} type={"password"}/>
+
             {showPasswordRepeatError ?
                <WarningText text={'La contraseña no es igual '}/> : null}
 

@@ -18,7 +18,6 @@ export const RegistrationRequest = () => {
 
     const getRequests = async () => {
         const data = await getSolicitudesCreacion()
-        console.log(data)
         setDocentes(data)
     }
 

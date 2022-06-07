@@ -6,7 +6,6 @@ export const loginDocentes = async (codSis, contrasenia) => {
         cod_SIS: parseInt(codSis),
         contrasenia: contrasenia
     } )
-    console.log('login data:',data)
     return data
 }
 
@@ -19,7 +18,6 @@ export const registroDocentes = async (codSis, nombre, celular, email ,contrasen
         email: email,
         contrasenia: contrasenia
     } )
-    console.log('Register data:',data)
     return data
 }
 

@@ -6,6 +6,5 @@ export const loginAdmin = async (codSis, contrasenia) => {
         cod_SIS: parseInt(codSis),
         contrasenia: contrasenia
     } )
-    console.log('login data:',data)
     return data
 }

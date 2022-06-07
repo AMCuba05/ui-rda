@@ -20,7 +20,6 @@ export const PendingRequests = () => {
 
     const getAulas = async () => {
       const data = await obtenerPendientes()
-      console.log(data);
       setAulas(data)
     }
     const getAulasProximas = async () => {
@@ -43,11 +42,11 @@ export const PendingRequests = () => {
                 <div className={'toggle-texto'}>
                 Proximidad
                 < ToggleButton onChange={state => state === true ?getAulasAntiguas():getAulasProximas()}/>
-               
+
                 Antiguedad
                 </div>
             </div>
-            
+
         </div>
         <div className={'table-header'}>
             <div className={'table-N'} >
@@ -89,7 +88,7 @@ export const PendingRequests = () => {
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
             <div className={'table-Horario'}>
-            {item.horarios.map((horario,index) => 
+            {item.horarios.map((horario,index) =>
                 <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
             </div>
             <div className={'table-Fecha'}>

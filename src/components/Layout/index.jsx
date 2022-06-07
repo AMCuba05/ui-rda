@@ -20,10 +20,10 @@ import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
 import { RegisterModal } from "../RegisterModal";
 import {UserCard} from "../UserCard";
+import {docenteMaterias} from "../../api/docenteMaterias";
+import {setMaterias} from "../../redux/reducers/materias";
+import {useDispatch} from "react-redux";
 import { NotificationsLayout } from "../Notifications/NotificationsLayout";
-
-
-
 
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
@@ -32,7 +32,9 @@ export const Layout = ({ children }) => {
     sessionStorage.getItem("logged") === "1"
   );
   const [user, setUser] = useState(sessionStorage.getItem("role"));
+  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("user")));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const showModalLogin = () => {
     setLogin(!login);
@@ -45,7 +47,7 @@ export const Layout = ({ children }) => {
   const onLogout = () => {
     sessionStorage.setItem("logged", "0");
     sessionStorage.setItem("role", "none");
-    sessionStorage.setItem("token", "0");
+    sessionStorage.setItem("token", '0')
     setLogged(false);
     navigate("/", { replace: true });
   };
@@ -61,10 +63,11 @@ export const Layout = ({ children }) => {
   return (
     <div className={"layout-container"}>
       <div className={"layout-menu-container"}>
-        {login ? <LoginModal onAction={showModalLogin} /> : null}
+        {login ? <LoginModal onAction={showModalLogin} registermodal={showModalRegister} /> : null}
         {register ? <RegisterModal onAction={showModalRegister} /> : null}
         <div className={"layout-navbar-content"}>
           <img className={"layout-img"} src={logo} alt={""} />
+          <UserCard data={currentUser} />
 
           <div className={"layout-navbar"}>
             {user === "user" ? (
@@ -126,7 +129,12 @@ export const Layout = ({ children }) => {
                     ? "layout-navbar-item-active"
                     : "layout-navbar-item"
                 }
-                onClick={() => navigate("/crear", { replace: true })}
+                onClick={ async () =>{
+                  const user = JSON.parse(sessionStorage.getItem('user'))
+                  const data = await docenteMaterias(user.id)
+                  dispatch(setMaterias(data))
+                  navigate("/crear", { replace: true })}
+                }
               >
                 <img src={plus} alt={""} />
                 <label> Crear Reserva</label>
@@ -144,7 +152,7 @@ export const Layout = ({ children }) => {
                 <img src={calendar} alt={""} />
                 <label> Historial </label>
               </div>
-            ) : (
+            ) : user==="admin" ? (
               <div
                 className={
                   window.location.pathname === "/admin/history"
@@ -156,9 +164,9 @@ export const Layout = ({ children }) => {
                 <img src={calendar} alt={""} />
                 <label> Historial </label>
               </div>
-            )}
+            ): null}
 
-            {user !== "user" ? (
+            {user === "admin" ? (
               <div
                 className={
                   window.location.pathname === "/admin/solicitudRegistro"
@@ -173,10 +181,10 @@ export const Layout = ({ children }) => {
                 <label> Solicitudes </label>
               </div>
             ) : null}
-            <div className={"layout-navbar-item"}>
+            {/*<div className={"layout-navbar-item"}>
               <img src={settings} alt={""} />
               <label> Configurar </label>
-            </div>
+              </div>*/}
             {logged ? (
               <div className={"layout-navbar-item"} onClick={onLogout}>
                 <img src={logout} alt={""} />

@@ -7,7 +7,7 @@ import { BoldText } from "../../BoldText";
 import "./styles.css";
 import "rsuite/dist/rsuite-rtl.css";
 
-export const ModalSuccess = ({ openModel, handleOpen, onSubmit }) => {
+export const ModalSuccess = ({ openModel, handleOpen, onSubmit, dataClassrooms= null }) => {
   return (
     <div>
       <Modal className={"modal"} open={openModel} onClose={handleOpen}>
@@ -19,8 +19,12 @@ export const ModalSuccess = ({ openModel, handleOpen, onSubmit }) => {
         </div>
 
         <div className={"modal-classroom"}>
-          <Classroom name={"620"} icon={garbageIcon} />
-          <Classroom name={"620"} icon={garbageIcon} />
+          {dataClassrooms != null ?
+
+          dataClassrooms.map((item) => (
+            <Classroom name={item.nombre} icon={garbageIcon} />
+          ))
+           : null}
         </div>
 
         <div className={'modal-buttons'}>

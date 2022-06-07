@@ -16,100 +16,57 @@ import { BackButton } from "../../components/Buttons/BackButton";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { crearSolicitud } from "../../api/crearSolicitud";
-import { NotificationsSuccessful } from "../../components/Notifications/Successful";
-import { NotificationsWarning } from "../../components/Notifications/warning";
-
+import "./styles.css";
 import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { BoldText } from "../../components/BoldText";
 import {obtenerDocentes} from "../../api/obtenerDocentes";
+import {WhiteButton} from "../../components/Buttons/WhiteButton";
+import {obtenerPeriodos} from "../../api/obtenerPeriodos";
 
-import "./styles.css";
-
-const periodos = [
-  {
-    label: "6:45 - 8:15",
-    value: "71370f92-4e66-4c07-8aa1-3298cdff745b"
-  },
-  {
-    label: "8:15 - 9:45",
-    value: '316f3d2b-0494-4e00-825a-534c2a66b892'
-  },
-  {
-    label: "9:45 - 11:15",
-    value: "d5372c81-1755-4815-a365-9b72b492cc54"
-  },
-  {
-    label: "11:15 - 12:45",
-    value: "20034093-cec7-44b0-9878-24c849c60847"
-  },
-  {
-    label: "12:45 - 14:15",
-    value: "2d3871ce-7f61-4334-958c-87284f0f5077"
-  },
-  {
-    label: "14:15 - 15:45",
-    value: '70ba535d-e8ee-488f-b59f-f33f8a558130'
-  },
-  {
-    label: "15:45 - 17:15",
-    value: "57249ed7-ab8c-4c36-bb9f-cd72f6efe19d"
-  },
-  {
-    label: "17:15 - 18:45",
-    value: "1c6a65ea-e257-4a23-861e-a238516376a7"
-  },
-  {
-    label: "18:45 - 20:15",
-    value: "18:45 - 20:15"
-  },
-  {
-    label: "20:15 - 21:45",
-    value: "b1366cea-2e57-43de-9aca-b7bc8769e888"
-  }
-]
 
 export const Book = () => {
   const [teachers, setTeachers] = useState([]);
   const [teachersList, setTeachersList] = useState([])
   const [teachersNameList, setTeachersNameList] = useState([])
   const [groupName, setGroupName] = useState([])
-  const [assignments, setAssignments] = useState([]);
-  const [groups, setGroups] = useState([]);
+  const [assignments, setAssignments] = useState();
   const [codeGroup, setCodeGroup] = useState([]);
-  const [total, setTotal] =useState(0)
+  const [fecha, setFecha] = useState()
   const date = new Date()
   const formatDate = date.toISOString().slice(0,10)
-  const [periodo, setPeriodo] = useState('71370f92-4e66-4c07-8aa1-3298cdff745b');
+  const [periodo, setPeriodo] = useState([]);
   const navigate = useNavigate();
-  const { data } = useSelector((state) => state.request);
+  const [reason, setReason] = useState()
   const { materias } = useSelector((state) => state.materias);
-  console.log(materias)
-  const nombreMaterias = materias.flatMap((item) => (item.nombre_materia));
+  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem('user')))
+  const nombreMaterias = ['Selecciona una Materia' , ...materias.flatMap((item) => (item.nombre_materia))]
+  const [periodos, setPeriodos] = useState([])
 
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
   const handleOpen = () => setOpen(!open);
   const handleOpenError = () => setOpenError(!openError);
 
-  const sumCapacidad = () => {
-    let count = 0
-    data.forEach(item => count += item.capacidad)
-    setTotal(count)
-  }
-
   const onChangePeriodo = e => {
     setPeriodo(e.target.value)
   }
 
   useEffect(() => {
-    sumCapacidad()
+    void getPeriodo()
+    setCurrentUser(JSON.parse(sessionStorage.getItem('user')))
+    setTeachers([JSON.parse(sessionStorage.getItem('user')).nombre])
   }, [])
 
   useEffect(() => {
-    assignments.map(item => void findItem(item))
+   void findItem(assignments)
+    setCodeGroup([])
+    setTeachers([currentUser.nombre])
+    setTeachersList([])
   }, [assignments])
 
-  useEffect(() => {
+  {
+    /*
+    useEffect(() => {
     const codes = []
     groups.map(item =>
     teachersList.map( (group) => {
@@ -119,168 +76,243 @@ export const Book = () => {
     }))
     setCodeGroup(codes)
   }, [groups])
+    */
+  }
 
-  useEffect(() => {
-    const groups = []
-    teachers.map(item =>
-        teachersList.map( (data) => {
-          if (data.nombre_docente === item ){
-            groups.push(data.nombre_grupo)
-          }
-        }))
-    setGroupName(groups)
-  }, [teachers])
+  const getGroups = (name) => {
+    let res = [{label:'Selecciona un grupo', value: 'nan'}]
+    teachersList.map(teacher => {
+      if (teacher.nombre_docente === name){
+        res.push({
+          label: teacher.nombre_grupo,
+          value: teacher.id_grupo
+        })
+      }
+    })
+    return res
+  }
+
 
   useEffect( () => {
-    const arrDocente = teachersList.flatMap((item) => (item.nombre_docente));
-    setTeachersNameList(arrDocente)
+    const arrDocente = ['Selecciona un Docente' , ...teachersList.flatMap((item) => (item.nombre_docente))];
+    const arrFiltered = arrDocente.filter((item,index)=>{
+      return arrDocente.indexOf(item) === index;
+    })
+    setTeachersNameList(arrFiltered)
   },[teachersList])
 
   const findItem = async (item) => {
     await materias.map( async (materia, index) => {
       if (materia.nombre_materia === item) {
         const response = await obtenerDocentes(materia.idMateria)
-        console.log(response)
         setTeachersList(response)
       }
     })
   }
 
 
-  const onSubmit = async () => {
-    try {
-      const solicitud = await crearSolicitud({
-        numero_estimado: total,
-        fecha: formatDate,
-        aulasId: data.flatMap(item => item.idAula),
+  const onSubmit = () => {
+      const solicitud = {
+        fecha: fecha,
         gruposId: codeGroup,
-        justificacionesLista: ["test"],
-        periodosId: [periodo],
-      });
+        justificacionesLista: [reason],
+        periodosId: periodo,
+      };
+      if (reason != undefined && periodo != undefined && codeGroup.length > 0 && fecha != undefined ){
+        sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
+        navigate("/reservar", { replace: true });
+      } else {
+        alert('Faltan campos por llenar')
+      }
 
-      navigate("/crear", { replace: true });
-    } catch (e) {
-      alert('Ha ocurrido un error')
-      setOpenError(true)
+  };
+
+  const onActivateGroup = (value) => {
+    const newCode = [...codeGroup]
+    newCode.push(value)
+    setCodeGroup(newCode)
+  }
+
+  const onDeactivateGroup = (value) => {
+    console.log(value)
+  }
+
+  const goToBooking = () => {
+    navigate("/reservar", { replace: true });
+  }
+
+  const hideNotification = () => {
+    let classNotification = document.getElementById("notifications-hide");
+    classNotification.classList.remove("hide");
+    classNotification.classList.add("hide-transform");
+    setTimeout(() => {
+      classNotification.classList.remove("hide-transform");
+      classNotification.classList.add("hide");
+    }, "10000");
+  };
+
+  const onChangeGroups = (value) => {
+    if(value !== 'nan' ){
+      if (!codeGroup.includes(value)) {
+        let newCodeGroup = [...codeGroup]
+        newCodeGroup.push(value)
+        setCodeGroup(newCodeGroup)
+      } else {
+        let newCodeGroup = arrayRemove(codeGroup, value)
+        setCodeGroup(newCodeGroup)
+      }
     }
-  };
-  const goToCreate = () => {
-    navigate("/crear", { replace: true });
-  };
+  }
 
+  const onChangePeriods = (value) => {
+    if(value !== 'nan' ){
+      if (!periodo.includes(value)) {
+        let newPeriodo = [...periodo]
+        newPeriodo.push(value)
+        setPeriodo(newPeriodo)
+      } else {
+        let newPeriodo = arrayRemove(periodo, value)
+        setPeriodo(newPeriodo)
+      }
+    }
+  }
 
+  function arrayRemove(arr, value) {
+
+    return arr.filter(function(ele){
+      return ele != value;
+    });
+  }
+
+  const getPeriodo = async () => {
+    const data = await obtenerPeriodos()
+    setPeriodos(data.flatMap((item) => ({label: `${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`,value: item.id})))
+  }
+
+  const codeIncludes = (value) => {
+    return codeGroup.includes(value)
+  }
+
+  const periodoIncludes = (value) => {
+    return periodo.includes(value)
+  }
 
   return (
     <div className={"form-content"}>
       <div className={"form-title-column"}>
-        <BackButton title={"Atras"} onClick={goToCreate} />
         <div className={"form-title"}>
-          <FormTitle name={"Reserva de Aula(s):"} />
-          {data.map((item) => (
-            <Classroom name={item.nombre} icon={garbageIcon} />
-          ))}
-        </div>
-        <NotificationsSuccessful date={formatDate} />
-        <NotificationsWarning />
-      </div>
+          <FormTitle name={"Crear Reserva:"} />
+          <text className={'book-subtitle'}>Llenado de datos</text>
+          <CommonText>Para empezar con la reserva, llene los siguientes campos correspondientes
+            en caso de que participen 1 o mas docentes extra, puede añadirlos en la reserva.
 
+            Una vez llenado todos los datos presione botón siguiente, si necesita realizar una modificación podra volver
+            a modificarlos aprentendo el boton volver atrás.</CommonText>
+        </div>
+      </div>
       <div className={"form-items"}>
         <div className={"form-item-inputs"}>
           <div className={"form-item-inputs-left"}>
+            <div className={"form-item-inputs-left"}>
+              <FormItemLabel label={"Docente"} />
+              <FormItemValue value={currentUser ? currentUser.nombre: 'Docente'} />
+            </div>
             <div className={"form-item-inputs-left-flex"}>
               <FormItemLabel label={"Materia"} />
-              <FormItemValueAutoComplete
-                items={assignments}
-                setItems={setAssignments}
-                docentOptions={nombreMaterias}
+              <FormItemValueDynamic
+                  onChange={ e => setAssignments(e.target.value)}
+                  options={nombreMaterias}
               />
             </div>
 
-            {
-              teachersList.length > 0 ?
-                  <div className={"form-item-inputs-left-flex"}>
-
-                    <FormItemLabel label={"Añadir Docentes"} />
-                    <FormItemValueAutoComplete
-                        items={teachers}
-                        setItems={setTeachers}
-                        docentOptions={teachersNameList}
-                    />
-                  </div>
-                  : null
-            }
-
-            {
-              groupName.length > 0 ?
-                  <div className={"form-item-inputs-left-flex"}>
-                    <FormItemLabel label={"Grupo"} />
-                    <FormItemValueAutoComplete
-                        items={groups}
-                        setItems={setGroups}
-                        docentOptions={groupName}
-                    />
-                  </div>
-                  : null
-            }
-            {
-              groupName.length > 0 ?
-                  <div className={"form-item-inputs-left-flex"}>
-                    <FormItemLabel label={"Motivo"} />
-                    <FormItemValueDynamic
-                        options={["Examen", "Clase", "Laboratorio"]}
-                    />
-                  </div>
-                  : null
+            {assignments != 'Selecciona una materia' && assignments ?
+                <div className={"form-item-inputs-left-flex"}>
+                  <FormItemLabel label={"Añadir Docentes"} />
+                  <FormItemValueDynamic
+                      onChange={ e => {
+                        let newTeachers = [...teachers]
+                        if ( e.target.value != 'Selecciona un Docente' && !newTeachers.includes(e.target.value)){
+                          newTeachers.push(e.target.value)
+                          setTeachers(newTeachers)
+                        }
+                      }}
+                      options={teachersNameList}
+                  />
+                </div> : null
             }
 
 
           </div>
-          <div className={"form-divider"} />
           <div className={"form-item-inputs-right"}>
-            <div className={"form-item-inputs-left-flex"}>
+            <div className={"form-item-inputs-left-flex-row"}>
+              <div className={"form-item-inputs-left-flex"}>
+                <FormItemLabel label={"Fecha"} />
+                <FormItemDatePicker onChange={e => setFecha(e.target.value)} />
+              </div>
               <div className={"form-item-inputs-left-flex"}>
                 <FormItemLabel label={"Horario"} />
                 <FormItemValueDynamic
                   options={periodos}
-                  onChange={onChangePeriodo}
+                  onChange={e => onChangePeriods(e.target.value)}
+                  includes={periodoIncludes}
                 />
               </div>
-              <div className={"form-item-inputs-left-flex"}>
-                <FormItemLabel label={"Fecha"} />
-                <FormItemDatePicker />
-              </div>
             </div>
-
-
-              {data.map(item => <div className={"form-item-inputs-left-flex"}>
-                <div className={"form-item-inputs-left-flex"}>
-                  <FormItemLabel label={"Capacidad Aula 1:"} />
-                  <FormItemValue value={`${item.capacidad} estudiantes`} />
-                </div>
-                <div className={"form-item-inputs-left-flex"}>
-                  <FormItemLabel label={"Lugar"} />
-                  <FormItemValue value={item.ubicacion} />
-                </div>
-              </div>)}
-
-            <div className={"form-item-inputs-left-flex"}>
-              <FormItemLabel label={"Capacidad Total:"} />
-              <FormItemValue value={`${total} estudiantes`} />
+            <div className={"form-item-inputs-left-flex-row"}>
+              {
+                teachersList.length > 0 ?
+                    <div className={"form-item-inputs-left-flex"}>
+                      <FormItemLabel label={"Motivo"} />
+                      <FormItemValueDynamic
+                          options={["Motivo", "Examen", "Clase", "Laboratorio", "Taller", "Defensa de Grado"]}
+                          onChange={e => setReason(e.target.value)}
+                      />
+                    </div>
+                    : null
+              }
+              {
+                teachersList.length > 0 ?
+                    <div className={"form-item-inputs-left-flex"}>
+                      <FormItemLabel label={"Grupo(s)"} />
+                      <FormItemValueDynamic
+                          options={getGroups(teachers[0])}
+                          onChange={e => onChangeGroups(e.target.value)}
+                          includes={codeIncludes}
+                      />
+                    </div>
+                    : null
+              }
             </div>
           </div>
         </div>
+        {
+          teachers.length > 1 ? teachers.slice(1).map((teacher) =>
+              <div className={"form-item-inputs"}>
+            <div className={"form-item-inputs-left"}>
+              <FormItemLabel label={"Docente"} />
+              <FormItemValue value={teacher} />
+            </div>
+            <div className={"form-item-inputs-left-flex"}>
+              <FormItemLabel label={"Grupo(s)"} />
+              <FormItemValueDynamic
+                  options={getGroups(teacher)}
+                  onChange={e => onChangeGroups(e.target.value)}
+                  includes={codeIncludes}
+              />
+            </div>
+          </div>) : null
+        }
+
         <div className={"form-submit-container"}>
           <div className={"form-submit-description"}>
-            <div>
-            <BoldText>Acepto Recibir Sugerencias: </BoldText>
-            </div>
+
           </div>
           <div className={"form-submit-buttons"}>
             <div>
-              <WarningButton title={"Cancelar Reserva"} />
+              <WhiteButton title={"Volver atras"} />
             </div>
-            <div onClick={onSubmit }>
-              <CommonButton title={"Enviar Reserva"} />
+            <div onClick={onSubmit /*hideNotification*/}>
+              <CommonButton title={"Siguiente"} />
             </div>
           </div>
         </div>

@@ -9,3 +9,9 @@
     border-width: 0px;
     width: 100%;
 }
+
+.form-item-value-hours{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
