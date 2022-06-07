@@ -3,15 +3,33 @@ import { CommonButton } from "../Buttons/Common";
 import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonInput } from "../Inputs/Common";
 import {FormTitle} from "../FormTitle"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WarningText } from "../WarningText";
 import { BoldText } from "../BoldText";
 import { FormItemValueAutoCompleteOne } from "../FormItemValueAutoCompleteOne";
 import "./styles.css";
 import {registroDocentes} from "../../api/loginDocentes";
+import {obtenerDocenteMaterias} from "../../api/docenteNoRegistrado";
 
 export const RegisterModal = ({ onAction }) => {
-  const [teachers, setTeachers] = useState([]);
+
+  const [teachers, setTeachers] = useState('');
+  const [teachersList, setTeachersList] = useState([])
+  const [teachersNameList, setTeachersNameList] = useState([])
+
+/*  useEffect( () => {
+  },[teachersList])
+*/
+  const teacherShow = async () => {
+
+    const response = await obtenerDocenteMaterias();
+    setTeachersList(response);
+
+    const arrDocente = teachersList.flatMap((item) => (item.nombre));
+    setTeachersNameList(arrDocente)
+    console.log(teachersNameList);
+  }
+
 
   const close = () => {
     onAction();
@@ -19,7 +37,7 @@ export const RegisterModal = ({ onAction }) => {
 
   const verifications = () => {
     let validation = false;
-    if (verificationCodSis() && verificationEmail() && verificationCellphone() && verificationPassword() && verificationRepeatPassword()) {
+    if (verificationName() && verificationCodSis() && verificationEmail() && verificationCellphone() && verificationPassword() && verificationRepeatPassword()) {
       validation = true;
     }
     return validation;
@@ -113,6 +131,18 @@ export const RegisterModal = ({ onAction }) => {
     return validation;
   }
 
+  const verificationName = () => {
+    let validation = false;
+    if(teachers.length > 0){
+      validation = true;
+      handleShowNameError(false);
+    }else{
+      validation = false;
+      handleShowNameError(true);
+    }
+    return validation;
+  }
+
   const [showCodSisError, setShowCodSisError] = useState(false);
   const handleShowCodSisErrorChange = (newShowCodSisError) => {
     setShowCodSisError(newShowCodSisError);
@@ -137,6 +167,12 @@ export const RegisterModal = ({ onAction }) => {
   const handleShowPasswordRepeatErrorChange = (newShowPasswordRepeatError) => {
     setShowPasswordRepeatError(newShowPasswordRepeatError);
   };
+
+
+  const [showNameError, setShowNameError] = useState(false);
+  const handleShowNameError = (newShowNameError) => {
+    setShowNameError(newShowNameError);
+  }
 
   const [codSis, setCodSis] = useState("");
   const handleCodSisChange = (newCodSis) => {
@@ -171,7 +207,7 @@ export const RegisterModal = ({ onAction }) => {
   const onRegister = async () => {
     if (verifications()) {
       try {
-        await registroDocentes(codSis, name, cellphone, email, password)
+        await registroDocentes(codSis, teachers, cellphone, email, password)
         alert('Solicitud de creacion de usuario enviada')
       } catch (e) {
         alert('Algo salió mal, inténtalo más tarde')
@@ -189,20 +225,28 @@ export const RegisterModal = ({ onAction }) => {
         </div>
         <div className={'register-modal-content-flex'}>
           <div className={'register-modal-content-left'}>
-            <div>
-              <CommonInput
-                  input={name}
-                  inputChange={handleNameChange}
-                  label={"Nombre Completo"}
 
-              />
+            <div  onClick={teacherShow}>
+              <CommonText>Nombre: </CommonText>
+              <FormItemValueAutoCompleteOne
+                        items={teachers}
+                        setItems={setTeachers}
+                        docentOptions={teachersNameList}
+                    />
+              {showNameError ? (
+                <WarningText
+                  text={"Nombre de docente vacio"}
+                />
+              ) : null}
             </div>
-            <div>
+            <div >
               <CommonInput
                 input={email}
                 inputChange={handleEmailChange}
                 label={"Correo"}
-                type={"email"}
+                type={'email'}
+
+
               />
               {showEmailError ? (
                 <WarningText
@@ -212,6 +256,7 @@ export const RegisterModal = ({ onAction }) => {
             </div>
             <div>
             <CommonInput input={password} inputChange={handlePasswordChange} label={'Contraseña'} type={"password"}/>
+
             {showPasswordError ?
                <WarningText text={'La contraseña es invalida '}/> : null}
 
@@ -233,6 +278,7 @@ export const RegisterModal = ({ onAction }) => {
             </div>
             <div>
             <CommonInput input={repeatPassword} inputChange={handleRepeatPasswordChange} label={'Repetir Contraseña'} type={"password"}/>
+
             {showPasswordRepeatError ?
                <WarningText text={'La contraseña no es igual '}/> : null}
 
