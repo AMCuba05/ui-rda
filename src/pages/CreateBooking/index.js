@@ -82,8 +82,8 @@ export const CreateBooking = () => {
             };
             console.log(params)
             await crearSolicitud(params)
-            alert('Todo piola')
-            //navigate("/crear", { replace: true });
+            alert('Solicitud de Reserva enviada correctamente')
+            navigate("/", { replace: true });
         } catch (e) {
             alert('Ha ocurrido un error')
         }

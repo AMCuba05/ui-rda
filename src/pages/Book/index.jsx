@@ -119,9 +119,13 @@ export const Book = () => {
         justificacionesLista: [reason],
         periodosId: [periodo],
       };
-      console.log(solicitud)
-      sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
-      navigate("/reservar", { replace: true });
+      if (reason != undefined && periodo != undefined && codeGroup.length > 0 && fecha != undefined ){
+        sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
+        navigate("/reservar", { replace: true });
+      } else {
+        alert('Faltan campos por llenar')
+      }
+
   };
 
   const goToBooking = () => {
@@ -142,7 +146,6 @@ export const Book = () => {
     if(value !== 'nan' && !codeGroup.includes(value)){
       let newCodeGroup = [...codeGroup]
       newCodeGroup.push(value)
-      console.log(newCodeGroup)
       setCodeGroup(newCodeGroup)
     }
   }
