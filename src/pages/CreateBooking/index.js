@@ -16,6 +16,8 @@ import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
 import {FormTitle} from "../../components/FormTitle";
 import {CommonText} from "../../components/CommonText";
 import {BackButton} from "../../components/Buttons/BackButton";
+import {CommonInput} from "../../components/Inputs/Common";
+import {crearSolicitud} from "../../api/crearSolicitud";
 
 
 export const CreateBooking = () => {
@@ -23,6 +25,7 @@ export const CreateBooking = () => {
     const [aulas, setAulas] = useState()
     const [reserva, setReserva] = useState([])
     const [cantidad, setCantidad] = useState(0)
+    const [estimado, setEstimado] = useState(0)
     const today = new Date()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -40,16 +43,6 @@ export const CreateBooking = () => {
                 setReserva(nuevaReserva)
             }
         })
-    }
-
-    const goToBooking = async () => {
-        if (reserva.length > 0) {
-            const user = JSON.parse(sessionStorage.getItem('user'))
-            const data = await docenteMaterias(user.id)
-            dispatch(setMaterias(data))
-            dispatch(setRequest(reserva))
-            navigate('/reservar', {replace: true})
-        }
     }
 
     const agregarReserva = (item) => {
@@ -76,6 +69,26 @@ export const CreateBooking = () => {
         navigate("/crear", { replace: true });
     };
 
+    const onSubmit = async () => {
+        try {
+            const data = JSON.parse(sessionStorage.getItem('solicitud'))
+            const params = {
+                numero_estimado: parseInt(estimado),
+                fecha: data.fecha,
+                aulasId: reserva.flatMap(item => item.idAula),
+                gruposId: data.gruposId,
+                justificacionesLista: data.justificacionesLista,
+                periodosId: data.periodosId,
+            };
+            console.log(params)
+            await crearSolicitud(params)
+            alert('Todo piola')
+            //navigate("/crear", { replace: true });
+        } catch (e) {
+            alert('Ha ocurrido un error')
+        }
+    };
+
     return<div>
         <div className={'create-booking-title'}>
 
@@ -90,7 +103,11 @@ export const CreateBooking = () => {
                 <CommonText>esta se mostrara como: ocupada o no disponible para una reserva.</CommonText>
             </div>
         </div>
-        <div>
+        <div className={'table-top-header'}>
+            <div className={'table-top-items'}>
+                <CommonInput input={estimado} inputChange={setEstimado} label={'Indique la capacidad total que espera reservar'}/>
+                <CommonInput label={'Buscar un aula o area en especifico:'}/>
+            </div>
             <div className={'table-header'}>
                 <div className={'table-suggest-Aula'} >
                     <BoldText white={true}>Aula</BoldText>
@@ -155,7 +172,7 @@ export const CreateBooking = () => {
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Confirmar Reserva'} onClick={goToBooking} />
+                <CommonButton title={'Confirmar Reserva'} onClick={onSubmit} />
             </div>
         </div>
         <div className={'table-suggest-footer'}>
@@ -163,7 +180,6 @@ export const CreateBooking = () => {
                 <BoldText>Capacidad seleccionada Total: </BoldText>
                 <ColoredTag>{cantidad} Estudiantes</ColoredTag>
             </div>
-
         </div>
     </div>
 }
