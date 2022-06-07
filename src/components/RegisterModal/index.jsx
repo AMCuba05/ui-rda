@@ -17,9 +17,10 @@ export const RegisterModal = ({ onAction }) => {
   const [teachersList, setTeachersList] = useState([])
   const [teachersNameList, setTeachersNameList] = useState([])
 
-/*  useEffect( () => {
-  },[teachersList])
-*/
+useEffect( () => {
+  void teacherShow()
+  },[])
+
   const teacherShow = async () => {
 
     const response = await obtenerDocenteMaterias();
@@ -27,7 +28,6 @@ export const RegisterModal = ({ onAction }) => {
 
     const arrDocente = teachersList.flatMap((item) => (item.nombre));
     setTeachersNameList(arrDocente)
-    console.log(teachersNameList);
   }
 
 
@@ -226,7 +226,7 @@ export const RegisterModal = ({ onAction }) => {
         <div className={'register-modal-content-flex'}>
           <div className={'register-modal-content-left'}>
 
-            <div  onClick={teacherShow}>
+            <div>
               <CommonText>Nombre: </CommonText>
               <FormItemValueAutoCompleteOne
                         items={teachers}

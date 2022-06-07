@@ -44,16 +44,16 @@ export const HistoryAdmin = () => {
           <BoldText white={true}>Docente(s)</BoldText>
 
         </div>
-        <div className={"align-flex7"}>
+        <div className={"align-flex6"}>
           <BoldText white={true}>Aula</BoldText>
         </div>
         <div className={"align-flex5"}>
           <BoldText white={true}>Cantidad</BoldText>
         </div>
-        <div className={"align-flex5"}>
+        <div className={"history-admin-hours"}>
           <BoldText white={true}>Horario</BoldText>
         </div>
-        <div className={"align-flex5"}>
+        <div className={"history-admin-hours"}>
           <BoldText white={true}>Fecha</BoldText>
         </div>
         <div className={"align-flex5"}>
@@ -71,7 +71,7 @@ export const HistoryAdmin = () => {
             <div className={"align-flex6 history-docents"}>
                 {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombreDocente}</BoldText> : <CommonText >{name.nombreDocente}</CommonText>)}
             </div>
-            <div className={"history-class-list  align-flex7"}>
+            <div className={"history-class-list  align-flex6"}>
                 {item.aulas.map( (aula, index) => <ColoredTag>{aula.nombre}</ColoredTag>)}
             </div>
             <div className={"align-flex5"}>
@@ -83,7 +83,7 @@ export const HistoryAdmin = () => {
 
 
             </div>
-            <div className={"align-flex5"}>
+            <div className={"history-admin-hours"}>
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={"align-flex5"}>

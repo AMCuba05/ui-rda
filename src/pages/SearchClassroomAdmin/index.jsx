@@ -70,7 +70,7 @@ export const SearchClassroomAdmin = () => {
       {aulas.map((item) =>
         <div className={"table-search-admin-item"}>
         <div className={"align-flex"}>
-          <ToggleSwitch id = {item.id}/>
+          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1}/>
         </div>
         <div className={"align-flex"}>
           <ColoredTag> {item.nombre}</ColoredTag>

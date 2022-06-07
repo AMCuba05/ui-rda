@@ -201,8 +201,6 @@ export const Layout = ({ children }) => {
 
           {logged ? (
             <div className={"layout-header"}>
-              {/*<Search />*/}
-
 
               {user === "user" ? (
                 <div className={"layout-header-icon"} onClick={handleOpenNotifications}>

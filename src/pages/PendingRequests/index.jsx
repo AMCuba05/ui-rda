@@ -82,7 +82,7 @@ export const PendingRequests = () => {
                 {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombre}</BoldText> : <CommonText >{name.nombre}</CommonText>)}
             </div>
             <div className={'table-Aula'}>
-                {item.aulas.map( (aula, index) => <ColoredTag state={aula.disponible_para_uso} >{aula.nombre}</ColoredTag>)}
+                {item.aulas.map( (aula) => <ColoredTag state={aula.estado ? 1 : 3} >{aula.nombre}</ColoredTag>)}
             </div>
             <div className={'table-Cantidad'}>
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>

@@ -47,7 +47,7 @@ export const Home = () => {
         void  getAulas()
     }, [])
 
-    return<div>
+    return<div style={{minHeight: '85vh'}}>
         <div className={'pending-title'}>
             <div>
                 Aulas sin reserva actualmente

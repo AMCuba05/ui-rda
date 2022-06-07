@@ -13,6 +13,8 @@ import {useState} from "react";
 import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
 import {setMaterias} from "../../redux/reducers/materias";
 import {docenteMaterias} from "../../api/docenteMaterias";
+import {Title} from "../../components/Title/indes";
+import {Search} from "../../components/Search";
 
 export const SearchClassroom = () => {
     const {data} = useSelector((state) => state.filtered)
@@ -51,9 +53,15 @@ export const SearchClassroom = () => {
     }
 
     return<div className={'search-classroom-container'}>
+        <div className={"layout-title"}>
+            <Title title={"Lista de Aulas disponibles:"} />
+            <Search />
+        </div>
 
         <CommonText>Busque el aula que le gustaria reservar, si tiene una busqueda en particular
             puede usar el boton Buscar Aula</CommonText>
+        <br/>
+
         {
             data.length > 0 ?
                 <div className={'table-header'}>
@@ -78,7 +86,32 @@ export const SearchClassroom = () => {
                     <div className={'table-suggest-vacio'}>
                         <BoldText white={true}></BoldText>
                     </div>
-                </div> :null
+                </div> : <>
+                    <div className={'table-header'}>
+                        <div className={'table-suggest-Aula'} >
+                            <BoldText white={true}>Aula</BoldText>
+                        </div>
+                        <div className={'table-suggest-Cantidad'}>
+                            <BoldText white={true}>Capacidad</BoldText>
+                        </div>
+                        <div className={'table-suggest-Horario'}>
+                            <BoldText white={true}>Horario</BoldText>
+                        </div>
+                        <div className={'table-suggest-Fecha'}>
+                            <BoldText white={true}>Fecha</BoldText>
+                        </div>
+                        <div className={'table-suggest-Lugar'}>
+                            <BoldText white={true}>Lugar</BoldText>
+                        </div>
+                        <div className={'table-suggest-Estado'}>
+                            <BoldText white={true}>Estado</BoldText>
+                        </div>
+                        <div className={'table-suggest-vacio'}>
+                            <BoldText white={true}></BoldText>
+                        </div>
+                    </div>
+                    <CommonText>No hay Aulas para mostrar</CommonText>
+                </>
         }
 
         { data.map((item, index)  => {
@@ -102,10 +135,10 @@ export const SearchClassroom = () => {
                         <ColoredTag>{item.ubicacion}</ColoredTag>
                     </div>
                     <div className={'table-suggest-Estado'}>
-                        <ColoredTag state={'free'}>Disponible</ColoredTag>
+                        <ColoredTag state={'1'}>Disponible</ColoredTag>
                     </div>
                     <div className={'table-suggest-vacio'}>
-                        <AddButton onClick={() => agregarReserva(item)} title={'Añadir'}/>
+
                     </div>
                 </div>
             )}
@@ -113,18 +146,7 @@ export const SearchClassroom = () => {
         {
             data.length > 0?
                 <div className={'table-suggest-footer'}>
-                    <div className={'table-suggest-footer-items'} >
-                        <BoldText>Aulas Seleccionadas: </BoldText>
-                        {reserva.map((item)=>
-                            <Classroom
-                                name={`${item.nombre}`}
-                                icon={garbageIcon}
-                                onClick={() => removerReserva(item) }/>
-                        )}
-                    </div>
-                    <div className={'table-suggest-footer-items'}>
-                        <CommonButton title={'Iniciar reserva'} onClick={goToBooking} />
-                    </div>
+
                 </div> : null
         }
     </div>
