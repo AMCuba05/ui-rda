@@ -19,6 +19,21 @@
     border-top-left-radius: 30px;
 }
 
+.table-top-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+}
+
+.table-top-header {
+    background: #FFFFFF;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+}
+
 .table-suggest-item {
     display: flex;
     flex-direction: row;
