@@ -18,7 +18,8 @@ import {CommonText} from "../../components/CommonText";
 import {BackButton} from "../../components/Buttons/BackButton";
 import {CommonInput} from "../../components/Inputs/Common";
 import {crearSolicitud} from "../../api/crearSolicitud";
-
+import { ModalSuccess } from '../../components/Modals/ModalSuccess';
+import { ModalWarning } from '../../components/Modals/ModalWarning';
 
 export const CreateBooking = () => {
 
@@ -89,9 +90,20 @@ export const CreateBooking = () => {
         }
     };
 
+    const [openModalS, setOpenModalS ] = useState(false);
+    const handleOpenModalS = () => {
+      setOpenModalS(!openModalS);
+    }
+
+    const [openModalW, setOpenModalW ] = useState(false);
+    const handleOpenModalW = () => {
+      setOpenModalW(!openModalW);
+    }
+
     return<div>
         <div className={'create-booking-title'}>
-
+            <ModalSuccess openModel={openModalS} handleOpen={handleOpenModalS} onSubmit={onSubmit} dataClassrooms={reserva}/>
+            <ModalWarning openModel={openModalW} handleOpen={handleOpenModalW} dataClassrooms={reserva} />
             <BackButton title={"Atras"} onClick={goToCreate} />
             <div className={"form-title-column"}>
                 <FormTitle name={"Crear Reserva:"} />
@@ -172,7 +184,7 @@ export const CreateBooking = () => {
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Confirmar Reserva'} onClick={onSubmit} />
+                <CommonButton title={'Confirmar Reserva'} onClick={handleOpenModalS} />
             </div>
         </div>
         <div className={'table-suggest-footer'}>

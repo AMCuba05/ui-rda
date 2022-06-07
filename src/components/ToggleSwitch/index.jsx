@@ -2,7 +2,7 @@ import { useState } from "react";
 import { cambiarEstadoAula } from "../../api/cambioEstadoAula";
 import "./styles.css"
 
-export const ToggleSwitch = () => {
+export const ToggleSwitch = ({id}) => {
   const [toogle, setToogle] = useState(false)
   const handleToogle = () => {
     setToogle(!toogle)
