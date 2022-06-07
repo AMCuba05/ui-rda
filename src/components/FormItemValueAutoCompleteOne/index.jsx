@@ -13,9 +13,10 @@ export const FormItemValueAutoCompleteOne = ({docentOptions, items, setItems}) =
     return <div >
         <div className={'form-item-value-autocomplete-one'}>
             <AutoComplete className={'form-item-value-autocomplete-one-input'} disabled={disable} value={value} data={docentOptions} onSelect={ (item, label) => {
-                const newArr = [...items]
-                newArr.push(label.label)
+                const newArr = label.label
+                /*newArr.push(label.label)*/
                 setItems(newArr)
+                console.log(items)
             }} onChange={value => setValue(value)} onClose={() => setDisable(true)}
             />
             <div className={'form-item-value-autocomplete-clear'} onClick={() => setDisable(false)}>

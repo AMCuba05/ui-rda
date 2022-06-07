@@ -23,6 +23,8 @@ import {UserCard} from "../UserCard";
 import { NotificationsLayout } from "../Notifications/NotificationsLayout";
 
 
+
+
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
   const [register, setRegister] = useState(false);

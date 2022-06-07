@@ -18,10 +18,12 @@ import { useSelector } from "react-redux";
 import { crearSolicitud } from "../../api/crearSolicitud";
 import { NotificationsSuccessful } from "../../components/Notifications/Successful";
 import { NotificationsWarning } from "../../components/Notifications/warning";
-import "./styles.css";
+
 import { ModalWarning } from "../../components/Modals/ModalWarning";
 import { BoldText } from "../../components/BoldText";
 import {obtenerDocentes} from "../../api/obtenerDocentes";
+
+import "./styles.css";
 
 const periodos = [
   {
