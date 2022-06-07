@@ -78,56 +78,25 @@ export const HistoryAdmin = () => {
             <div className={"align-flex5"}>
                 <ColoredTag>{item.numero_estimado} est.</ColoredTag>
             </div>
-            <div className={"align-flex5"}>
-            {item.periodos.map((horario,index) => 
+            <div className={"history-admin-hours"}>
+            {item.periodos.map((horario,index) =>
                 <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
-          
-           
+
+
             </div>
             <div className={"align-flex5"}>
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={"align-flex5"}>
-                <ColoredTag>{item.justificaciones[0].justificacion}</ColoredTag>
+                <ColoredTag>{item.motivo[0].justificacion}</ColoredTag>
             </div>
             <div className={"align-flex5"}>
               {(item.estado === 'ACEPTADO' ? <ColoredTag state={1}>{item.estado}</ColoredTag>:
-                item.estado === 'pendiente' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
+                item.estado === 'PENDIENTE' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
                 <ColoredTag state={3}>{item.estado}</ColoredTag>)}
-            
+
             </div>
             </div>)}
-      <div className={"table-history-item"}>
-      <div className={"align-flex"}>
-          <BoldText> 1</BoldText>
-        </div>
-        <div className={"align-flex6 history-docents"}>
-          <BoldText> Esteban Quito R. </BoldText>
-          <span>Leticia Blanco</span>
-          <span>Vladimir Costas</span>
-        </div>
-        <div className={"history-class-list  align-flex7"}>
-          <ColoredTag> AUDITORIO</ColoredTag>
-          <ColoredTag> 696</ColoredTag>
-          <ColoredTag> 696</ColoredTag>
-
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> 900 est.</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> 15:45 -17:15</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> 20/05/2022</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> Examen</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag state={3}> Rechazado</ColoredTag>
-        </div>
-      </div>
     </div>
   );
 };

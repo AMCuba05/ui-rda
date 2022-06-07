@@ -63,7 +63,7 @@ export const Layout = ({ children }) => {
   return (
     <div className={"layout-container"}>
       <div className={"layout-menu-container"}>
-        {login ? <LoginModal onAction={showModalLogin} /> : null}
+        {login ? <LoginModal onAction={showModalLogin} registermodal={showModalRegister} /> : null}
         {register ? <RegisterModal onAction={showModalRegister} /> : null}
         <div className={"layout-navbar-content"}>
           <img className={"layout-img"} src={logo} alt={""} />
@@ -141,11 +141,18 @@ export const Layout = ({ children }) => {
               </div>
             ) : null}
             {user === "user" ? (
-              <div className={"layout-navbar-item"}>
+              <div
+                className={
+                  window.location.pathname === "/history"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+                onClick={() => navigate("history", { replace: true })}
+              >
                 <img src={calendar} alt={""} />
                 <label> Historial </label>
               </div>
-            ) : (
+            ) : user==="admin" ? (
               <div
                 className={
                   window.location.pathname === "/admin/history"
@@ -157,9 +164,9 @@ export const Layout = ({ children }) => {
                 <img src={calendar} alt={""} />
                 <label> Historial </label>
               </div>
-            )}
+            ): null}
 
-            {user !== "user" ? (
+            {user === "admin" ? (
               <div
                 className={
                   window.location.pathname === "/admin/solicitudRegistro"
@@ -174,10 +181,10 @@ export const Layout = ({ children }) => {
                 <label> Solicitudes </label>
               </div>
             ) : null}
-            <div className={"layout-navbar-item"}>
+            {/*<div className={"layout-navbar-item"}>
               <img src={settings} alt={""} />
               <label> Configurar </label>
-            </div>
+              </div>*/}
             {logged ? (
               <div className={"layout-navbar-item"} onClick={onLogout}>
                 <img src={logout} alt={""} />

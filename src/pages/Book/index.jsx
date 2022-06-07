@@ -153,12 +153,6 @@ export const Book = () => {
     setPeriodos(data.flatMap((item) => ({label: `${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`,value: item.id})))
   }
 
-
-  const [openModalS, setOpenModalS ] = useState(false);
-  const handleOpenModalS = () => {
-    setOpenModalS(!openModalS);
-  }
-
   return (
     <div className={"form-content"}>
       <div className={"form-title-column"}>

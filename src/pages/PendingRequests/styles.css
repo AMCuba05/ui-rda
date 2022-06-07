@@ -59,8 +59,10 @@
 }
 
 .table-Horario {
-    
     flex: 2.5;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .table-Fecha {
@@ -81,5 +83,5 @@
 .toggle-texto{
     font-size: 20px;
     margin: 45px 0px 0px 0px;
-    float: right;   
+    float: right;
 }
