@@ -133,7 +133,7 @@ export const Layout = ({ children }) => {
             {user === "user" ? (
               <div className={"layout-navbar-item"}>
                 <img src={calendar} alt={""} />
-                <label> Historiall </label>
+                <label> Historial </label>
               </div>
             ) : (
               <div
