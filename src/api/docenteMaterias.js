@@ -1,6 +1,6 @@
 import axios from 'axios';
-
+import { url } from './url';
 export const docenteMaterias = async (id) => {
-    const { data } = await axios.get(`https://reserva-aulas-stage.herokuapp.com/docente/materias/${id}` )
+    const { data } = await axios.get(url + `docente/materias/${id}` )
     return data
 }
