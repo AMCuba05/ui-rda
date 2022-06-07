@@ -131,7 +131,14 @@ export const Layout = ({ children }) => {
               </div>
             ) : null}
             {user === "user" ? (
-              <div className={"layout-navbar-item"}>
+              <div
+                className={
+                  window.location.pathname === "/history"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+                onClick={() => navigate("history", { replace: true })}
+              >
                 <img src={calendar} alt={""} />
                 <label> Historial </label>
               </div>

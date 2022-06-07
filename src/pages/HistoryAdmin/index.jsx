@@ -88,7 +88,7 @@ export const HistoryAdmin = () => {
                 <ColoredTag>{item.fecha}</ColoredTag>
             </div>
             <div className={"align-flex5"}>
-                <ColoredTag></ColoredTag>
+                <ColoredTag>{item.motivo[0].justificacion}</ColoredTag>
             </div>
             <div className={"align-flex5"}>
               {(item.estado === 'ACEPTADO' ? <ColoredTag state={1}>{item.estado}</ColoredTag>:
@@ -97,37 +97,6 @@ export const HistoryAdmin = () => {
 
             </div>
             </div>)}
-      <div className={"table-history-item"}>
-      <div className={"align-flex"}>
-          <BoldText> 1</BoldText>
-        </div>
-        <div className={"align-flex6 history-docents"}>
-          <BoldText> Esteban Quito R. </BoldText>
-          <span>Leticia Blanco</span>
-          <span>Vladimir Costas</span>
-        </div>
-        <div className={"history-class-list  align-flex7"}>
-          <ColoredTag> AUDITORIO</ColoredTag>
-          <ColoredTag> 696</ColoredTag>
-          <ColoredTag> 696</ColoredTag>
-
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> 900 est.</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> 15:45 -17:15</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> 20/05/2022</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag> Examen</ColoredTag>
-        </div>
-        <div className={"align-flex5"}>
-          <ColoredTag state={3}> Rechazado</ColoredTag>
-        </div>
-      </div>
     </div>
   );
 };
