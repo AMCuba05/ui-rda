@@ -36,7 +36,7 @@ export const Request = () => {
       console.log(data.solicitud.id)
       await aceptarReserva(data.solicitud.id)
       alert('Se acepto la solicitud de reserva')
-      //handleOpenSucces();
+
       //await enviarMailRechazo(data.docentes[0].email)
       navigate('/admin/pendientes', {replace: true})
 
@@ -59,9 +59,9 @@ export const Request = () => {
   return (
     <div className={"request-content"}>
       {/**TODO: implementr backend  */}
-      <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces}/>
-      <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning}/>
-      <ModalReject openModel={openReject} handleOpen={handleOpenReject}/>
+      <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces} onSubmit={onAccept} dataClassrooms={data.aulas}/>
+      <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning} />
+      <ModalReject openModel={openReject} handleOpen={handleOpenReject} onSubmit={onReject}/>
       <BackButton title={'Atras'} onClick={() => navigate('/admin/pendientes', {replace: true})} />
       <div className={"request-title"}>
         <FormTitle name={"Reserva de Aula(s):"} />
@@ -200,14 +200,17 @@ export const Request = () => {
                 <div className="items-sugestion-flex-label">
                 <FormItemLabel label={"Aulas seleccionadas:"} />
                 </div>
-                <div>
-                <Classroom name={"651"} icon={garbageIcon} />
+                <div className="request-sugestions-button-flex">
+                  {
+                  data.aulas.map( aula => <Classroom name={aula.nombre}  icon={garbageIcon} /> )
+                  }
+
                 </div>
               </div>
               <div className="request-sugestions-button-flex">
-                <WarningButton title={"Rechazar Reserva"} onClick={onReject} />
+                <WarningButton title={"Rechazar Reserva"} onClick={handleOpenReject} />
 
-                <CommonButton title={"Confirmar Reserva"} onClick={onAccept} />
+                <CommonButton title={"Confirmar Reserva"} onClick={handleOpenSucces} />
               </div>
             </div>
           </div>

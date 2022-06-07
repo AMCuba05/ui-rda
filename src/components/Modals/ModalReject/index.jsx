@@ -22,7 +22,9 @@ export const ModalReject = ({ openModel, handleOpen }) => {
           <div className={'modal-reject-options'}>
 
           <FormItemValueDynamic
-              options={["Motivo 1", "Motivo 2", "Motivo 3"]}
+              options={["Aula(s) ya reservada(s)",
+              "Aula(s) no disponibles en feriados",
+              "Ya reservo demasiadas aulas "]}
             />
           </div>
         </div>
