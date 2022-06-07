@@ -19,7 +19,6 @@ import {obtenerMateriaDatosReserva} from "../../api/docenteMaterias";
 
 export const Request = () => {
   const data = JSON.parse(localStorage.getItem('pendingItem'))
-  console.log(data)
   const [materia, setMateria] = useState('')
   const [conflictos, setConflictos] = useState([])
 
@@ -120,9 +119,7 @@ export const Request = () => {
 
             <div className={"request-item-inputs-left-flex"}>
               <FormItemLabel label={"Grupo (s)"} />
-              <FormItemValue value={"1"} />
-              <FormItemValue value={"3"} />
-              <FormItemValue value={"4"} />
+              {data.grupos.map(item => <FormItemValue value={item.nombre} /> )}
             </div>
             <div className={"request-item-inputs-left-flex"}>
               <div className={"request-item-inputs-left-flex"}>
@@ -136,13 +133,13 @@ export const Request = () => {
             </div>
             <div className={"request-item-inputs-left-flex"}>
               <div className={"request-item-inputs-left-flex"}>
-                <FormItemLabel label={"Horario"} />
-                <FormItemValue value={`14:15 - 15:45`} />
-              </div>
-              <div className={"request-item-inputs-left-flex"}>
                 <FormItemLabel label={"Fecha"} />
                 <FormItemValue value={data.fecha} />
               </div>
+            </div>
+            <div className={"request-item-inputs-left-flex"}>
+              <FormItemLabel label={"Horario(s)"} />
+              {data.horarios.map(item =>  <FormItemValue value={`${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`} /> )}
             </div>
           </div>
         </div>

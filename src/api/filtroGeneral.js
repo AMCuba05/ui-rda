@@ -9,7 +9,6 @@ export const filtroGeneral = async (params) => {
     } else {
         formatoPeriodo = `${periodo}:00`
     }
-    console.log(params, formatoPeriodo)
     const { data } = await axios.post(url + 'aula/general', {
         fecha: params.fecha,
         periodos: [formatoPeriodo],

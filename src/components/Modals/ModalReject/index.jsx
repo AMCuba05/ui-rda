@@ -8,7 +8,7 @@ import { FormItemValueDynamic} from "../../FormItemValueDynamic";
 import "./styles.css";
 import "rsuite/dist/rsuite-rtl.css";
 
-export const ModalReject = ({ openModel, handleOpen }) => {
+export const ModalReject = ({ openModel, handleOpen, onSubmit }) => {
   return (
     <div>
       <Modal className={"modal-reject"} open={openModel} onClose={handleOpen}>
@@ -32,8 +32,8 @@ export const ModalReject = ({ openModel, handleOpen }) => {
           <div className={'modal-reject-buttons-btn'} onClick={handleOpen}>
             <WhiteButton title={"Retroceder"} />
           </div>
-          <div className={'modal-reject-buttons-btn'}>
-            <CommonButton title={"Enviar sugerencia"} />
+          <div className={'modal-reject-buttons-btn'} onClick={onSubmit}>
+            <CommonButton title={"Confirmar"} />
           </div>
         </div>
       </Modal>

@@ -80,7 +80,6 @@ export const CreateBooking = () => {
                 justificacionesLista: data.justificacionesLista,
                 periodosId: data.periodosId,
             };
-            console.log(params)
             await crearSolicitud(params)
             alert('Solicitud de Reserva enviada correctamente')
             navigate("/", { replace: true });
@@ -109,7 +108,6 @@ export const CreateBooking = () => {
                 ubicacionAula: item.ubicacion
             }
             const libre = await estadoAula(params)
-            console.log(item.nombre, libre)
             if (!libre) {
                 let newConflicto = [...conflicto]
                 newConflicto.push(reserva.nombre)

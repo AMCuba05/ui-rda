@@ -20,7 +20,6 @@ export const SearchClassroomAdmin = () => {
 
     const getAulas = async () => {
       const data = await obtenerAulas()
-      console.log(data)
       setAulas(data)
     }
 
@@ -51,7 +50,7 @@ export const SearchClassroomAdmin = () => {
         </div>
       </div>
       <div className={"table-search-admin-header"}>
-        
+
         <div className={"align-flex"}>
           <BoldText white={true}>Habilitar/Deshabilitar</BoldText>
         </div>

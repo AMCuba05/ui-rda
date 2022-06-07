@@ -18,7 +18,6 @@ export const HistoryAdmin = () => {
 
   const getHistorial = async () => {
       const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id)
-      console.log(data);
       setHistorial(data)
     }
 

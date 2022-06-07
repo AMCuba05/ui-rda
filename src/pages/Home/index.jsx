@@ -97,7 +97,7 @@ export const Home = () => {
                     <ColoredTag>{item.ubicacion}</ColoredTag>
                 </div>
                 <div className={'table-suggest-Estado'}>
-                    <ColoredTag state={'free'}>Disponible</ColoredTag>
+                    <ColoredTag state={'1'}>Disponible</ColoredTag>
                 </div>
                 <div className={'table-suggest-vacio'}>
                     <AddButton onClick={() => agregarReserva(item)} title={'Añadir'}/>

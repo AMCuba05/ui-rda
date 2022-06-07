@@ -33,7 +33,7 @@ export const Book = () => {
   const [fecha, setFecha] = useState()
   const date = new Date()
   const formatDate = date.toISOString().slice(0,10)
-  const [periodo, setPeriodo] = useState('71370f92-4e66-4c07-8aa1-3298cdff745b');
+  const [periodo, setPeriodo] = useState([]);
   const navigate = useNavigate();
   const [reason, setReason] = useState()
   const { materias } = useSelector((state) => state.materias);
@@ -115,7 +115,7 @@ export const Book = () => {
         fecha: fecha,
         gruposId: codeGroup,
         justificacionesLista: [reason],
-        periodosId: [periodo],
+        periodosId: periodo,
       };
       if (reason != undefined && periodo != undefined && codeGroup.length > 0 && fecha != undefined ){
         sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
@@ -125,6 +125,16 @@ export const Book = () => {
       }
 
   };
+
+  const onActivateGroup = (value) => {
+    const newCode = [...codeGroup]
+    newCode.push(value)
+    setCodeGroup(newCode)
+  }
+
+  const onDeactivateGroup = (value) => {
+    console.log(value)
+  }
 
   const goToBooking = () => {
     navigate("/reservar", { replace: true });
@@ -141,16 +151,49 @@ export const Book = () => {
   };
 
   const onChangeGroups = (value) => {
-    if(value !== 'nan' && !codeGroup.includes(value)){
-      let newCodeGroup = [...codeGroup]
-      newCodeGroup.push(value)
-      setCodeGroup(newCodeGroup)
+    if(value !== 'nan' ){
+      if (!codeGroup.includes(value)) {
+        let newCodeGroup = [...codeGroup]
+        newCodeGroup.push(value)
+        setCodeGroup(newCodeGroup)
+      } else {
+        let newCodeGroup = arrayRemove(codeGroup, value)
+        setCodeGroup(newCodeGroup)
+      }
     }
+  }
+
+  const onChangePeriods = (value) => {
+    if(value !== 'nan' ){
+      if (!periodo.includes(value)) {
+        let newPeriodo = [...periodo]
+        newPeriodo.push(value)
+        setPeriodo(newPeriodo)
+      } else {
+        let newPeriodo = arrayRemove(periodo, value)
+        setPeriodo(newPeriodo)
+      }
+    }
+  }
+
+  function arrayRemove(arr, value) {
+
+    return arr.filter(function(ele){
+      return ele != value;
+    });
   }
 
   const getPeriodo = async () => {
     const data = await obtenerPeriodos()
     setPeriodos(data.flatMap((item) => ({label: `${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`,value: item.id})))
+  }
+
+  const codeIncludes = (value) => {
+    return codeGroup.includes(value)
+  }
+
+  const periodoIncludes = (value) => {
+    return periodo.includes(value)
   }
 
   return (
@@ -167,7 +210,6 @@ export const Book = () => {
         </div>
       </div>
       <div className={"form-items"}>
-
         <div className={"form-item-inputs"}>
           <div className={"form-item-inputs-left"}>
             <div className={"form-item-inputs-left"}>
@@ -210,7 +252,8 @@ export const Book = () => {
                 <FormItemLabel label={"Horario"} />
                 <FormItemValueDynamic
                   options={periodos}
-                  onChange={onChangePeriodo}
+                  onChange={e => onChangePeriods(e.target.value)}
+                  includes={periodoIncludes}
                 />
               </div>
             </div>
@@ -233,6 +276,7 @@ export const Book = () => {
                       <FormItemValueDynamic
                           options={getGroups(teachers[0])}
                           onChange={e => onChangeGroups(e.target.value)}
+                          includes={codeIncludes}
                       />
                     </div>
                     : null
@@ -252,6 +296,7 @@ export const Book = () => {
               <FormItemValueDynamic
                   options={getGroups(teacher)}
                   onChange={e => onChangeGroups(e.target.value)}
+                  includes={codeIncludes}
               />
             </div>
           </div>) : null
