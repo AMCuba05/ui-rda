@@ -6,6 +6,7 @@ import FilterIcon from "../../assets/svg/filter.svg";
 import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
 import "./styles.css";
 import { obtenerHistorial } from "../../api/historialDocente";
+import {eliminarSolicitud} from "../../api/eliminarSolicitud"
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 
@@ -16,6 +17,12 @@ export const HistoryAdmin = () => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
       navigate('/admin/reserva', {replace: true});
     }
+
+  const eliminar = async (item) => {
+    if(item.estado == "ACEPTADO" || item.estado == "PENDIENTE"){
+      const data = await eliminarSolicitud(item.solicitud[0].id);
+    }
+  }
 
   const getHistorial = async () => {
       const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id)
@@ -97,7 +104,7 @@ export const HistoryAdmin = () => {
 
             </div>
             <div className={"align-flex1-5"}>
-              <img src={redGarbageIcom} alt="" className={"icono-basurero"}/>
+              <img src={redGarbageIcom} alt="" className={"icono-basurero"} onClick={()=> eliminar(item)}/>
             </div>
             </div>)}
     </div>
