@@ -3,6 +3,7 @@ import { BoldText } from "../../components/BoldText";
 import { ColoredTag } from "../../components/ColoredTag";
 import {CommonText} from "../../components/CommonText";
 import FilterIcon from "../../assets/svg/filter.svg";
+import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
 import "./styles.css";
 import { obtenerHistorial } from "../../api/historialDocente";
 import {useNavigate} from "react-router-dom";
@@ -30,8 +31,6 @@ export const HistoryAdmin = () => {
       <div className={"history-admin-title"}>
         <TitlePage title={"Historial de reservas"} />
         <div className={"history-admin-title-filter"}>
-        <img src={FilterIcon} alt="" />
-        <span>Filtrar</span>
 
         </div>
 
@@ -62,7 +61,9 @@ export const HistoryAdmin = () => {
         <div className={"align-flex5"}>
           <BoldText white={true}>Estado</BoldText>
         </div>
-
+        <div className={"align-flex2"}>
+          <BoldText white={true}>Anular</BoldText>
+        </div>
       </div>
       {solicitudes.map((item, index)  => <div className={"table-history-item"}>
       <div className={"align-flex"}>
@@ -94,6 +95,9 @@ export const HistoryAdmin = () => {
                 item.estado === 'PENDIENTE' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
                 <ColoredTag state={3}>{item.estado}</ColoredTag>)}
 
+            </div>
+            <div className={"align-flex1-5"}>
+              <img src={redGarbageIcom} alt="" className={"icono-basurero"}/>
             </div>
             </div>)}
     </div>
