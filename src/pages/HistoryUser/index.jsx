@@ -7,6 +7,8 @@ import "./styles.css";
 import { obtenerHistorial } from "../../api/historialDocente";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import { ModalDelete } from "../../components/Modals/ModalDelete";
+import {ModalMoreInfo} from "../../components/Modals/ModalMoreInfo";
 
 export const HistoryUser = () => {
   const navigate = useNavigate()
@@ -27,6 +29,8 @@ export const HistoryUser = () => {
 
   return (
     <div className={"history-user-page"}>
+      <ModalDelete openModel={false}/>
+      <ModalMoreInfo openModel={false}/>
       <div className={"history-user-title"}>
         <TitlePage title={"Historial de reservas"} />
         <div className={"history-user-title-filter"}>
