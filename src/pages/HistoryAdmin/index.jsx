@@ -9,6 +9,7 @@ import { obtenerHistorial } from "../../api/historialDocente";
 import {eliminarSolicitud} from "../../api/eliminarSolicitud"
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import { WarningReservationCancelation } from "../../components/WarningReservationCancelation";
 
 export const HistoryAdmin = () => {
   const navigate = useNavigate()
@@ -33,8 +34,13 @@ export const HistoryAdmin = () => {
         void getHistorial()
     },[])
 
+  const [openModalW, setOpenModalW ] = useState(false);
+  const handleOpenModalW = () => {
+    setOpenModalW(!openModalW);
+  }
   return (
     <div className={"history-admin-page"}>
+      
       <div className={"history-admin-title"}>
         <TitlePage title={"Historial de reservas"} />
         <div className={"history-admin-title-filter"}>
@@ -73,6 +79,7 @@ export const HistoryAdmin = () => {
         </div>
       </div>
       {solicitudes.map((item, index)  => <div className={"table-history-item"}>
+      <WarningReservationCancelation openModel={openModalW} handleOpen={handleOpenModalW} onSubmit={eliminar} item={item}/>
       <div className={"align-flex"}>
                 <BoldText >{index + 1}</BoldText>
             </div>
@@ -104,7 +111,7 @@ export const HistoryAdmin = () => {
 
             </div>
             <div className={"align-flex1-5"}>
-              <img src={redGarbageIcom} alt="" className={"icono-basurero"} onClick={()=> eliminar(item)}/>
+              <img src={redGarbageIcom} alt="" className={"icono-basurero"} onClick={handleOpenModalW} />
             </div>
             </div>)}
     </div>
