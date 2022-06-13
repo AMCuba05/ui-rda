@@ -8,6 +8,8 @@ import {AddButton} from "../../components/Buttons/AddButton";
 import {Classroom} from "../../components/Classroom";
 import {SuccessfulButton} from "../../components/Buttons/Successful";
 import {WhiteButton} from "../../components/Buttons/WhiteButton";
+import {BackButton} from "../../components/Buttons/BackButton";
+import {useNavigate} from "react-router-dom";
 
 const data = [
     {
@@ -94,12 +96,17 @@ const data = [
 
 
 export const SuggestClassroom = () => {
+  const navigate = useNavigate()
+  const goToReservar = () => {
+    navigate("/reservar", { replace: true });
+  };
     return<div>
         <div className={'pending-title'}>
             <div>
-                Lista de Aula(s) Disponibles:
+                Sugerencia de Aulas:
             </div>
         </div>
+        <BackButton title={"Atras"} onClick={goToReservar} />
         <div className={'table-header'}>
             <div className={'table-suggest-Aula'} >
                 <BoldText white={true}>Aula</BoldText>
@@ -140,7 +147,7 @@ export const SuggestClassroom = () => {
                 <ColoredTag>Nuevo Pdft</ColoredTag>
             </div>
             <div className={'table-suggest-Estado'}>
-                <ColoredTag state={'free'}>Disponible</ColoredTag>
+                <ColoredTag state={'1'}>Disponible</ColoredTag>
             </div>
             <div className={'table-suggest-vacio'}>
                 <AddButton title={'Añadir'}/>
@@ -151,11 +158,18 @@ export const SuggestClassroom = () => {
                 <BoldText>Aulas Seleccionadas: </BoldText>
                 <Classroom name={'653 B'} icon={garbageIcon}/>
                 <Classroom name={'TAMEC 2'} icon={garbageIcon}/>
+
+            <div className={'table-suggest-footer-items'} >
+                <BoldText>Capacidad seleccionada Total: </BoldText>
+                <ColoredTag>0 Estudiantes</ColoredTag>
+            </div>
+
             </div>
             <div className={'table-suggest-footer-items'}>
-                <WhiteButton title={'Enviar Sugerencias'} />
-                <div style={{width: '30px'}}></div>
+
+                <WhiteButton title={'Retroceder'} onClick={goToReservar}/>
                 <CommonButton title={'Confirmar reserva'} />
+
             </div>
         </div>
     </div>

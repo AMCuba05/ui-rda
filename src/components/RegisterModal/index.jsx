@@ -28,6 +28,7 @@ useEffect( () => {
 
     const arrDocente = teachersList.flatMap((item) => (item.nombre));
     setTeachersNameList(arrDocente)
+    console.log(teachersNameList);
   }
 
 
@@ -100,8 +101,7 @@ useEffect( () => {
     let validation = false;
     let cellphonePattern = /^#?(([6|7]{1}[0-9]{7,7}))$/;
     if(cellphone === ""){
-      handleShowCellphoneError(true);
-      validation = false;
+      validation = true;
     } else {
       if(cellphonePattern.test(cellphone)){
         handleShowCellphoneError(false);
