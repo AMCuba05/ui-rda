@@ -1,0 +1,31 @@
+.modal-warning{
+    width: 500px;
+    border-radius: 20px;
+  }
+  
+  .modal-warning-title{
+  margin-bottom: 10px;
+  }
+  
+  .modal-warning-text{
+  font-size: 18px;
+  margin-bottom: 10px;
+  }
+  
+  .modal-warning-classroom{
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  }
+  
+  .modal-warning-buttons{
+  display: flex;
+  gap: 30px;
+  }
+  
+  .modal-warning-buttons-btn{
+  flex: 1;
+  }
+  
