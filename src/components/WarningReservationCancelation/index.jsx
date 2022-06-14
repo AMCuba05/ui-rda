@@ -4,26 +4,57 @@ import { WhiteButton } from "../Buttons/WhiteButton";
 import { CommonButton } from "../Buttons/Common";
 import { Classroom } from "../Classroom";
 import { BoldText } from "../BoldText";
+import { ColoredTag } from "../ColoredTag";
 import "./styles.css";
 import "rsuite/dist/rsuite-rtl.css";
 
 export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, dataClassrooms = null, item}) => {
+  
   return (
     <div>
       <Modal className={"modal-warning"} open={openModel} onClose={handleOpen} >
         <div className={"modal-warning-title"}>
-          <BoldText children={"¡Advertencia! antes de confirmar:"} />
+          <BoldText children={"¿Estas seguro de que quieres anular esta reserva?"} />
         </div>
         <div className={"modal-warning-text"}>
-          {console.log(item)}
-          Las siguientes aulas tienen conflicto:
+          La siguiente reserva sera anulada:
+        </div>
+
+        <div className={"modal-warning-text"}>
+          Fecha:
+        </div>
+        {
+        }
+        <div className={"modal-warning-classroom"}>
+          {item != null
+            ? () =>{
+                <ColoredTag>{item.fecha}</ColoredTag>
+            } 
+            : null}
+        </div>
+
+        <div className={"modal-warning-text"}>
+          Aulas:
         </div>
 
         <div className={"modal-warning-classroom"}>
-          {dataClassrooms != null
-            ? dataClassrooms.map((item) => (
-                <Classroom name={item.nombre} icon={garbageIcon} />
-              ))
+          {item.aulas != null
+            ? item.aulas.map((aula) => {
+              <ColoredTag>{aula.nombre}</ColoredTag>
+              }
+            )
+            : null}
+        </div>
+
+        <div className={"modal-warning-text"}>
+          Peridos:
+        </div>
+        <div className={"modal-warning-classroom"}>
+          {item.periodos != null
+            ? item.periodos.map((periodo) => {
+              <ColoredTag>{periodo.hora_inicio.substring(0,5)} - {periodo.hora_fin.substring(0,5)}</ColoredTag>
+              }
+            )
             : null}
         </div>
 
