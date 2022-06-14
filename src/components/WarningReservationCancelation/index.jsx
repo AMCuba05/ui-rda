@@ -23,13 +23,12 @@ export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, 
         <div className={"modal-warning-text"}>
           Fecha:
         </div>
-        {
-        }
+        
         <div className={"modal-warning-classroom"}>
           {item != null
-            ? () =>{
+            ? 
                 <ColoredTag>{item.fecha}</ColoredTag>
-            } 
+            
             : null}
         </div>
 
@@ -38,24 +37,20 @@ export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, 
         </div>
 
         <div className={"modal-warning-classroom"}>
-          {item.aulas != null
-            ? item.aulas.map((aula) => {
+          {item.aulas.map((aula) => 
               <ColoredTag>{aula.nombre}</ColoredTag>
-              }
-            )
-            : null}
+              
+            )}
         </div>
 
         <div className={"modal-warning-text"}>
           Peridos:
         </div>
         <div className={"modal-warning-classroom"}>
-          {item.periodos != null
-            ? item.periodos.map((periodo) => {
+          {item.periodos.map((periodo) => 
               <ColoredTag>{periodo.hora_inicio.substring(0,5)} - {periodo.hora_fin.substring(0,5)}</ColoredTag>
-              }
             )
-            : null}
+          }
         </div>
 
         <div className={"modal-warning-text"}>
