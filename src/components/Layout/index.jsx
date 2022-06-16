@@ -166,6 +166,25 @@ export const Layout = ({ children }) => {
               </div>
             ): null}
 
+{user === "user" ? (
+              <div
+                className={
+                  window.location.pathname === "/perfil"
+                    ? "layout-navbar-item-active"
+                    : "layout-navbar-item"
+                }
+                onClick={ async () =>{
+                  const user = JSON.parse(sessionStorage.getItem('user'))
+                  const data = await docenteMaterias(user.id)
+                  dispatch(setMaterias(data))
+                  navigate("/perfil", { replace: true })}
+                }
+              >
+                <img src={settings} alt={""} />
+                <label> Configurar</label>
+              </div>
+            ) : null}
+
             {user === "admin" ? (
               <div
                 className={
