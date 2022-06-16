@@ -1,5 +1,6 @@
 import './styles.css'
-import garbageIcon from '../../assets/svg/redGarbageIcom.svg'
+import garbageIcon from '../../assets/svg/redGarbageIcom.svg';
+import suggestIcon from "../../assets/svg/suggest-icon.svg";
 import {BoldText} from "../../components/BoldText";
 import {ColoredTag} from "../../components/ColoredTag";
 import {CommonButton} from "../../components/Buttons/Common";
@@ -150,6 +151,12 @@ export const CreateBooking = () => {
             <div className={'table-top-items'}>
                 <CommonInput input={estimado} inputChange={setEstimado} label={'Indique la capacidad total que espera reservar'}/>
                 <CommonInput label={'Buscar un aula o area en especifico:'}/>
+            </div>
+            <div className={'table-suggest-link'}>
+              <a onClick={() => navigate("/admin/sugerir", { replace: true })}>
+                <img src={suggestIcon}/>
+                Sugerirme aulas
+              </a>
             </div>
             <div className={'table-header'}>
                 <div className={'table-suggest-Aula'} >

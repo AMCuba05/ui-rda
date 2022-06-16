@@ -1,23 +1,25 @@
 import { TitlePage } from "../../components/TitlePage";
 import { BoldText } from "../../components/BoldText";
 import { ColoredTag } from "../../components/ColoredTag";
-import {CommonText} from "../../components/CommonText";
-import FilterIcon from "../../assets/svg/filter.svg";
-import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
+import { CommonText } from "../../components/CommonText";
+import filterIcon from "../../assets/svg/filter.svg";
 import "./styles.css";
 import { obtenerHistorial } from "../../api/historialDocente";
 import {eliminarSolicitud} from "../../api/eliminarSolicitud"
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import searchIcon from "../../assets/svg/SearchIcon.svg";
+import arrowIcon from "../../assets/svg/whiteRightArrow.svg";
+import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
 import { WarningReservationCancelation } from "../../components/WarningReservationCancelation";
 
 export const HistoryAdmin = () => {
-  const navigate = useNavigate()
-  const [solicitudes, setHistorial] = useState([])
+  const navigate = useNavigate();
+  const [solicitudes, setHistorial] = useState([]);
   const goToOptions = (item) => {
-      localStorage.setItem('pendingItem', JSON.stringify(item))
-      navigate('/admin/reserva', {replace: true});
-    }
+    localStorage.setItem("pendingItem", JSON.stringify(item));
+    navigate("/admin/reserva", { replace: true });
+  };
 
   const eliminar = async (item) => {
     if(item.estado == "ACEPTADO" || item.estado == "PENDIENTE"){
@@ -26,13 +28,13 @@ export const HistoryAdmin = () => {
   }
 
   const getHistorial = async () => {
-      const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id)
-      setHistorial(data)
-    }
+    const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id);
+    setHistorial(data);
+  };
 
-    useEffect(() => {
-        void getHistorial()
-    },[])
+  useEffect(() => {
+    void getHistorial();
+  }, []);
 
   const [openModalW, setOpenModalW ] = useState(false);
   const handleOpenModalW = () => {
@@ -43,10 +45,20 @@ export const HistoryAdmin = () => {
       
       <div className={"history-admin-title"}>
         <TitlePage title={"Historial de reservas"} />
-        <div className={"history-admin-title-filter"}>
+      </div>
+      <div className={"search-bar-input-content"}>
+        <div className={"search-bar-input-container"}>
+          <img className={"search-icon"} src={searchIcon} alt={""} />
+          <input
+            className={"search-bar-input"}
+            placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}
+          />
+        </div>
+        <div className={"search-bar-button"}>
+          <text className={"search-bar-button-title"}>Buscar Aula</text>
+          <img className={"arrow-icon"} src={arrowIcon} alt={""} />
 
         </div>
-
       </div>
       <div className={"table-history-header"}>
         <div className={"align-flex"}>
@@ -54,7 +66,6 @@ export const HistoryAdmin = () => {
         </div>
         <div className={"align-flex6"}>
           <BoldText white={true}>Docente(s)</BoldText>
-
         </div>
         <div className={"align-flex6"}>
           <BoldText white={true}>Aula</BoldText>
@@ -74,46 +85,55 @@ export const HistoryAdmin = () => {
         <div className={"align-flex5"}>
           <BoldText white={true}>Estado</BoldText>
         </div>
-        <div className={"align-flex2"}>
-          <BoldText white={true}>Anular</BoldText>
-        </div>
+
       </div>
-      {solicitudes.map((item, index)  => <div className={"table-history-item"}>
-      <WarningReservationCancelation openModel={openModalW} handleOpen={handleOpenModalW} onSubmit={eliminar} item={item}/>
-      <div className={"align-flex"}>
-                <BoldText >{index + 1}</BoldText>
-            </div>
-            <div className={"align-flex6 history-docents"}>
-                {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombreDocente}</BoldText> : <CommonText >{name.nombreDocente}</CommonText>)}
-            </div>
-            <div className={"history-class-list  align-flex6"}>
-                {item.aulas.map( (aula, index) => <ColoredTag>{aula.nombre}</ColoredTag>)}
-            </div>
-            <div className={"align-flex5"}>
-                <ColoredTag>{item.numero_estimado} est.</ColoredTag>
-            </div>
-            <div className={"history-admin-hours"}>
-            {item.periodos.map((horario,index) =>
-                <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
-
-
-            </div>
-            <div className={"history-admin-hours"}>
-                <ColoredTag>{item.fecha}</ColoredTag>
-            </div>
-            <div className={"align-flex5"}>
-                <ColoredTag>{item.motivo[0].justificacion}</ColoredTag>
-            </div>
-            <div className={"align-flex5"}>
-              {(item.estado === 'ACEPTADO' ? <ColoredTag state={1}>{item.estado}</ColoredTag>:
-                item.estado === 'PENDIENTE' ? <ColoredTag state={2}>{item.estado}</ColoredTag>:
-                <ColoredTag state={3}>{item.estado}</ColoredTag>)}
-
-            </div>
-            <div className={"align-flex1-5"}>
-              <img src={redGarbageIcom} alt="" className={"icono-basurero"} onClick={handleOpenModalW} />
-            </div>
-            </div>)}
+      {solicitudes.map((item, index) => (
+        <div className={"table-history-item"}>
+          <div className={"align-flex"}>
+            <BoldText>{index + 1}</BoldText>
+          </div>
+          <div className={"align-flex6 history-docents"}>
+            {item.docentes.map((name, index) =>
+              index === 0 ? (
+                <BoldText>{name.nombreDocente}</BoldText>
+              ) : (
+                <CommonText>{name.nombreDocente}</CommonText>
+              )
+            )}
+          </div>
+          <div className={"history-class-list  align-flex6"}>
+            {item.aulas.map((aula, index) => (
+              <ColoredTag>{aula.nombre}</ColoredTag>
+            ))}
+          </div>
+          <div className={"align-flex5"}>
+            <ColoredTag>{item.numero_estimado} est.</ColoredTag>
+          </div>
+          <div className={"history-admin-hours"}>
+            {item.periodos.map((horario, index) => (
+              <ColoredTag>
+                {horario.hora_inicio.substring(0, 5)} -{" "}
+                {horario.hora_fin.substring(0, 5)}
+              </ColoredTag>
+            ))}
+          </div>
+          <div className={"history-admin-hours"}>
+            <ColoredTag>{item.fecha}</ColoredTag>
+          </div>
+          <div className={"align-flex5"}>
+            <ColoredTag>{item.motivo[0].justificacion}</ColoredTag>
+          </div>
+          <div className={"align-flex5"}>
+            {item.estado === "ACEPTADO" ? (
+              <ColoredTag state={1}>{item.estado}</ColoredTag>
+            ) : item.estado === "PENDIENTE" ? (
+              <ColoredTag state={2}>{item.estado}</ColoredTag>
+            ) : (
+              <ColoredTag state={3}>{item.estado}</ColoredTag>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

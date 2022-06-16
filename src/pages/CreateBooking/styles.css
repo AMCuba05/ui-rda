@@ -92,3 +92,13 @@
     display: flex;
     flex: 2;
 }
+
+.table-suggest-link{
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}

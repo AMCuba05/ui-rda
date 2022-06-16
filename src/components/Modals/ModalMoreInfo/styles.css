@@ -1,0 +1,37 @@
+.modal-more-info{
+  width: 500px;
+  border-radius: 20px;
+}
+
+.modal-more-info-title{
+margin-bottom: 10px;
+}
+
+.modal-more-info-text{
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.modal-more-info-classroom{
+display: flex;
+gap: 20px;
+justify-content: center;
+align-items: center;
+margin-bottom: 20px;
+}
+
+
+.modal-more-info-options{
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex: 1;
+}
+.modal-more-info-buttons{
+display: flex;
+gap: 30px;
+}
+
+.modal-more-info-buttons-btn{
+flex: 1;
+}
