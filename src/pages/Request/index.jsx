@@ -78,7 +78,6 @@ export const Request = () => {
   const navigate = useNavigate()
   return (
     <div className={"request-content"}>
-      {/**TODO: implementr backend  */}
       <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces} onSubmit={onAccept} dataClassrooms={data.aulas}/>
       <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning} />
       <ModalReject openModel={openReject} handleOpen={handleOpenReject} onSubmit={onReject}/>
@@ -227,8 +226,7 @@ export const Request = () => {
               </div>
               <div className="request-sugestions-button-flex">
                 <WarningButton title={"Rechazar Reserva"} onClick={handleOpenReject} />
-
-                <CommonButton title={"Confirmar Reserva"} onClick={handleOpenSucces} />
+                <CommonButton title={"Confirmar Reserva"} disabled={conflictos.length > 0} onClick={handleOpenSucces} />
               </div>
             </div>
           </div>
