@@ -32,8 +32,9 @@ export const CreateBooking = () => {
     const dispatch = useDispatch()
 
     const getAulas = async () => {
-        const data = await obtenerAulasDisponibles(today.toISOString().substring(0,10))
-        setAulas(data.slice(0,15))
+        const data = JSON.parse(sessionStorage.getItem('solicitud'))
+        const res = await obtenerAulasDisponibles(data.fecha)
+        setAulas(res.slice(0,15))
     }
 
     const removerReserva = (item) => {
@@ -70,11 +71,17 @@ export const CreateBooking = () => {
         navigate("/crear", { replace: true });
     };
 
+    const onSubmitConflict = async () => {
+        setConflicto([])
+        setReserva([])
+        handleOpenModalW(!openModalW)
+    };
+
     const onSubmit = async () => {
         try {
             const data = JSON.parse(sessionStorage.getItem('solicitud'))
             const params = {
-                numero_estimado: parseInt(estimado),
+                numero_estimado: parseInt(cantidad),
                 fecha: data.fecha,
                 aulasId: reserva.flatMap(item => item.idAula),
                 gruposId: data.gruposId,
@@ -89,6 +96,8 @@ export const CreateBooking = () => {
         }
     };
 
+
+
     const [openModalS, setOpenModalS ] = useState(false);
     const handleOpenModalS = () => {
       setOpenModalS(!openModalS);
@@ -101,7 +110,8 @@ export const CreateBooking = () => {
 
     const openModal = async () => {
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
-        reserva.map( async item => {
+        let newConflicto = [...conflicto]
+        reserva.map(async item => {
             const params = {
                 fecha: data.fecha,
                 periodo: data.periodosId[0],
@@ -110,8 +120,8 @@ export const CreateBooking = () => {
             }
             const libre = await estadoAula(params)
             if (!libre) {
-                let newConflicto = [...conflicto]
-                newConflicto.push(reserva.nombre)
+                newConflicto = [...conflicto]
+                newConflicto.push(item.nombre)
                 setConflicto(newConflicto)
             }
         })
@@ -125,7 +135,7 @@ export const CreateBooking = () => {
     return<div>
         <div className={'create-booking-title'}>
             <ModalSuccess openModel={openModalS} handleOpen={handleOpenModalS} onSubmit={onSubmit} dataClassrooms={reserva}/>
-            <ModalWarning openModel={openModalW} handleOpen={handleOpenModalW} onSubmit={onSubmit} dataClassrooms={reserva} />
+            <ModalWarning openModel={openModalW} handleOpen={handleOpenModalW} onSubmit={onSubmitConflict} dataClassrooms={reserva} />
             <BackButton title={"Atras"} onClick={goToCreate} />
             <div className={"form-title-column"}>
                 <FormTitle name={"Crear Reserva:"} />
@@ -155,9 +165,6 @@ export const CreateBooking = () => {
                 <div className={'table-suggest-Cantidad'}>
                     <BoldText white={true}>Capacidad</BoldText>
                 </div>
-                <div className={'table-suggest-Horario'}>
-                    <BoldText white={true}>Horario</BoldText>
-                </div>
                 <div className={'table-suggest-Fecha'}>
                     <BoldText white={true}>Fecha</BoldText>
                 </div>
@@ -172,6 +179,8 @@ export const CreateBooking = () => {
                 </div>
             </div>
         </div>
+        {console.log('conflicto',conflicto)}
+        {console.log('reserva',reserva)}
         {aulas ? aulas.map((item, index)  => {
             return(
                 <div className={'table-suggest-item'}>
@@ -181,13 +190,8 @@ export const CreateBooking = () => {
                     <div className={'table-suggest-Cantidad'}>
                         <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                     </div>
-                    <div className={'table-suggest-Horario'}>
-                        <FormItemValueDynamic options={['6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15',
-                            '11:15 - 12:45', '12:45 - 14:15', '14:15 - 15:45', '15:45 - 17:15', '17:15 - 18:45',
-                            '18:45 - 20:15', '20:15 - 21:45']}/>
-                    </div>
                     <div className={'table-suggest-Fecha'}>
-                        <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>
+                        <ColoredTag>{JSON.parse(sessionStorage.getItem('solicitud')).fecha}</ColoredTag>
                     </div>
                     <div className={'table-suggest-Lugar'}>
                         <ColoredTag>{item.ubicacion}</ColoredTag>

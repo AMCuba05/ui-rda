@@ -64,21 +64,6 @@ export const Book = () => {
     setTeachersList([])
   }, [assignments])
 
-  {
-    /*
-    useEffect(() => {
-    const codes = []
-    groups.map(item =>
-    teachersList.map( (group) => {
-      if (group.nombre_grupo === item ){
-        codes.push(group.id_grupo)
-      }
-    }))
-    setCodeGroup(codes)
-  }, [groups])
-    */
-  }
-
   const getGroups = (name) => {
     let res = [{label:'Selecciona un grupo', value: 'nan'}]
     teachersList.map(teacher => {
@@ -110,8 +95,9 @@ export const Book = () => {
     })
   }
 
-
   const onSubmit = () => {
+    let yourDate = new Date()
+    const formatToday = yourDate.toISOString().split('T')[0]
       const solicitud = {
         fecha: fecha,
         gruposId: codeGroup,
@@ -119,36 +105,27 @@ export const Book = () => {
         periodosId: periodo,
       };
       if (reason != undefined && periodo != undefined && codeGroup.length > 0 && fecha != undefined ){
-        sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
-        navigate("/reservar", { replace: true });
+        if(formatToday < fecha || formatToday.substring(0,4) === fecha.substring(0,4) ){
+          sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
+          navigate("/reservar", { replace: true });
+        } else {
+          alert('La fecha no es valida')
+        }
       } else {
-        alert('Faltan campos por llenar')
+        if (!reason) {
+          alert('Debe llenar campo de Motivo')
+        }
+        if (!periodo) {
+          alert('Debe seleccionar al menos un Horario')
+        }
+        if (codeGroup.length === 0) {
+          alert('Debe seleccionar al menos un Grupo')
+        }
+        if (!fecha) {
+          alert('Debe ingresar una fecha')
+        }
       }
 
-  };
-
-  const onActivateGroup = (value) => {
-    const newCode = [...codeGroup]
-    newCode.push(value)
-    setCodeGroup(newCode)
-  }
-
-  const onDeactivateGroup = (value) => {
-    console.log(value)
-  }
-
-  const goToBooking = () => {
-    navigate("/reservar", { replace: true });
-  }
-
-  const hideNotification = () => {
-    let classNotification = document.getElementById("notifications-hide");
-    classNotification.classList.remove("hide");
-    classNotification.classList.add("hide-transform");
-    setTimeout(() => {
-      classNotification.classList.remove("hide-transform");
-      classNotification.classList.add("hide");
-    }, "10000");
   };
 
   const onChangeGroups = (value) => {
@@ -165,7 +142,7 @@ export const Book = () => {
   }
 
   const onChangePeriods = (value) => {
-    if(value !== 'nan' ){
+    if(value !== 'Selecciona un Horario' ){
       if (!periodo.includes(value)) {
         let newPeriodo = [...periodo]
         newPeriodo.push(value)
@@ -186,7 +163,7 @@ export const Book = () => {
 
   const getPeriodo = async () => {
     const data = await obtenerPeriodos()
-    setPeriodos(data.flatMap((item) => ({label: `${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`,value: item.id})))
+    setPeriodos([ 'Selecciona un Horario' ,...data.flatMap((item) => ({label: `${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`,value: item.id}))])
   }
 
   const codeIncludes = (value) => {

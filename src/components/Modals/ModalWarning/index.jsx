@@ -28,7 +28,7 @@ export const ModalWarning = ({openModel, handleOpen, onSubmit, dataClassrooms = 
         </div>
 
         <div className={"modal-warning-text"}>
-          ¿Desea Continuar?
+          Intente con otra Aula
         </div>
 
         <div className={"modal-warning-buttons"}>
@@ -36,7 +36,7 @@ export const ModalWarning = ({openModel, handleOpen, onSubmit, dataClassrooms = 
             <WhiteButton title={"Retroceder"} />
           </div>
           <div className={"modal-warning-buttons-btn"}>
-            <CommonButton title={"Continuar"} onClick={onSubmit} />
+            <CommonButton title={"Aceptar"} onClick={onSubmit} />
           </div>
         </div>
       </Modal>

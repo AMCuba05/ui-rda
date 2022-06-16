@@ -5,10 +5,13 @@ import { CommonText } from "../../components/CommonText";
 import filterIcon from "../../assets/svg/filter.svg";
 import "./styles.css";
 import { obtenerHistorial } from "../../api/historialDocente";
+import {eliminarSolicitud} from "../../api/eliminarSolicitud"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import searchIcon from "../../assets/svg/SearchIcon.svg";
 import arrowIcon from "../../assets/svg/whiteRightArrow.svg";
+import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
+import { WarningReservationCancelation } from "../../components/WarningReservationCancelation";
 
 export const HistoryAdmin = () => {
   const navigate = useNavigate();
@@ -17,6 +20,12 @@ export const HistoryAdmin = () => {
     localStorage.setItem("pendingItem", JSON.stringify(item));
     navigate("/admin/reserva", { replace: true });
   };
+
+  const eliminar = async (item) => {
+    if(item.estado == "ACEPTADO" || item.estado == "PENDIENTE"){
+      const data = await eliminarSolicitud(item.solicitud[0].id);
+    }
+  }
 
   const getHistorial = async () => {
     const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id);
@@ -27,8 +36,13 @@ export const HistoryAdmin = () => {
     void getHistorial();
   }, []);
 
+  const [openModalW, setOpenModalW ] = useState(false);
+  const handleOpenModalW = () => {
+    setOpenModalW(!openModalW);
+  }
   return (
     <div className={"history-admin-page"}>
+      
       <div className={"history-admin-title"}>
         <TitlePage title={"Historial de reservas"} />
       </div>
@@ -43,6 +57,7 @@ export const HistoryAdmin = () => {
         <div className={"search-bar-button"}>
           <text className={"search-bar-button-title"}>Buscar Aula</text>
           <img className={"arrow-icon"} src={arrowIcon} alt={""} />
+
         </div>
       </div>
       <div className={"table-history-header"}>
@@ -70,6 +85,7 @@ export const HistoryAdmin = () => {
         <div className={"align-flex5"}>
           <BoldText white={true}>Estado</BoldText>
         </div>
+
       </div>
       {solicitudes.map((item, index) => (
         <div className={"table-history-item"}>
