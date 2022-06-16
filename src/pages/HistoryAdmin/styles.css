@@ -71,9 +71,17 @@
   flex: 7;
 }
 
+.align-flex1-5 {
+  flex: 1.5;
+}
+
 .history-admin-hours {
-  flex: 6;
+  flex: 7;
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.icono-basurero{
+  width: 105%;
 }
