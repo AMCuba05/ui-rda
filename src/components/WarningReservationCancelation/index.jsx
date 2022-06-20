@@ -8,8 +8,8 @@ import { ColoredTag } from "../ColoredTag";
 import "./styles.css";
 import "rsuite/dist/rsuite-rtl.css";
 
-export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, dataClassrooms = null, item}) => {
-  
+export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, dataClassrooms = null, item = null}) => {
+
   return (
     <div>
       <Modal className={"modal-warning"} open={openModel} onClose={handleOpen} >
@@ -23,12 +23,12 @@ export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, 
         <div className={"modal-warning-text"}>
           Fecha:
         </div>
-        
+
         <div className={"modal-warning-data"}>
           {item != null
-            ? 
+            ?
                 <ColoredTag>{item.fecha}</ColoredTag>
-            
+
             : null}
         </div>
 
@@ -37,9 +37,9 @@ export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, 
         </div>
 
         <div className={"modal-warning-data"}>
-          {item.aulas.map((aula) => 
+          {item.aulas.map((aula) =>
               <ColoredTag>{aula.nombre}</ColoredTag>
-              
+
             )}
         </div>
 
@@ -47,7 +47,7 @@ export const WarningReservationCancelation = ({openModel, handleOpen, onSubmit, 
           Peridos:
         </div>
         <div className={"modal-warning-data"}>
-          {item.periodos.map((periodo) => 
+          {item.periodos.map((periodo) =>
               <ColoredTag>{periodo.hora_inicio.substring(0,5)} - {periodo.hora_fin.substring(0,5)}</ColoredTag>
             )
           }
