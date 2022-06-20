@@ -16,8 +16,10 @@ margin-bottom: 10px;
 display: flex;
 gap: 20px;
 justify-content: center;
+flex-wrap: wrap;
 align-items: center;
 margin-bottom: 20px;
+
 }
 
 .modal-delete-buttons{

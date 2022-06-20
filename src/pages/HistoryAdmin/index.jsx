@@ -5,48 +5,32 @@ import { CommonText } from "../../components/CommonText";
 import filterIcon from "../../assets/svg/filter.svg";
 import "./styles.css";
 import { obtenerHistorial } from "../../api/historialDocente";
-import {eliminarSolicitud} from "../../api/eliminarSolicitud"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import searchIcon from "../../assets/svg/SearchIcon.svg";
 import arrowIcon from "../../assets/svg/whiteRightArrow.svg";
-import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
-import { WarningReservationCancelation } from "../../components/WarningReservationCancelation";
-import {setLoading} from "../../redux/reducers/loading";
-import {useDispatch} from "react-redux";
 
 export const HistoryAdmin = () => {
   const navigate = useNavigate();
   const [solicitudes, setHistorial] = useState([]);
-  const dispatch = useDispatch()
   const goToOptions = (item) => {
     localStorage.setItem("pendingItem", JSON.stringify(item));
     navigate("/admin/reserva", { replace: true });
   };
 
-  const eliminar = async (item) => {
-    dispatch(setLoading(true))
-    if(item.estado == "ACEPTADO" || item.estado == "PENDIENTE"){
-      const data = await eliminarSolicitud(item.solicitud[0].id);
-    }
-    dispatch(setLoading(false))
-  }
+
 
   const getHistorial = async () => {
-    dispatch(setLoading(true))
+
     const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id);
     setHistorial(data);
-    dispatch(setLoading(false))
   };
 
   useEffect(() => {
     void getHistorial();
   }, []);
 
-  const [openModalW, setOpenModalW ] = useState(false);
-  const handleOpenModalW = () => {
-    setOpenModalW(!openModalW);
-  }
+
   return (
     <div className={"history-admin-page"}>
 

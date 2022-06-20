@@ -50,7 +50,8 @@ export const Layout = ({ children }) => {
   const onLogout = () => {
     sessionStorage.setItem("logged", "0");
     sessionStorage.setItem("role", "none");
-    sessionStorage.setItem("token", '0')
+    sessionStorage.setItem("token", '0');
+
     setLogged(false);
     navigate("/", { replace: true });
   };
@@ -263,10 +264,10 @@ export const Layout = ({ children }) => {
                   />
                 </div>
               </div>
-              <div className={"layout-title"}>
+              {/*<div className={"layout-title"}>
                 <Title title={"Que aula le gustaria reservar?"} />
                 <Search />
-              </div>
+              </div>*/}
             </div>
           )}
 
