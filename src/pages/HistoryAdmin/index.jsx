@@ -12,24 +12,31 @@ import searchIcon from "../../assets/svg/SearchIcon.svg";
 import arrowIcon from "../../assets/svg/whiteRightArrow.svg";
 import redGarbageIcom from "../../assets/svg/redGarbageIcom.svg";
 import { WarningReservationCancelation } from "../../components/WarningReservationCancelation";
+import {setLoading} from "../../redux/reducers/loading";
+import {useDispatch} from "react-redux";
 
 export const HistoryAdmin = () => {
   const navigate = useNavigate();
   const [solicitudes, setHistorial] = useState([]);
+  const dispatch = useDispatch()
   const goToOptions = (item) => {
     localStorage.setItem("pendingItem", JSON.stringify(item));
     navigate("/admin/reserva", { replace: true });
   };
 
   const eliminar = async (item) => {
+    dispatch(setLoading(true))
     if(item.estado == "ACEPTADO" || item.estado == "PENDIENTE"){
       const data = await eliminarSolicitud(item.solicitud[0].id);
     }
+    dispatch(setLoading(false))
   }
 
   const getHistorial = async () => {
+    dispatch(setLoading(true))
     const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id);
     setHistorial(data);
+    dispatch(setLoading(false))
   };
 
   useEffect(() => {
@@ -42,7 +49,7 @@ export const HistoryAdmin = () => {
   }
   return (
     <div className={"history-admin-page"}>
-      
+
       <div className={"history-admin-title"}>
         <TitlePage title={"Historial de reservas"} />
       </div>

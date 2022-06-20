@@ -22,8 +22,10 @@ import { RegisterModal } from "../RegisterModal";
 import {UserCard} from "../UserCard";
 import {docenteMaterias} from "../../api/docenteMaterias";
 import {setMaterias} from "../../redux/reducers/materias";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { NotificationsLayout } from "../Notifications/NotificationsLayout";
+import {LoadingSpinner} from "../Loading";
+import {setLoading} from "../../redux/reducers/loading";
 
 export const Layout = ({ children }) => {
   const [login, setLogin] = useState(sessionStorage.getItem("logged") != "0");
@@ -35,6 +37,7 @@ export const Layout = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("user")));
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {value} = useSelector((state) => state.loader);
 
   const showModalLogin = () => {
     setLogin(!login);
@@ -62,6 +65,7 @@ export const Layout = ({ children }) => {
 
   return (
     <div className={"layout-container"}>
+      { value ? <LoadingSpinner/> : null }
       <div className={"layout-menu-container"}>
         {login ? <LoginModal onAction={showModalLogin} registermodal={showModalRegister} /> : null}
         {register ? <RegisterModal onAction={showModalRegister} /> : null}
@@ -130,9 +134,11 @@ export const Layout = ({ children }) => {
                     : "layout-navbar-item"
                 }
                 onClick={ async () =>{
+                  dispatch(setLoading(true))
                   const user = JSON.parse(sessionStorage.getItem('user'))
                   const data = await docenteMaterias(user.id)
                   dispatch(setMaterias(data))
+                  dispatch(setLoading(false))
                   navigate("/crear", { replace: true })}
                 }
               >
@@ -174,9 +180,11 @@ export const Layout = ({ children }) => {
                     : "layout-navbar-item"
                 }
                 onClick={ async () =>{
+                  dispatch(setLoading(true))
                   const user = JSON.parse(sessionStorage.getItem('user'))
                   const data = await docenteMaterias(user.id)
                   dispatch(setMaterias(data))
+                  dispatch(setLoading(false))
                   navigate("/perfil", { replace: true })}
                 }
               >

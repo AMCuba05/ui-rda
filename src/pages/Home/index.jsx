@@ -7,9 +7,10 @@ import {AddButton} from "../../components/Buttons/AddButton";
 import {Classroom} from "../../components/Classroom";
 import {useEffect, useState} from "react";
 import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
 import {useNavigate} from "react-router-dom";
+import {setLoading} from "../../redux/reducers/loading";
 
 
 export const Home = () => {
@@ -17,12 +18,15 @@ export const Home = () => {
     const [aulas, setAulas] = useState()
     const [reserva, setReserva] = useState([])
     const today = new Date()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const data = useSelector(state => state.request)
 
     const getAulas = async () => {
+        dispatch(setLoading(true))
         const data = await obtenerAulasDisponibles(today.toISOString().substring(0,10))
         setAulas(data.slice(0,10))
+        dispatch(setLoading(false))
     }
 
     const removerReserva = (item) => {

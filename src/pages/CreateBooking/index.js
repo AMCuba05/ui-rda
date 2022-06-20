@@ -7,7 +7,7 @@ import {CommonButton} from "../../components/Buttons/Common";
 import {AddButton} from "../../components/Buttons/AddButton";
 import {Classroom} from "../../components/Classroom";
 import {useEffect, useState} from "react";
-import {obtenerAulasDisponibles} from "../../api/aulasDisponibles";
+import {nombreAulas, obtenerAulasDisponibles, sugerenciaAulas} from "../../api/aulasDisponibles";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {FormItemValueDynamic} from "../../components/FormItemValueDynamic";
@@ -27,6 +27,7 @@ export const CreateBooking = () => {
     const [conflicto, setConflicto] = useState([])
     const [cantidad, setCantidad] = useState(0)
     const [estimado, setEstimado] = useState(0)
+    const [name, setName] = useState()
     const today = new Date()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -35,6 +36,46 @@ export const CreateBooking = () => {
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
         const res = await obtenerAulasDisponibles(data.fecha)
         setAulas(res.slice(0,15))
+    }
+
+    const getSugerencias = async () => {
+        const data = JSON.parse(sessionStorage.getItem('solicitud'))
+        try {
+            const response = await sugerenciaAulas({
+                fecha: data.fecha,
+                periodos: [],
+                capacidadMin: 10,
+                capacidadMax: estimado,
+                area: data.ubicacion
+            })
+            if (Array.isArray(response)){
+                setAulas(response)
+            } else {
+                setAulas([response])
+            }
+        } catch (e) {
+            alert('No se encontraron aulas para el número estimado')
+        }
+    }
+
+    const getSugerenciasNombre = async () => {
+        const data = JSON.parse(sessionStorage.getItem('solicitud'))
+        try {
+            const response = await nombreAulas({
+                fecha: data.fecha,
+                nombreAula: name
+            })
+            if (response.length == 0){
+                alert('No se encontraron aulas para el criterio de busqueda')
+            }
+            if (Array.isArray(response)){
+                setAulas(response)
+            } else {
+                setAulas([response])
+            }
+        } catch (e) {
+            alert('No se encontraron aulas para el número estimado')
+        }
     }
 
     const removerReserva = (item) => {
@@ -150,10 +191,13 @@ export const CreateBooking = () => {
         <div className={'table-top-header'}>
             <div className={'table-top-items'}>
                 <CommonInput input={estimado} inputChange={setEstimado} label={'Indique la capacidad total que espera reservar'}/>
-                <CommonInput label={'Buscar un aula o area en especifico:'}/>
+                <div>
+                    <CommonInput label={'Buscar un aula o area en especifico:'} input={name} inputChange={setName}/>
+                    <CommonButton title={'Buscar'} onClick={getSugerenciasNombre} />
+                </div>
             </div>
             <div className={'table-suggest-link'}>
-              <a onClick={() => navigate("/admin/sugerir", { replace: true })}>
+              <a onClick={getSugerencias}>
                 <img src={suggestIcon}/>
                 Sugerirme aulas
               </a>
@@ -179,8 +223,7 @@ export const CreateBooking = () => {
                 </div>
             </div>
         </div>
-        {console.log('conflicto',conflicto)}
-        {console.log('reserva',reserva)}
+
         {aulas ? aulas.map((item, index)  => {
             return(
                 <div className={'table-suggest-item'}>

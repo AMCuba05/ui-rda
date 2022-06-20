@@ -9,18 +9,23 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import { ModalDelete } from "../../components/Modals/ModalDelete";
 import {ModalMoreInfo} from "../../components/Modals/ModalMoreInfo";
+import {setLoading} from "../../redux/reducers/loading";
+import {useDispatch} from "react-redux";
 
 export const HistoryUser = () => {
   const navigate = useNavigate()
   const [solicitudes, setHistorial] = useState([])
+    const dispatch = useDispatch()
   const goToOptions = (item) => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
       navigate('/admin/reserva', {replace: true});
     }
 
   const getHistorial = async () => {
+      dispatch(setLoading(true))
       const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id)
       setHistorial(data)
+      dispatch(setLoading(false))
     }
 
     useEffect(() => {

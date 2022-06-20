@@ -9,18 +9,23 @@ import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { obtenerAulas } from "../../api/cambioEstadoAula";
+import {useDispatch} from "react-redux";
+import {setLoading} from "../../redux/reducers/loading";
 
 export const SearchClassroomAdmin = () => {
   const navigate = useNavigate()
   const [aulas, setAulas] = useState([])
+    const dispatch = useDispatch()
   const goToOptions = (item) => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
       navigate('/admin/reserva', {replace: true});
     }
 
     const getAulas = async () => {
+      dispatch(setLoading(true))
       const data = await obtenerAulas()
       setAulas(data)
+      dispatch(setLoading(false))
     }
 
     useEffect(() => {

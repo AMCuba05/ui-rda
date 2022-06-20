@@ -9,3 +9,24 @@ export const obtenerAulasDisponibles = async (date) => {
     })
     return data
 }
+
+export const sugerenciaAulas = async (params) => {
+    const { data } = await axios.post(url + 'aula/sugerenciaReserva' , {
+        fecha: params.fecha,
+        periodos: params.periodos,
+        capacidadMin: params.capacidadMin,
+        capacidadMax: params.capacidadMax,
+        area: params.area
+    })
+    console.log(data)
+    return data
+}
+
+export const nombreAulas = async (params) => {
+    const { data } = await axios.post(url + 'aula/nombre' , {
+        fecha: params.fecha,
+        nombreAula: params.nombreAula
+    })
+    console.log(data)
+    return data
+}
