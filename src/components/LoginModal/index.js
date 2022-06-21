@@ -8,11 +8,15 @@ import './styles.css'
 import {loginDocentes} from "../../api/loginDocentes";
 import {currentUser, currentUserAdmin} from "../../api/currentUser";
 import {loginAdmin} from "../../api/loginAdmin";
+import {useDispatch} from "react-redux";
+import {setLoading} from "../../redux/reducers/loading";
 
 export const LoginModal = ({onAction, registermodal}) => {
+    const dispatch = useDispatch()
 
     const onLogin = async () => {
         if(verifications()){
+            dispatch(setLoading(true))
             try {
                 const data = await loginDocentes(codSis, password)
                 sessionStorage.setItem('role', 'user')
@@ -35,7 +39,7 @@ export const LoginModal = ({onAction, registermodal}) => {
                     alert('Código SIS o contraseña incorrectos')
                 }
             }
-
+            dispatch(setLoading(false))
 
         }
     }
