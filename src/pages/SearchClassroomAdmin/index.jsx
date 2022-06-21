@@ -15,6 +15,7 @@ import {setLoading} from "../../redux/reducers/loading";
 export const SearchClassroomAdmin = () => {
   const navigate = useNavigate()
   const [aulas, setAulas] = useState([])
+    const [filtro, setFiltro] = useState()
     const dispatch = useDispatch()
   const goToOptions = (item) => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
@@ -27,6 +28,22 @@ export const SearchClassroomAdmin = () => {
       setAulas(data)
       dispatch(setLoading(false))
     }
+
+    const filter = async () => {
+        if (filtro === '') {
+            console.log('entro')
+            await getAulas()
+        } else {
+          const result = aulas.filter(aula => aula.nombre === filtro );
+            setAulas(result)
+        }
+    }
+
+    useEffect(() => {
+        if (filtro === ''){
+            void getAulas()
+        }
+    },[filtro])
 
     useEffect(() => {
         void getAulas()
@@ -41,9 +58,9 @@ export const SearchClassroomAdmin = () => {
             <div className={'search-admin-bar-input-content'}>
                 <div className={'search-admin-bar-input-container'}>
                     <img className={'search-admin-icon'} src={searchIcon} alt={''}/>
-                    <input className={'search-admin-bar-input'} placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}/>
+                    <input onChange={e => setFiltro(e.target.value)} className={'search-admin-bar-input'} placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}/>
                 </div>
-                <div className={'search-admin-bar-button'} >
+                <div className={'search-admin-bar-button'} onClick={filter} >
                     <text className={'search-admin-bar-button-title'}>Buscar Aula</text>
                     <img className={'arrow-admin-icon'} src={arrowIcon} alt={''}/>
                 </div>
@@ -92,23 +109,6 @@ export const SearchClassroomAdmin = () => {
       </div>
       )}
 
-      <div className={"table-search-admin-item"}>
-        <div className={"align-flex"}>
-          <ToggleSwitch />
-        </div>
-        <div className={"align-flex"}>
-          <ColoredTag> AUDITORIO</ColoredTag>
-        </div>
-        <div className={"align-flex"}>
-          <ColoredTag> 150 estudiantes</ColoredTag>
-        </div>
-        <div className={"align-flex"}>
-          <ColoredTag>Edificio Nuevo</ColoredTag>
-        </div>
-        <div className={"align-flex"}>
-          <ColoredTag state={1}> Habilitado</ColoredTag>
-        </div>
-      </div>
     </div>
   );
 };

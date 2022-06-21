@@ -8,6 +8,7 @@ import {filtroGeneral} from "../../api/filtroGeneral";
 import {useDispatch, useSelector} from "react-redux";
 import {setFilter} from '../../redux/reducers/aulasFiltradas'
 import {setLoading} from "../../redux/reducers/loading";
+import {nombreAulas} from "../../api/aulasDisponibles";
 
 const AREAS = [
     'Area',
@@ -32,11 +33,12 @@ const AREAS = [
 ]
 
 export const Search = () => {
-    const [ nombre, setNombre ] = useState()
     const [ capacidadMax, setCapacidadMax ] = useState(200)
     const [ capacidadMin, setCapacidadMin ] = useState(0)
     const [ periodos, setPeriodos ] = useState('')
     const [ area, setArea ] = useState('')
+    const [name, setName] = useState()
+    const [aulas, setAulas] = useState()
     const dispatch = useDispatch()
 
     const onFilter = async () => {
@@ -54,13 +56,24 @@ export const Search = () => {
         dispatch(setLoading(false))
     }
 
-    const onChangeArea = e => {
-        if (area === 'Area' ){
-            setArea('')
-        } else {
-            setArea(e.target.value)
+    const getSugerenciasNombre = async () => {
+        const date = new Date()
+        dispatch(setLoading(true))
+        try {
+            const response = await nombreAulas({
+                fecha: date.toISOString().substring(0,10),
+                nombreAula: name
+            })
+            if (Array.isArray(response)){
+                dispatch(setFilter(response))
+            } else {
+                dispatch(setFilter([response]))
+            }
+        } catch (e) {
+            console.log(e)
+            alert('No se encontraron aulas para el número estimado')
         }
-
+        dispatch(setLoading(false))
     }
 
     const onChangePeriodo = e => {
@@ -84,26 +97,12 @@ export const Search = () => {
             <div className={'search-bar-input-content'}>
                 <div className={'search-bar-input-container'}>
                     <img className={'search-icon'} src={searchIcon} alt={''}/>
-                    <input className={'search-bar-input'} placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}/>
+                    <input onChange={e => setName(e.target.value)} className={'search-bar-input'} placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}/>
                     <img className={'filter-icon'} src={filterIcon} alt={''}/>
                 </div>
-                <div className={'search-bar-button'} onClick={onFilter}>
+                <div className={'search-bar-button'} onClick={getSugerenciasNombre}>
                     <text className={'search-bar-button-title'}>Buscar Aula</text>
                     <img className={'arrow-icon'} src={arrowIcon} alt={''}/>
-                </div>
-            </div>
-            <div className={'search-bar-filters'}>
-                <div>
-                    <FormItemValueDynamic onChange={onChangeArea} options={AREAS}/>
-                </div>
-                <div>
-                    <FormItemValueDynamic onChange={onChangeCapacidad} options={['Cantidad', '10 - 30 est.', '30 - 50 est.', '50 - 70 est.', '70 - 100 est.'
-                        , '100 - 150 est.', 'Más de 200 est.']}/>
-                </div>
-                <div>
-                    <FormItemValueDynamic onChange={onChangePeriodo} options={['Horario', '6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15',
-                        '11:15 - 12:45', '12:45 - 14:15', '14:15 - 15:45', '15:45 - 17:15', '17:15 - 18:45',
-                        '18:45 - 20:15', '20:15 - 21:45']}/>
                 </div>
             </div>
         </div>

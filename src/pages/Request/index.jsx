@@ -231,7 +231,7 @@ export const Request = () => {
             </div>
             : null
         }
-        {!conflictos.length > 0 ?
+        {conflictos.length > 0 ?
             <div className={'table-top-header'}>
               <div className={'table-top-items'}>
                 <div>
@@ -358,8 +358,9 @@ export const Request = () => {
                 <FormItemLabel label={"Aulas seleccionadas:"} />
                 </div>
                 <div className="request-sugestions-button-flex">
+                  {console.log(data)}
                   {
-                  data.aulas.map( aula => <Classroom name={aula.nombre} /> )
+                  data.aulas.map( aula => aula.estado === 'tiene una solicitud' ? null : <Classroom name={aula.nombre} /> )
                   }
                   {reserva.map((item)=>
                       <Classroom

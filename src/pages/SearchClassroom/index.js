@@ -15,6 +15,8 @@ import {setMaterias} from "../../redux/reducers/materias";
 import {docenteMaterias} from "../../api/docenteMaterias";
 import {Title} from "../../components/Title/indes";
 import {Search} from "../../components/Search";
+import {setLoading} from "../../redux/reducers/loading";
+import {nombreAulas} from "../../api/aulasDisponibles";
 
 export const SearchClassroom = () => {
     const {data} = useSelector((state) => state.filtered)
@@ -23,34 +25,6 @@ export const SearchClassroom = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-
-    const removerReserva = (item) => {
-        const nuevaReserva = [...reserva]
-        reserva.map( (itemReserva, index) => {
-            if ( itemReserva === item ){
-                nuevaReserva.splice(index, 1)
-                setReserva(nuevaReserva)
-            }
-        })
-    }
-
-    const goToBooking = async () => {
-        if (reserva.length > 0) {
-            const user = JSON.parse(sessionStorage.getItem('user'))
-            const data = await docenteMaterias(user.id)
-            dispatch(setMaterias(data))
-            dispatch(setRequest(reserva))
-            navigate('/reservar', {replace: true})
-        }
-    }
-
-    const agregarReserva = (item) => {
-        const nuevaReserva = [...reserva]
-        if ( !nuevaReserva.includes(item) ) {
-            nuevaReserva.push(item)
-            setReserva(nuevaReserva)
-        }
-    }
 
     return<div className={'search-classroom-container'}>
         <div className={"layout-title"}>
@@ -71,9 +45,6 @@ export const SearchClassroom = () => {
                     <div className={'table-suggest-Cantidad'}>
                         <BoldText white={true}>Capacidad</BoldText>
                     </div>
-                    <div className={'table-suggest-Horario'}>
-                        <BoldText white={true}>Horario</BoldText>
-                    </div>
                     <div className={'table-suggest-Fecha'}>
                         <BoldText white={true}>Fecha</BoldText>
                     </div>
@@ -93,9 +64,6 @@ export const SearchClassroom = () => {
                         </div>
                         <div className={'table-suggest-Cantidad'}>
                             <BoldText white={true}>Capacidad</BoldText>
-                        </div>
-                        <div className={'table-suggest-Horario'}>
-                            <BoldText white={true}>Horario</BoldText>
                         </div>
                         <div className={'table-suggest-Fecha'}>
                             <BoldText white={true}>Fecha</BoldText>
@@ -122,11 +90,6 @@ export const SearchClassroom = () => {
                     </div>
                     <div className={'table-suggest-Cantidad'}>
                         <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
-                    </div>
-                    <div className={'table-suggest-Horario'}>
-                    <FormItemValueDynamic options={['6:45 - 8:15', '8:15 - 9:45', '9:45 - 11:15',
-                        '11:15 - 12:45', '12:45 - 14:15', '14:15 - 15:45', '15:45 - 17:15', '17:15 - 18:45',
-                        '18:45 - 20:15', '20:15 - 21:45']}/>
                     </div>
                     <div className={'table-suggest-Fecha'}>
                         <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>
