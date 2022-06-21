@@ -19,6 +19,7 @@ import {crearSolicitud} from "../../api/crearSolicitud";
 import { ModalSuccess } from '../../components/Modals/ModalSuccess';
 import { ModalWarning } from '../../components/Modals/ModalWarning';
 import {estadoAula} from "../../api/estadoAula";
+import {setLoading} from "../../redux/reducers/loading";
 
 export const CreateBooking = () => {
 
@@ -33,12 +34,15 @@ export const CreateBooking = () => {
     const dispatch = useDispatch()
 
     const getAulas = async () => {
+        dispatch(setLoading(true))
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
         const res = await obtenerAulasDisponibles(data.fecha)
-        setAulas(res.slice(0,15))
+        setAulas(res.slice(0,10))
+        dispatch(setLoading(false))
     }
 
     const getSugerencias = async () => {
+        dispatch(setLoading(true))
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
         try {
             const response = await sugerenciaAulas({
@@ -56,9 +60,11 @@ export const CreateBooking = () => {
         } catch (e) {
             alert('No se encontraron aulas para el número estimado')
         }
+        dispatch(setLoading(false))
     }
 
     const getSugerenciasNombre = async () => {
+        dispatch(setLoading(true))
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
         try {
             const response = await nombreAulas({
@@ -76,6 +82,7 @@ export const CreateBooking = () => {
         } catch (e) {
             alert('No se encontraron aulas para el número estimado')
         }
+        dispatch(setLoading(false))
     }
 
     const removerReserva = (item) => {
@@ -119,6 +126,7 @@ export const CreateBooking = () => {
     };
 
     const onSubmit = async () => {
+        dispatch(setLoading(true))
         try {
             const data = JSON.parse(sessionStorage.getItem('solicitud'))
             const params = {
@@ -135,6 +143,7 @@ export const CreateBooking = () => {
         } catch (e) {
             alert('Ha ocurrido un error')
         }
+        dispatch(setLoading(false))
     };
 
 
@@ -190,18 +199,16 @@ export const CreateBooking = () => {
         </div>
         <div className={'table-top-header'}>
             <div className={'table-top-items'}>
-                <CommonInput input={estimado} inputChange={setEstimado} label={'Indique la capacidad total que espera reservar'}/>
-                <div>
+                <div style={{width: '30vw'}}>
+                    <CommonInput input={estimado} inputChange={setEstimado} label={'Indique la capacidad total que espera reservar'}/>
+                    <CommonButton title={'Buscar por Cantidad'} onClick={getSugerencias} />
+                </div>
+                <div style={{width: '30vw'}}>
                     <CommonInput label={'Buscar un aula o area en especifico:'} input={name} inputChange={setName}/>
-                    <CommonButton title={'Buscar'} onClick={getSugerenciasNombre} />
+                    <CommonButton title={'Buscar por Nombre'} onClick={getSugerenciasNombre} />
                 </div>
             </div>
-            <div className={'table-suggest-link'}>
-              <a onClick={getSugerencias}>
-                <img src={suggestIcon}/>
-                Sugerirme aulas
-              </a>
-            </div>
+
             <div className={'table-header'}>
                 <div className={'table-suggest-Aula'} >
                     <BoldText white={true}>Aula</BoldText>

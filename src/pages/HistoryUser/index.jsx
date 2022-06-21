@@ -25,6 +25,7 @@ export const HistoryUser = () => {
     }
 
     const eliminar = async (item) => {
+      dispatch(setLoading(true))
       try{
         const data = await eliminarSolicitud(item);
         alert('Solicitud de Reserva eliminada correctamente')
@@ -32,6 +33,7 @@ export const HistoryUser = () => {
       }catch(e){
         alert('La Solicitud de Reserva no se pudo eliminar')
       }
+      dispatch(setLoading(false))
 
     }
 

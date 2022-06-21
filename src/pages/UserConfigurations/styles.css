@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   font-family: 'uni-sans-book';
+  min-height: 90vh;
 }
 
 .user-configurations-subtitle{
