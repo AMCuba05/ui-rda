@@ -28,7 +28,8 @@ export const Request = () => {
   const data = JSON.parse(localStorage.getItem('pendingItem'))
   const [materia, setMateria] = useState('')
   const [conflictos, setConflictos] = useState([])
-  const [name, setName] = useState()
+  const [confirmAula, setConfirmAula] = useState([])
+  const [name, setName] = useState('')
   const [aulas, setAulas] = useState()
   const [reserva, setReserva] = useState([])
   const dispatch = useDispatch()
@@ -109,34 +110,12 @@ export const Request = () => {
   const [openReject, setOpenReject] = useState(false);
   const handleOpenReject = () => setOpenReject(!openReject);
 
-  const getSugerencias = async () => {
-    const data = JSON.parse(sessionStorage.getItem('solicitud'))
-    dispatch(setLoading(true))
-    try {
-      const response = await sugerenciaAulas({
-        fecha: data.fecha,
-        periodos: [],
-        capacidadMin: 10,
-        capacidadMax: data.numero_estimado,
-        area: data.ubicacion
-      })
-      if (Array.isArray(response)){
-        setAulas(response)
-      } else {
-        setAulas([response])
-      }
-    } catch (e) {
-      alert('No se encontraron aulas para el número estimado')
-    }
-    dispatch(setLoading(false))
-  }
-
   const getSugerenciasNombre = async () => {
-    const data = JSON.parse(sessionStorage.getItem('solicitud'))
     dispatch(setLoading(true))
     try {
+      const fecha = data.fecha
       const response = await nombreAulas({
-        fecha: data.fecha,
+        fecha: fecha,
         nombreAula: name
       })
       if (response.length == 0){
@@ -159,7 +138,7 @@ export const Request = () => {
     <div className={"request-content"}>
       <ModalSuccess openModel={openSucces} handleOpen={handleOpenSucces} onSubmit={onAccept} dataClassrooms={data.aulas}/>
       <ModalWarning openModel={openWarning} handleOpen={handleOpenWarning} />
-      <ModalReject openModel={openReject} handleOpen={handleOpenReject} onSubmit={onReject}/>
+      <ModalReject openModel={openReject} handleOpen={handleOpenReject} sugerencias={reserva} onSubmit={onReject}/>
       <BackButton title={'Atras'} onClick={() => navigate('/admin/pendientes', {replace: true})} />
       <div className={"request-title"}>
         <FormTitle name={"Reserva de Aula(s):"} />
@@ -239,12 +218,6 @@ export const Request = () => {
                   <CommonButton title={'Buscar'} onClick={getSugerenciasNombre} />
                 </div>
               </div>
-              <div className={'table-suggest-link'}>
-                <a onClick={getSugerencias}>
-                  <img src={suggestIcon}/>
-                  Sugerirme aulas
-                </a>
-              </div>
               <div className={'table-header'}>
                 <div className={'table-suggest-Aula'} >
                   <BoldText white={true}>Aula</BoldText>
@@ -278,7 +251,7 @@ export const Request = () => {
                   <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                 </div>
                 <div className={'table-suggest-Fecha'}>
-                  <ColoredTag>{JSON.parse(sessionStorage.getItem('solicitud')).fecha}</ColoredTag>
+                  <ColoredTag>{data.fecha}</ColoredTag>
                 </div>
                 <div className={'table-suggest-Lugar'}>
                   <ColoredTag>{item.ubicacion}</ColoredTag>
@@ -358,9 +331,8 @@ export const Request = () => {
                 <FormItemLabel label={"Aulas seleccionadas:"} />
                 </div>
                 <div className="request-sugestions-button-flex">
-                  {console.log(data)}
                   {
-                  data.aulas.map( aula => aula.estado === 'tiene una solicitud' ? null : <Classroom name={aula.nombre} /> )
+                  data.conflictos.map( aula => aula.estado === 'tiene una solicitud' ? null : <Classroom name={aula.nombreAula} /> )
                   }
                   {reserva.map((item)=>
                       <Classroom
