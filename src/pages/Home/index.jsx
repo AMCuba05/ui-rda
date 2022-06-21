@@ -13,7 +13,6 @@ export const Home = () => {
       <div className={'home-page-img'}>
         <img src={homeImg} alt="home-img" />
       </div>
-
     </div>
     </div>
     )
