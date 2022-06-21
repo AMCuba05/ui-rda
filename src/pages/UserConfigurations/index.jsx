@@ -30,11 +30,7 @@ export const UserConfigurations = () => {
     console.log(newCel)
   }
   const modificar = async () =>{
-    if(newCel === undefined) {setCel(currentUser.celular)}
-    if(newEmail === undefined) {setEmail(currentUser.email)}
     const data = await actualizarDocente(currentUser.id,newEmail,  newCel, newPassword);
-    console.log("algo")
-    console.log(data)
     return data;
   }
   return (
@@ -57,7 +53,6 @@ export const UserConfigurations = () => {
             <div className={'user-configuration-input-label'}>
               <span>Cod Sis</span>
               <div className={'user-configuration-input'}>
-                {console.log(currentUser)}
                 <input type="text" disabled={inputCodSis} placeholder={currentUser.cod_SIS}/>
               </div>
             </div>
