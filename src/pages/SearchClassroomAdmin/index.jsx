@@ -93,8 +93,8 @@ export const SearchClassroomAdmin = () => {
       </div>
       {aulas.map((item) =>
         <div className={"table-search-admin-item"}>
-        <div className={"align-flex"} >
-          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1}/>
+        <div className={"align-flex" } onClick={()=>getAulas()}>
+          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1} getAulas = {()=>getAulas()}/>
         </div>
         <div className={"align-flex"}>
           <ColoredTag> {item.nombre}</ColoredTag>
