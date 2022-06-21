@@ -26,13 +26,13 @@ useEffect( () => {
 
   const teacherShow = async () => {
 
-    dispatch(setLoading(true))
+    
     const response = await obtenerDocenteMaterias();
     setTeachersList(response);
 
     const arrDocente = teachersList.flatMap((item) => (item.nombre));
     setTeachersNameList(arrDocente)
-    dispatch(setLoading(false))
+    
   }
 
 
