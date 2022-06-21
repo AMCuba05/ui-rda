@@ -39,43 +39,31 @@ export const SearchClassroom = () => {
         {
             data.length > 0 ?
                 <div className={'table-header'}>
-                    <div className={'table-suggest-Aula'} >
+                    <div className={'table-suggest-Aula-docente'} >
                         <BoldText white={true}>Aula</BoldText>
                     </div>
-                    <div className={'table-suggest-Cantidad'}>
+                    <div className={'table-suggest-Cantidad-docente'}>
                         <BoldText white={true}>Capacidad</BoldText>
                     </div>
-                    <div className={'table-suggest-Fecha'}>
-                        <BoldText white={true}>Fecha</BoldText>
-                    </div>
-                    <div className={'table-suggest-Lugar'}>
+                    <div className={'table-suggest-Lugar-docente'}>
                         <BoldText white={true}>Lugar</BoldText>
                     </div>
-                    <div className={'table-suggest-Estado'}>
+                    <div className={'table-suggest-Estado-docente'}>
                         <BoldText white={true}>Estado</BoldText>
-                    </div>
-                    <div className={'table-suggest-vacio'}>
-                        <BoldText white={true}></BoldText>
                     </div>
                 </div> : <>
                     <div className={'table-header'}>
-                        <div className={'table-suggest-Aula'} >
+                        <div className={'table-suggest-Aula-docente'} >
                             <BoldText white={true}>Aula</BoldText>
                         </div>
-                        <div className={'table-suggest-Cantidad'}>
+                        <div className={'table-suggest-Cantidad-docente'}>
                             <BoldText white={true}>Capacidad</BoldText>
                         </div>
-                        <div className={'table-suggest-Fecha'}>
-                            <BoldText white={true}>Fecha</BoldText>
-                        </div>
-                        <div className={'table-suggest-Lugar'}>
+                        <div className={'table-suggest-Lugar-docente'}>
                             <BoldText white={true}>Lugar</BoldText>
                         </div>
-                        <div className={'table-suggest-Estado'}>
+                        <div className={'table-suggest-Estado-docente'}>
                             <BoldText white={true}>Estado</BoldText>
-                        </div>
-                        <div className={'table-suggest-vacio'}>
-                            <BoldText white={true}></BoldText>
                         </div>
                     </div>
                     <CommonText>No hay Aulas para mostrar</CommonText>
@@ -85,23 +73,17 @@ export const SearchClassroom = () => {
         { data.map((item, index)  => {
             return(
                 <div className={'table-suggest-item'}>
-                    <div className={'table-suggest-Aula'} >
+                    <div className={'table-suggest-Aula-docente'} >
                         <ColoredTag >{item.nombre}</ColoredTag>
                     </div>
-                    <div className={'table-suggest-Cantidad'}>
+                    <div className={'table-suggest-Cantidad-docente'}>
                         <ColoredTag >{item.capacidad} estudiantes</ColoredTag>
                     </div>
-                    <div className={'table-suggest-Fecha'}>
-                        <ColoredTag>{today.toISOString().substring(0,10)}</ColoredTag>
-                    </div>
-                    <div className={'table-suggest-Lugar'}>
+                    <div className={'table-suggest-Lugar-docente'}>
                         <ColoredTag>{item.ubicacion}</ColoredTag>
                     </div>
-                    <div className={'table-suggest-Estado'}>
+                    <div className={'table-suggest-Estado-docente'}>
                         <ColoredTag state={'1'}>Disponible</ColoredTag>
-                    </div>
-                    <div className={'table-suggest-vacio'}>
-
                     </div>
                 </div>
             )}
