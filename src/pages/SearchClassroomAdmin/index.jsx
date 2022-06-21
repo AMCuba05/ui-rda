@@ -15,8 +15,9 @@ import {setLoading} from "../../redux/reducers/loading";
 export const SearchClassroomAdmin = () => {
   const navigate = useNavigate()
   const [aulas, setAulas] = useState([])
-    const [filtro, setFiltro] = useState()
-    const dispatch = useDispatch()
+  const [filtro, setFiltro] = useState()
+
+  const dispatch = useDispatch()
   const goToOptions = (item) => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
       navigate('/admin/reserva', {replace: true});
@@ -46,6 +47,7 @@ export const SearchClassroomAdmin = () => {
     },[filtro])
 
     useEffect(() => {
+      console.log("entra aqui")
         void getAulas()
     },[])
 
@@ -91,8 +93,8 @@ export const SearchClassroomAdmin = () => {
       </div>
       {aulas.map((item) =>
         <div className={"table-search-admin-item"}>
-        <div className={"align-flex"}>
-          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1}/>
+        <div className={"align-flex" } onClick={()=>getAulas()}>
+          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1} getAulas = {()=>getAulas()}/>
         </div>
         <div className={"align-flex"}>
           <ColoredTag> {item.nombre}</ColoredTag>

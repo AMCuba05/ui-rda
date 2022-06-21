@@ -51,7 +51,6 @@ export const PendingRequests = () => {
     }
     useEffect(() => {
         void getAulasProximas()
-        void getAulas()
     },[])
 
     return<div className={'pending-page'}>
