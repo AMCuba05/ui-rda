@@ -9,26 +9,35 @@ import {BlackButton} from "../../components/Buttons/BlackButton";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {obtenerPendientes, obtenerAntiguas, obtenerProximas} from "../../api/obtenerPendientes";
+import {useDispatch} from "react-redux";
+import {setLoading} from "../../redux/reducers/loading";
 
 export const PendingRequests = () => {
   const navigate = useNavigate()
   const [aulas, setAulas] = useState([])
+    const dispatch = useDispatch()
   const goToOptions = (item) => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
       navigate('/admin/reserva', {replace: true});
     }
 
     const getAulas = async () => {
+        dispatch(setLoading(true))
       const data = await obtenerPendientes()
       setAulas(data)
+        dispatch(setLoading(false))
     }
     const getAulasProximas = async () => {
+        dispatch(setLoading(true))
         const data = await obtenerProximas()
         setAulas(data)
+        dispatch(setLoading(false))
     }
     const getAulasAntiguas = async () => {
+        dispatch(setLoading(true))
         const data = await obtenerAntiguas()
         setAulas(data)
+        dispatch(setLoading(false))
     }
     const drawState = (state) => {
       switch (state){

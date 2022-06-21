@@ -7,6 +7,7 @@ import {useState} from 'react';
 import {filtroGeneral} from "../../api/filtroGeneral";
 import {useDispatch, useSelector} from "react-redux";
 import {setFilter} from '../../redux/reducers/aulasFiltradas'
+import {setLoading} from "../../redux/reducers/loading";
 
 const AREAS = [
     'Area',
@@ -39,6 +40,7 @@ export const Search = () => {
     const dispatch = useDispatch()
 
     const onFilter = async () => {
+        dispatch(setLoading(true))
         const date = new Date()
         const data = {
             fecha: date.toISOString().substring(0,10),
@@ -49,6 +51,7 @@ export const Search = () => {
         }
         const response = await filtroGeneral(data)
         dispatch(setFilter(response))
+        dispatch(setLoading(false))
     }
 
     const onChangeArea = e => {

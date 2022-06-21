@@ -10,18 +10,22 @@ import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import { ModalDelete } from "../../components/Modals/ModalDelete";
 import {ModalMoreInfo} from "../../components/Modals/ModalMoreInfo";
+import {setLoading} from "../../redux/reducers/loading";
+import {useDispatch} from "react-redux";
 import {eliminarSolicitud} from "../../api/eliminarSolicitud"
 import "./styles.css";
 
 export const HistoryUser = () => {
   const navigate = useNavigate()
   const [solicitudes, setHistorial] = useState([])
+    const dispatch = useDispatch()
   const goToOptions = (item) => {
       localStorage.setItem('pendingItem', JSON.stringify(item))
       navigate('/admin/reserva', {replace: true});
     }
 
     const eliminar = async (item) => {
+      dispatch(setLoading(true))
       try{
         const data = await eliminarSolicitud(item);
         alert('Solicitud de Reserva eliminada correctamente')
@@ -29,12 +33,15 @@ export const HistoryUser = () => {
       }catch(e){
         alert('La Solicitud de Reserva no se pudo eliminar')
       }
+      dispatch(setLoading(false))
 
     }
 
   const getHistorial = async () => {
+      dispatch(setLoading(true))
       const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id)
       setHistorial(data)
+      dispatch(setLoading(false))
     }
 
     const [openModalW, setOpenModalW ] = useState(false);

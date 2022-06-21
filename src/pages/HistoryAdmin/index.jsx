@@ -9,10 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import searchIcon from "../../assets/svg/SearchIcon.svg";
 import arrowIcon from "../../assets/svg/whiteRightArrow.svg";
+import {useDispatch} from "react-redux";
+import {setLoading} from "../../redux/reducers/loading";
 
 export const HistoryAdmin = () => {
   const navigate = useNavigate();
   const [solicitudes, setHistorial] = useState([]);
+  const dispatch = useDispatch()
   const goToOptions = (item) => {
     localStorage.setItem("pendingItem", JSON.stringify(item));
     navigate("/admin/reserva", { replace: true });
@@ -21,8 +24,10 @@ export const HistoryAdmin = () => {
 
 
   const getHistorial = async () => {
+    dispatch(setLoading(true))
     const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id);
     setHistorial(data);
+    dispatch(setLoading(false))
   };
 
   useEffect(() => {

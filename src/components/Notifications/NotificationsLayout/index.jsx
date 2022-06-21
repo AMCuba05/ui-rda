@@ -6,14 +6,19 @@ import { useNavigate } from "react-router-dom"
 
 import { useEffect, useState } from "react"
 import { obtenerNotificacionesDocentes } from "../../../api/obtenerNotificacionesDocente"
+import {setLoading} from "../../../redux/reducers/loading";
+import {useDispatch} from "react-redux";
 
 export const NotificationsLayout = () =>{
   const navigate = useNavigate()
   const [notificaciones, setNotificaciones] = useState([])
+  const dispatch = useDispatch()
 
   const getNotificaciones = async () => {
+      dispatch(setLoading(true))
       const data = await obtenerNotificacionesDocentes(JSON.parse(sessionStorage.user).id);//sessionStorage.user.id);
       setNotificaciones(data)
+      dispatch(setLoading(false))
     }
 
     useEffect(() => {
