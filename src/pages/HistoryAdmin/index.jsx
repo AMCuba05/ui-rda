@@ -4,7 +4,7 @@ import { ColoredTag } from "../../components/ColoredTag";
 import { CommonText } from "../../components/CommonText";
 import filterIcon from "../../assets/svg/filter.svg";
 import "./styles.css";
-import { obtenerHistorial } from "../../api/historialDocente";
+import { obtenerHistorial } from "../../api/historialAdministrador";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import searchIcon from "../../assets/svg/SearchIcon.svg";
@@ -25,7 +25,7 @@ export const HistoryAdmin = () => {
 
   const getHistorial = async () => {
     dispatch(setLoading(true))
-    const data = await obtenerHistorial(JSON.parse(sessionStorage.user).id);
+    const data = await obtenerHistorial();
     setHistorial(data);
     dispatch(setLoading(false))
   };
@@ -40,20 +40,6 @@ export const HistoryAdmin = () => {
 
       <div className={"history-admin-title"}>
         <TitlePage title={"Historial de reservas"} />
-      </div>
-      <div className={"search-bar-input-content"}>
-        <div className={"search-bar-input-container"}>
-          <img className={"search-icon"} src={searchIcon} alt={""} />
-          <input
-            className={"search-bar-input"}
-            placeholder={"ej. 691B, vicerectorado, auditorio, etc. "}
-          />
-        </div>
-        <div className={"search-bar-button"}>
-          <text className={"search-bar-button-title"}>Buscar Aula</text>
-          <img className={"arrow-icon"} src={arrowIcon} alt={""} />
-
-        </div>
       </div>
       <div className={"table-history-header"}>
         <div className={"align-flex"}>
