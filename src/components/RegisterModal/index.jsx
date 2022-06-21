@@ -10,12 +10,15 @@ import { FormItemValueAutoCompleteOne } from "../FormItemValueAutoCompleteOne";
 import "./styles.css";
 import {registroDocentes} from "../../api/loginDocentes";
 import {obtenerDocenteMaterias} from "../../api/docenteNoRegistrado";
+import {setLoading} from "../../redux/reducers/loading";
+import {useDispatch} from "react-redux";
 
 export const RegisterModal = ({ onAction }) => {
 
   const [teachers, setTeachers] = useState('');
   const [teachersList, setTeachersList] = useState([])
   const [teachersNameList, setTeachersNameList] = useState([])
+  const dispatch = useDispatch()
 
 useEffect( () => {
   void teacherShow()
@@ -23,12 +26,13 @@ useEffect( () => {
 
   const teacherShow = async () => {
 
+    dispatch(setLoading(true))
     const response = await obtenerDocenteMaterias();
     setTeachersList(response);
 
     const arrDocente = teachersList.flatMap((item) => (item.nombre));
     setTeachersNameList(arrDocente)
-    console.log(teachersNameList);
+    dispatch(setLoading(false))
   }
 
 
@@ -205,6 +209,7 @@ useEffect( () => {
   }
 
   const onRegister = async () => {
+    dispatch(setLoading(true))
     if (verifications()) {
       try {
         await registroDocentes(codSis, teachers, cellphone, email, password)
@@ -215,6 +220,7 @@ useEffect( () => {
     } else {
       alert('Debe llenar todos los campos')
     }
+    dispatch(setLoading(false))
   }
 
   return (

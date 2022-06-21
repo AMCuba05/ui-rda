@@ -14,7 +14,7 @@ import { ModalSuccess } from "../../components/Modals/ModalSuccess";
 
 import { BackButton } from "../../components/Buttons/BackButton";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { crearSolicitud } from "../../api/crearSolicitud";
 import "./styles.css";
 import { ModalWarning } from "../../components/Modals/ModalWarning";
@@ -22,6 +22,7 @@ import { BoldText } from "../../components/BoldText";
 import {obtenerDocentes} from "../../api/obtenerDocentes";
 import {WhiteButton} from "../../components/Buttons/WhiteButton";
 import {obtenerPeriodos} from "../../api/obtenerPeriodos";
+import {setLoading} from "../../redux/reducers/loading";
 
 
 export const Book = () => {
@@ -44,6 +45,7 @@ export const Book = () => {
 
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const dispatch = useDispatch()
   const handleOpen = () => setOpen(!open);
   const handleOpenError = () => setOpenError(!openError);
 
@@ -87,12 +89,14 @@ export const Book = () => {
   },[teachersList])
 
   const findItem = async (item) => {
+    dispatch(setLoading(true))
     await materias.map( async (materia, index) => {
       if (materia.nombre_materia === item) {
         const response = await obtenerDocentes(materia.idMateria)
         setTeachersList(response)
       }
     })
+    dispatch(setLoading(false))
   }
 
   const onSubmit = () => {
@@ -105,7 +109,7 @@ export const Book = () => {
         periodosId: periodo,
       };
       if (reason != undefined && periodo != undefined && codeGroup.length > 0 && fecha != undefined ){
-        if(formatToday < fecha || formatToday.substring(0,4) === fecha.substring(0,4) ){
+        if(formatToday < fecha && formatToday.substring(0,4) === fecha.substring(0,4) ){
           sessionStorage.setItem('solicitud', JSON.stringify(solicitud))
           navigate("/reservar", { replace: true });
         } else {
@@ -162,8 +166,10 @@ export const Book = () => {
   }
 
   const getPeriodo = async () => {
+    dispatch(setLoading(true))
     const data = await obtenerPeriodos()
     setPeriodos([ 'Selecciona un Horario' ,...data.flatMap((item) => ({label: `${item.hora_inicio.substring(0,5)} - ${item.hora_fin.substring(0,5)}`,value: item.id}))])
+    dispatch(setLoading(false))
   }
 
   const codeIncludes = (value) => {

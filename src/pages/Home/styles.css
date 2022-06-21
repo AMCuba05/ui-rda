@@ -1,5 +1,6 @@
 .home-page{
   font-family: 'uni-sans-book';
+  min-height: 90vh;
 }
 
 .home-page-layout{

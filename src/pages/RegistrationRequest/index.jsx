@@ -6,22 +6,28 @@ import checkIcon from "../../assets/svg/Check.svg";
 import xIcon from "../../assets/svg/x-red.svg";
 import {useEffect, useState} from "react";
 import {aceptarSolicitudesCreacion, getSolicitudesCreacion, rechazarSolicitudesCreacion} from "../../api/loginDocentes";
+import {setLoading} from "../../redux/reducers/loading";
+import {useDispatch} from "react-redux";
 
 export const RegistrationRequest = () => {
 
     const [docentes, setDocentes] = useState([])
     const [update, setUpdate] = useState(true)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         void getRequests()
     },[update])
 
     const getRequests = async () => {
+        dispatch(setLoading(true))
         const data = await getSolicitudesCreacion()
         setDocentes(data)
+        dispatch(setLoading(false))
     }
 
     const onReject = async (id) => {
+        dispatch(setLoading(true))
         try {
             await rechazarSolicitudesCreacion(id)
             alert('Se ha rechazado la solicitud de acceso al sitema')
@@ -30,9 +36,11 @@ export const RegistrationRequest = () => {
             alert('Ha ocurrido un error')
             setUpdate(!update)
         }
+        dispatch(setLoading(false))
     }
 
     const onAccept = async (id) => {
+        dispatch(setLoading(true))
         try {
             await aceptarSolicitudesCreacion(id)
             alert('Se ha aceptado la solicitud de acceso al sitema')
@@ -41,6 +49,7 @@ export const RegistrationRequest = () => {
             alert('Ha ocurrido un error')
             setUpdate(!update)
         }
+        dispatch(setLoading(false))
     }
 
   return (
