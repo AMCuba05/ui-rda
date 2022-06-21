@@ -4,3 +4,22 @@
     min-height: 85vh;
 }
 
+.table-suggest-Aula-docente {
+    display: flex;
+    flex: 2.5;
+}
+
+.table-suggest-Cantidad-docente {
+    display: flex;
+    flex: 3.2;
+}
+
+.table-suggest-Lugar-docente {
+    display: flex;
+    flex: 4;
+}
+
+.table-suggest-Estado-docente {
+    display: flex;
+    flex: 3;
+}
