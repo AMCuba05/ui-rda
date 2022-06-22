@@ -36,7 +36,7 @@ export const UserConfigurations = () => {
   const modificar = async () =>{
     const data = await actualizarDocente(currentUserSaved.id,newEmail,  newCel, newPassword);
     const token = sessionStorage.getItem("token")
-    
+
     const user = await currentUser(token)
     console.log(user)
     sessionStorage.setItem('user', JSON.stringify(user))
@@ -59,12 +59,14 @@ export const UserConfigurations = () => {
               <span>Nombre Completo</span>
               <div className={'user-configuration-input'}>
                 <input type="text" disabled={inputName} placeholder = {currentUserSaved.nombre}/>
+
               </div>
             </div>
             <div className={'user-configuration-input-label'}>
               <span>Cod Sis</span>
               <div className={'user-configuration-input'}>
                 <input type="text" disabled={inputCodSis} placeholder={currentUserSaved.cod_SIS}/>
+
               </div>
             </div>
 
@@ -73,14 +75,20 @@ export const UserConfigurations = () => {
             <div className={'user-configuration-input-label'}>
               <span>Correo</span>
               <div className={'user-configuration-input'}>
+                <div>
                 <CommonInput type="email" disabled={inputEmail} placeholder = {currentUserSaved.email} inputChange={handleEmail}/>
+                </div>
+
                 <img src={editIcon} onClick={() => setInputEmail(false)}/>
               </div>
             </div>
             <div className={'user-configuration-input-label'}>
               <span>Celular</span>
               <div className={'user-configuration-input'}>
+                <div>
                 <CommonInput type="number" disabled={inputCellphone} placeholder = {currentUserSaved.celular} inputChange={handleCel}/>
+                </div>
+
                 <img src={editIcon} onClick={() => setInputCellphone(false)}/>
               </div>
             </div>
@@ -90,7 +98,10 @@ export const UserConfigurations = () => {
             <div className={'user-configuration-input-label'}>
               <span>Constraseña</span>
               <div className={'user-configuration-input'}>
+                <div>
                 <CommonInput type="password" disabled={inputPassword} placeholder= "***************" inputChange={handlePass}/>
+                </div>
+
                 <img src={editIcon} onClick={() => setInputPassword(false)}/>
               </div>
             </div>
@@ -101,7 +112,7 @@ export const UserConfigurations = () => {
           </div>
           <div className={'user-configurations-buttons'}>
             <div>
-            <WhiteButton title={'Cancelar cambios'}/>
+
             </div>
             <div>
             <CommonButton title={'Guardar cambios'} onClick={modificar}/>

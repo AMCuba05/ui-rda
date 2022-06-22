@@ -57,6 +57,9 @@
     border-radius: 20px;
     background-color: #F4F7FE;
 }
+.user-configuration-input input:disabled {
+  background: #ccc;
+}
 
 .user-configuration-input img{
   cursor: pointer;
