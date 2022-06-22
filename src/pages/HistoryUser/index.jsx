@@ -83,9 +83,8 @@ export const HistoryUser = () => {
         </div>
         <div className={"align-flex6"}>
           <BoldText white={true}>Docente(s)</BoldText>
-
         </div>
-        <div className={"align-flex6"}>
+        <div className={"align-flex5"}>
           <BoldText white={true}>Aula</BoldText>
         </div>
         <div className={"align-flex5"}>
@@ -104,7 +103,7 @@ export const HistoryUser = () => {
           <BoldText white={true}>Estado</BoldText>
         </div>
         <div className={"align-flex2"}>
-
+          <BoldText white={true}>Anular reserva</BoldText>
         </div>
       </div>
       {solicitudes.map((item, index)  => <div className={"table-history-item"}>
@@ -115,7 +114,7 @@ export const HistoryUser = () => {
             <div className={"align-flex6 history-docents"}>
                 {item.docentes.map( (name, index) => index === 0 ?  <BoldText >{name.nombreDocente}</BoldText> : <CommonText >{name.nombreDocente}</CommonText>)}
             </div>
-            <div className={"history-class-list  align-flex6"}>
+            <div className={"history-class-list  align-flex5"}>
                 {item.aulas.map( (aula, index) => <ColoredTag>{aula.nombre}</ColoredTag>)}
             </div>
             <div className={"align-flex5"}>
