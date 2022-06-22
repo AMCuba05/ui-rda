@@ -71,9 +71,6 @@ export const HistoryUser = () => {
       <div className={"history-user-title"}>
         <TitlePage title={"Historial de reservas"} />
         <div className={"history-user-title-filter"}>
-        <img src={FilterIcon} alt="" />
-        <span>Filtrar</span>
-
         </div>
 
       </div>
