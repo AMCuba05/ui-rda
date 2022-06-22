@@ -46,28 +46,6 @@ export const CreateBooking = () => {
         dispatch(setLoading(false))
     }
 
-    const getSugerencias = async () => {
-        dispatch(setLoading(true))
-        const data = JSON.parse(sessionStorage.getItem('solicitud'))
-        try {
-            const response = await sugerenciaAulas({
-                fecha: data.fecha,
-                periodos: [],
-                capacidadMin: 10,
-                capacidadMax: estimado,
-                area: data.ubicacion
-            })
-            if (Array.isArray(response)){
-                setAulas(response)
-            } else {
-                setAulas([response])
-            }
-        } catch (e) {
-            alert('No se encontraron aulas para el número estimado')
-        }
-        dispatch(setLoading(false))
-    }
-
     const getSugerenciasNombre = async () => {
         dispatch(setLoading(true))
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
@@ -83,6 +61,36 @@ export const CreateBooking = () => {
                 setAulas(response)
             } else {
                 setAulas([response])
+            }
+        } catch (e) {
+            alert('No se encontraron aulas para el número estimado')
+        }
+        dispatch(setLoading(false))
+    }
+
+    const getSugerencias = async () => {
+        const data = JSON.parse(sessionStorage.getItem('solicitud'))
+        dispatch(setLoading(true))
+        try {
+            if (parseInt(estimado) > 10) {
+                const periodoLista = await obtenerPeriodById(data.periodosId)
+                const response = await obtenerAulasDisponibles({
+                    fecha:data.fecha,
+                    periodos:periodoLista,
+                    capacidadMin: Math.floor(parseInt(estimado) / 100) != 0 ? parseInt(estimado) / Math.floor(parseInt(estimado) / 100) : parseInt(estimado) ,
+                    capacidadMax: Math.floor(parseInt(estimado) / 100) != 0 ? (parseInt(estimado) / Math.floor(parseInt(estimado) / 100)) + 50 : parseInt(estimado) + 50 ,
+                })
+
+                if (response.length == 0){
+                    alert('No se encontraron aulas para el criterio de busqueda')
+                }
+                if (Array.isArray(response)){
+                    setAulas(response)
+                } else {
+                    setAulas([response])
+                }
+            } else {
+                alert('La capacidad total de reserva debe ser Mayor a 10')
             }
         } catch (e) {
             alert('No se encontraron aulas para el número estimado')
@@ -207,7 +215,7 @@ export const CreateBooking = () => {
             <div className={'table-top-items'}>
                 <div style={{width: '30vw'}}>
                     <CommonInput input={estimado} inputChange={setEstimado} label={'Indique la capacidad total que espera reservar'}/>
-                    <CommonButton title={'Buscar por Cantidad'} onClick={getSugerencias} />
+                    <CommonButton title={'Sugerirme Aulas'} onClick={getSugerencias} />
                 </div>
                 <div style={{width: '30vw'}}>
                     <CommonInput label={'Buscar un aula o area en especifico:'} input={name} inputChange={setName}/>

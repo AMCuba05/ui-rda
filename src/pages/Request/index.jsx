@@ -19,10 +19,12 @@ import {obtenerMateriaDatosReserva} from "../../api/docenteMaterias";
 import {CommonInput} from "../../components/Inputs/Common";
 import suggestIcon from "../../assets/svg/suggest-icon.svg";
 import {BoldText} from "../../components/BoldText";
-import {nombreAulas, sugerenciaAulas} from "../../api/aulasDisponibles";
+import {nombreAulas, obtenerAulasDisponibles, sugerenciaAulas} from "../../api/aulasDisponibles";
 import {AddButton} from "../../components/Buttons/AddButton";
 import {setLoading} from "../../redux/reducers/loading";
 import {useDispatch} from "react-redux";
+import {obtenerPeriodById} from "../../api/obtenerPeriodos";
+import {actualizarAula} from "../../api/actualizarAula";
 
 export const Request = () => {
   const data = JSON.parse(localStorage.getItem('pendingItem'))
@@ -79,7 +81,7 @@ export const Request = () => {
   const searchConflicts = () => {
     let newConflictos = []
     data.conflictos.map(item => {
-      if(item.estado != 'libre'){
+      if(item.estado != 'libre' && !newConflictos.includes(item.nombreAula)){
         newConflictos.push(item.nombreAula)
       }
     })
@@ -89,11 +91,20 @@ export const Request = () => {
   const onAccept = async () => {
     dispatch(setLoading(true))
     try {
-      await aceptarReserva(data.solicitud.id)
-      alert('Se acepto la solicitud de reserva')
+      if (reserva.length > 0) {
+        const valid = data.aulas.filter( aula => !conflictos.includes(aula.nombre) )
+        const nameValid = valid.flatMap( item => item.aula_id)
+        const nameReserva = reserva.flatMap( item => item.idAula)
+        const finalReserva = [...nameValid, ...nameReserva]
+        await actualizarAula(finalReserva, data.solicitud.datos_reserva_id)
+        await aceptarReserva(data.solicitud.id)
+      } else {
+        await aceptarReserva(data.solicitud.id)
+        alert('Se acepto la solicitud de reserva')
 
-      //await enviarMailRechazo(data.docentes[0].email)
-      navigate('/admin/pendientes', {replace: true})
+        //await enviarMailRechazo(data.docentes[0].email)
+        navigate('/admin/pendientes', {replace: true})
+      }
 
     } catch (e) {
       alert('Algo salió mal intentalo más tarde')
@@ -112,12 +123,16 @@ export const Request = () => {
 
   const getSugerenciasNombre = async () => {
     dispatch(setLoading(true))
+    const periodos = data.horarios.flatMap(item => item.periodo_id)
     try {
-      const fecha = data.fecha
-      const response = await nombreAulas({
-        fecha: fecha,
-        nombreAula: name
+      const periodoLista = await obtenerPeriodById(periodos)
+      const response = await obtenerAulasDisponibles({
+        fecha:data.fecha,
+        periodos:periodoLista,
+        capacidadMin: Math.floor(data.numero_estimado / data.aulas.length),
+        capacidadMax: Math.floor(data.numero_estimado / data.aulas.length) + 50
       })
+
       if (response.length == 0){
         alert('No se encontraron aulas para el criterio de busqueda')
       }
@@ -130,6 +145,18 @@ export const Request = () => {
       alert('No se encontraron aulas para el número estimado')
     }
     dispatch(setLoading(false))
+  }
+
+  const requestState = () => {
+    if(conflictos.length > 0){
+      if (reserva.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true
+    }
   }
 
 
@@ -146,7 +173,6 @@ export const Request = () => {
           data.aulas.map( aula => <Classroom name={aula.nombre} /> )
         }
       </div>
-
       <div className={"request-items"}>
         <div className={"request-item-inputs"}>
           <div className={"request-item-inputs-left"}>
@@ -214,8 +240,7 @@ export const Request = () => {
             <div className={'table-top-header'}>
               <div className={'table-top-items'}>
                 <div>
-                  <CommonInput label={'Buscar un aula o area en especifico:'} input={name} inputChange={setName}/>
-                  <CommonButton title={'Buscar'} onClick={getSugerenciasNombre} />
+                  <CommonButton title={'Ver Sugerencias'} onClick={getSugerenciasNombre} />
                 </div>
               </div>
               <div className={'table-header'}>
@@ -332,7 +357,7 @@ export const Request = () => {
                 </div>
                 <div className="request-sugestions-button-flex">
                   {
-                  data.conflictos.map( aula => aula.estado === 'tiene una solicitud' ? null : <Classroom name={aula.nombreAula} /> )
+                  data.aulas.map( aula => conflictos.includes(aula.nombre) ? null : <Classroom name={aula.nombre} /> )
                   }
                   {reserva.map((item)=>
                       <Classroom
@@ -345,7 +370,7 @@ export const Request = () => {
               </div>
               <div className="request-sugestions-button-flex">
                 <WarningButton title={"Rechazar Reserva"} onClick={handleOpenReject} />
-                <CommonButton title={"Confirmar Reserva"} disabled={conflictos.length > 0} onClick={handleOpenSucces} />
+                <CommonButton title={"Confirmar Reserva"} disabled={!requestState()} onClick={handleOpenSucces} />
               </div>
             </div>
           </div>
