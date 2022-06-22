@@ -9,8 +9,9 @@ export const obtenerPeriodos = async () => {
 export const obtenerPeriodById = async (idPeriodos) => {
     var lista = new Array();
     for(let i=0; i<idPeriodos.length; i++){
-        const {data} = await axios.get(url + `periodo/`+ idPeriodos[i])    
+        const {data} = await axios.get(url + `periodo/`+ idPeriodos[i])
         lista.push(data.hora_inicio);
     }
+    console.log(lista)
     return lista;
 }
