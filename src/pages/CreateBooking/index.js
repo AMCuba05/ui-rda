@@ -272,7 +272,15 @@ export const CreateBooking = () => {
                 )}
             </div>
             <div className={'table-suggest-footer-items'}>
-                <CommonButton title={'Confirmar Reserva'} onClick={openModal} />
+                <CommonButton title={'Confirmar Reserva'}
+                onClick={() => {
+                  if(cantidad > 0){
+                    openModal()
+                  }else{
+                    alert('Necesita seleccionar un aula almenos');
+                  }
+
+                }} />
             </div>
         </div>
         <div className={'table-suggest-footer'}>
