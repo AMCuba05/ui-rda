@@ -10,6 +10,5 @@ export const actualizarDocente = async (id, email, cel, password) => {
         celular:cel+"",
         contrasenia:password
     });
-    console.log(data);
     return data; 
 }

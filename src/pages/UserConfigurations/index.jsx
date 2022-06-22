@@ -6,6 +6,7 @@ import { CommonButton } from '../../components/Buttons/Common';
 import {CommonInput} from "../../components/Inputs/Common";
 import {useEffect, useState} from "react";
 import { actualizarDocente } from "../../api/modificarDocente";
+import {currentUser} from "../../api/currentUser";
 
 export const UserConfigurations = () => {
   const [inputName, setInputName] = useState(true);
@@ -13,7 +14,10 @@ export const UserConfigurations = () => {
   const [inputEmail, setInputEmail] = useState(true);
   const [inputCellphone, setInputCellphone] = useState(true);
   const [inputPassword, setInputPassword] = useState(true);
-  const [currentUser, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  const [currentUserSaved, setCurrentUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+  /*const [currentEmail, setCurretEmail] = useState(currentUserSaved.email);
+  const [currentContra, setCurretContra] = useState(currentUserSaved.contrasenia);
+  const [current, setCurretCel] = useState(currentUserSaved.celular);*/
   const [newEmail, setEmail] = useState()
   const [newPassword, setPass] = useState()
   const [newCel, setCel] = useState()
@@ -30,7 +34,14 @@ export const UserConfigurations = () => {
     console.log(newCel)
   }
   const modificar = async () =>{
-    const data = await actualizarDocente(currentUser.id,newEmail,  newCel, newPassword);
+    const data = await actualizarDocente(currentUserSaved.id,newEmail,  newCel, newPassword);
+    const token = sessionStorage.getItem("token")
+    
+    const user = await currentUser(token)
+    console.log(user)
+    sessionStorage.setItem('user', JSON.stringify(user))
+    setCurrentUser(user)
+    //window.location.reload(false);
     return data;
   }
   return (
@@ -47,13 +58,13 @@ export const UserConfigurations = () => {
             <div className={'user-configuration-input-label'}>
               <span>Nombre Completo</span>
               <div className={'user-configuration-input'}>
-                <input type="text" disabled={inputName} placeholder = {currentUser.nombre}/>
+                <input type="text" disabled={inputName} placeholder = {currentUserSaved.nombre}/>
               </div>
             </div>
             <div className={'user-configuration-input-label'}>
               <span>Cod Sis</span>
               <div className={'user-configuration-input'}>
-                <input type="text" disabled={inputCodSis} placeholder={currentUser.cod_SIS}/>
+                <input type="text" disabled={inputCodSis} placeholder={currentUserSaved.cod_SIS}/>
               </div>
             </div>
 
@@ -62,14 +73,14 @@ export const UserConfigurations = () => {
             <div className={'user-configuration-input-label'}>
               <span>Correo</span>
               <div className={'user-configuration-input'}>
-                <CommonInput type="email" disabled={inputEmail} placeholder = {currentUser.email} inputChange={handleEmail}/>
+                <CommonInput type="email" disabled={inputEmail} placeholder = {currentUserSaved.email} inputChange={handleEmail}/>
                 <img src={editIcon} onClick={() => setInputEmail(false)}/>
               </div>
             </div>
             <div className={'user-configuration-input-label'}>
               <span>Celular</span>
               <div className={'user-configuration-input'}>
-                <CommonInput type="number" disabled={inputCellphone} placeholder = {currentUser.celular} inputChange={handleCel}/>
+                <CommonInput type="number" disabled={inputCellphone} placeholder = {currentUserSaved.celular} inputChange={handleCel}/>
                 <img src={editIcon} onClick={() => setInputCellphone(false)}/>
               </div>
             </div>
