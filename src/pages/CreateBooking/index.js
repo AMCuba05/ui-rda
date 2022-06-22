@@ -174,6 +174,7 @@ export const CreateBooking = () => {
                 ubicacionAula: item.ubicacion
             }
             const libre = await estadoAula(params)
+            console.log(libre)
             if (!libre) {
                 newConflicto = [...conflicto]
                 newConflicto.push(item.nombre)

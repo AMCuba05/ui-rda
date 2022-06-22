@@ -23,9 +23,12 @@ import {obtenerDocentes} from "../../api/obtenerDocentes";
 import {WhiteButton} from "../../components/Buttons/WhiteButton";
 import {obtenerPeriodos} from "../../api/obtenerPeriodos";
 import {setLoading} from "../../redux/reducers/loading";
+import { useCookies } from 'react-cookie';
+
 
 
 export const Book = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
   const [teachers, setTeachers] = useState([]);
   const [teachersList, setTeachersList] = useState([])
   const [teachersNameList, setTeachersNameList] = useState([])
@@ -52,6 +55,7 @@ export const Book = () => {
   const onChangePeriodo = e => {
     setPeriodo(e.target.value)
   }
+  
 
   useEffect(() => {
     void getPeriodo()

@@ -1,2 +1,2 @@
-const url = "http://localhost:8000/";
+const url = "https://reserva-aulas-stage.herokuapp.com/";
 export {url};
