@@ -87,8 +87,7 @@ export const SearchClassroomAdmin = () => {
             </div>
 
       <div className={"search-admin-title-filter"}>
-          <img src={FilterIcon} alt="" />
-          <span>Filtrar</span>
+          
         </div>
       </div>
       <div className={"table-search-admin-header"}>

@@ -21,18 +21,14 @@ export const RegisterModal = ({ onAction }) => {
   const dispatch = useDispatch()
 
 useEffect( () => {
-  void teacherShow()
+  //void teacherShow()
   },[])
 
   const teacherShow = async () => {
-
-    
     const response = await obtenerDocenteMaterias();
     setTeachersList(response);
-
     const arrDocente = teachersList.flatMap((item) => (item.nombre));
     setTeachersNameList(arrDocente)
-    
   }
 
 
@@ -232,7 +228,7 @@ useEffect( () => {
         <div className={'register-modal-content-flex'}>
           <div className={'register-modal-content-left'}>
 
-            <div>
+            <div onClick = {teacherShow}>
               <CommonText>Nombre: </CommonText>
               <FormItemValueAutoCompleteOne
                         items={teachers}

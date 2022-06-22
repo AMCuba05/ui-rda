@@ -20,6 +20,7 @@ import { ModalSuccess } from '../../components/Modals/ModalSuccess';
 import { ModalWarning } from '../../components/Modals/ModalWarning';
 import {estadoAula} from "../../api/estadoAula";
 import {setLoading} from "../../redux/reducers/loading";
+import { obtenerPeriodById } from '../../api/obtenerPeriodos';
 
 export const CreateBooking = () => {
 
@@ -36,7 +37,11 @@ export const CreateBooking = () => {
     const getAulas = async () => {
         dispatch(setLoading(true))
         const data = JSON.parse(sessionStorage.getItem('solicitud'))
-        const res = await obtenerAulasDisponibles(data.fecha)
+        const periodoLista = await obtenerPeriodById(data.periodosId)
+        const res = await obtenerAulasDisponibles({
+            fecha:data.fecha,
+            periodos:periodoLista
+        })
         setAulas(res.slice(0,10))
         dispatch(setLoading(false))
     }
@@ -169,6 +174,7 @@ export const CreateBooking = () => {
                 ubicacionAula: item.ubicacion
             }
             const libre = await estadoAula(params)
+            console.log(libre)
             if (!libre) {
                 newConflicto = [...conflicto]
                 newConflicto.push(item.nombre)

@@ -25,6 +25,7 @@ import {obtenerPeriodos} from "../../api/obtenerPeriodos";
 import {setLoading} from "../../redux/reducers/loading";
 
 
+
 export const Book = () => {
   const [teachers, setTeachers] = useState([]);
   const [teachersList, setTeachersList] = useState([])
@@ -52,6 +53,7 @@ export const Book = () => {
   const onChangePeriodo = e => {
     setPeriodo(e.target.value)
   }
+  
 
   useEffect(() => {
     void getPeriodo()
