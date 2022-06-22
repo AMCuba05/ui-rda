@@ -18,7 +18,6 @@ export const AppRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route exact path="/reservar" element={<CreateBooking />} />
         <Route exact path="/buscar" element={<SearchClassroom />} />
-        <Route exact path="/admin/buscar" element={<SearchClassroomAdmin />} />
         <Route exact path="/history" element={<HistoryUser/>}/>
         <Route exact path="/crear" element={<Book />} />
         <Route exact path="/perfil" element={<UserConfigurations/>}/>
@@ -27,6 +26,7 @@ export const AppRoutes = () => {
         <Route exact path="/admin/reserva" element={<Request />} />
         <Route exact path="/admin/solicitudRegistro" element={<RegistrationRequest/>}/>
         <Route exact path="/admin/history" element={<HistoryAdmin/>}/>
+        <Route exact path="/admin/buscar" element={<SearchClassroomAdmin />} />
 
     </Routes>
 
