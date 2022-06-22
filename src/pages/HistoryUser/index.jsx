@@ -136,7 +136,7 @@ export const HistoryUser = () => {
 
             </div>
             <div className={"align-flex1-5"}>
-            {(item.estado === "CANCELADO" ?
+            {(item.estado === "CANCELADO" || item.estado === "RECHAZADO"?
               null :
               <img src={redGarbageIcom} alt="" className={"icono-basurero"}
               onClick={() => {handleDataForModal(item.aulas);
