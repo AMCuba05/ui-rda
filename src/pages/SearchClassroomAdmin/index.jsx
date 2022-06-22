@@ -16,6 +16,10 @@ export const SearchClassroomAdmin = () => {
   const navigate = useNavigate()
   const [aulas, setAulas] = useState([])
   const [filtro, setFiltro] = useState()
+  const [aulaDisponible, setAulaDisponible] = useState(-1)
+  const handleAulaDisponible = (newDisponible) => {
+    setAulaDisponible(newDisponible);
+  }
 
   const dispatch = useDispatch()
   const goToOptions = (item) => {
@@ -38,6 +42,20 @@ export const SearchClassroomAdmin = () => {
           const result = aulas.filter(aula => aula.nombre === filtro );
             setAulas(result)
         }
+    }
+
+    const changeStatus =  (id) => {
+      let divButton = document.getElementById(id);
+      let tagName = divButton.childNodes[0].className;
+      if (tagName === "tag-1"){
+        divButton.childNodes[0].classList.remove('tag-1');
+        divButton.childNodes[0].classList.add('tag-3');
+        divButton.childNodes[0].textContent = "Deshabilitado";
+      }else{
+        divButton.childNodes[0].classList.remove('tag-3');
+        divButton.childNodes[0].classList.add('tag-1');
+        divButton.childNodes[0].textContent = "Habilitado";
+      }
     }
 
     useEffect(() => {
@@ -93,8 +111,8 @@ export const SearchClassroomAdmin = () => {
       </div>
       {aulas.map((item) =>
         <div className={"table-search-admin-item"}>
-        <div className={"align-flex" } onClick={()=>getAulas()}>
-          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1} getAulas = {()=>getAulas()}/>
+        <div className={"align-flex" } onClick={() => changeStatus(item.id)}>
+          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1} />
         </div>
         <div className={"align-flex"}>
           <ColoredTag> {item.nombre}</ColoredTag>
@@ -105,8 +123,14 @@ export const SearchClassroomAdmin = () => {
         <div className={"align-flex"}>
           <ColoredTag>{item.ubicacion}</ColoredTag>
         </div>
-        <div className={"align-flex"}>
-          {item.disponible_para_uso === 1? <ColoredTag state={1}> Habilitado</ColoredTag>: <ColoredTag state={3}> Deshabilitado</ColoredTag>}
+        <div className={"align-flex"} id={item.id} >
+          {
+
+          item.disponible_para_uso === 1?
+          <ColoredTag state={1}> Habilitado</ColoredTag>
+          :
+          <ColoredTag state={3}> Deshabilitado</ColoredTag>
+          }
         </div>
       </div>
       )}

@@ -8,6 +8,9 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     justify-content: center;
     color: #FFFFFF;
+
+    font-size: 22px;
+    font-family: 'uni-sans-book';
 }
 
 .tag-2{
@@ -20,6 +23,9 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     justify-content: center;
     color: #FFFFFF;
+
+    font-size: 22px;
+    font-family: 'uni-sans-book';
 }
 
 .tag-3{
@@ -32,6 +38,9 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     justify-content: center;
     color: #FFFFFF;
+
+    font-size: 22px;
+    font-family: 'uni-sans-book';
 }
 
 .tag-default{
@@ -45,4 +54,7 @@
     color: #686869;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     font-weight: 400;
+    font-size: 22px;
+    font-family: 'uni-sans-book';
+
 }
