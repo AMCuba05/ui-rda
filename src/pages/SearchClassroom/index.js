@@ -83,7 +83,12 @@ export const SearchClassroom = () => {
                         <ColoredTag>{item.ubicacion}</ColoredTag>
                     </div>
                     <div className={'table-suggest-Estado-docente'}>
-                        <ColoredTag state={'1'}>Disponible</ColoredTag>
+                    {
+                        item.disponible_para_uso === 1?
+                        <ColoredTag state={1}> Habilitado</ColoredTag>
+                        :
+                        <ColoredTag state={3}> Deshabilitado</ColoredTag>
+                        }
                     </div>
                 </div>
             )}
