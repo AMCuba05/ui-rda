@@ -23,8 +23,7 @@ export const sugerenciaAulas = async (params) => {
 }
 
 export const nombreAulas = async (params) => {
-    const { data } = await axios.post(url + 'aula/nombre' , {
-        fecha: params.fecha,
+    const { data } = await axios.post(url + 'aula/infoAula' , {
         nombreAula: params.nombreAula
     })
     console.log(data)
