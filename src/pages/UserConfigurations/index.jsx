@@ -31,6 +31,7 @@ export const UserConfigurations = () => {
     setCel(newCel)
   }
   const modificar = async () =>{
+
     if(newCel === undefined){
       setCel(currentUserSaved.celular);
     }
@@ -40,6 +41,7 @@ export const UserConfigurations = () => {
     if(newPassword === undefined){
       setPass(currentUserSaved.contrasenia);
     }
+
     if(verificationCellphone(newCel) && verificationEmail(newEmail) && verificationPassword(newPassword)){
       const data = await actualizarDocente(currentUserSaved.id,newEmail,  newCel, newPassword);
       const token = sessionStorage.getItem("token")
@@ -48,7 +50,7 @@ export const UserConfigurations = () => {
       sessionStorage.setItem('user', JSON.stringify(user))
       setCurrentUser(user)
       //window.location.reload(false);
-        window.alert("Cambios realizados correctamente");
+      window.alert("Cambios realizados correctamente");
       return data;
     }
   }
@@ -56,9 +58,8 @@ export const UserConfigurations = () => {
   const verificationCellphone = (newCel) => {
     let validation = false;
     let cellphonePattern = /^#?(([6|7]{1}[0-9]{6,6}))$/;
-    if(newCel === undefined){
-      validation = true;
-    }else if(newCel === ""){
+    
+    if(newCel === ""){
       validation = true;
     } else {
       if(cellphonePattern.test(newCel)){
@@ -74,9 +75,8 @@ export const UserConfigurations = () => {
   const verificationEmail = (newEmail) => {
     let validation = false;
     let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if(newEmail === undefined){
-      validation = true;
-    }else if (newEmail === "") {
+    
+    if (newEmail === "") {
       validation = false;
       window.alert("Debes ingresar un correo electronico");
     } else {
@@ -92,9 +92,7 @@ export const UserConfigurations = () => {
 
   const verificationPassword = (newPassword) => {
     let validation = false;
-    if(newPassword === undefined){
-      validation = true;
-    }else if (newPassword === "") {
+    if (newPassword === "") {
       window.alert("Debes ingresar una nueva contrasena");
       validation = false;
     } else {
