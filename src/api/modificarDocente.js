@@ -7,7 +7,7 @@ export const actualizarDocente = async (id, email, cel, password) => {
 
     const { data } = await axios.put(url + `docente/actualizar/${id}` , {
         email:email,
-        celular:cel+"",
+        celular:cel,
         contrasenia:password
     });
     return data; 
