@@ -21,29 +21,23 @@ export const UserConfigurations = () => {
   const [newEmail, setEmail] = useState()
   const [newPassword, setPass] = useState()
   const [newCel, setCel] = useState()
+
   const handleEmail = (newEmail) => {
     setEmail(newEmail)
   }
-  const handlePass = (newPass) => {
-    setPass(newPass)
+  const handlePass = (newPassword) => {
+    setPass(newPassword)
   }
   const handleCel = (newCel) => {
     setCel(newCel)
   }
   const modificar = async () =>{
-
-    if(newCel === undefined){
-      setCel(currentUserSaved.celular);
-    }
-    if(newEmail === undefined){
-      setEmail(currentUserSaved.email);
-    }
-    if(newPassword === undefined){
-      setPass(currentUserSaved.contrasenia);
-    }
-
     if(verificationCellphone(newCel) && verificationEmail(newEmail) && verificationPassword(newPassword)){
-      const data = await actualizarDocente(currentUserSaved.id,newEmail,  newCel, newPassword);
+      let nuevoValorEmail = newEmail !== currentUserSaved.email?newEmail:currentUserSaved.email;
+      let nuevoValorCelular = newCel !== currentUserSaved.celular && newCel != undefined?newCel:currentUserSaved.celular;
+      let nuevoValorPassword = newPassword;
+
+      const data = await actualizarDocente(currentUserSaved.id,nuevoValorEmail,  nuevoValorCelular, nuevoValorPassword);
       const token = sessionStorage.getItem("token")
 
       const user = await currentUser(token)
@@ -59,7 +53,7 @@ export const UserConfigurations = () => {
     let validation = false;
     let cellphonePattern = /^#?(([6|7]{1}[0-9]{6,6}))$/;
     
-    if(newCel === ""){
+    if(newCel === undefined){
       validation = true;
     } else {
       if(cellphonePattern.test(newCel)){
@@ -75,8 +69,10 @@ export const UserConfigurations = () => {
   const verificationEmail = (newEmail) => {
     let validation = false;
     let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    
-    if (newEmail === "") {
+    if(newEmail === undefined){
+      validation = true;
+    }
+    else if (newEmail === "") {
       validation = false;
       window.alert("Debes ingresar un correo electronico");
     } else {
@@ -92,7 +88,11 @@ export const UserConfigurations = () => {
 
   const verificationPassword = (newPassword) => {
     let validation = false;
-    if (newPassword === "") {
+    
+    if(newPassword === undefined){
+      validation = true;
+    }
+    else if (newPassword === "") {
       window.alert("Debes ingresar una nueva contrasena");
       validation = false;
     } else {
