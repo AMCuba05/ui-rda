@@ -5,10 +5,11 @@ import { CommonButton } from "../../Buttons/Common";
 import { Classroom } from "../../Classroom";
 import { BoldText } from "../../BoldText";
 import { FormItemValue } from "../../FormItemValue";
+import { ColoredTag } from "../../ColoredTag";
 import "./styles.css";
 import "rsuite/dist/rsuite-rtl.css";
 
-export const ModalDelete = ({openModel, handleOpen, onSubmit, dataClassrooms = null}) => {
+export const ModalDelete = ({openModel, handleOpen, onSubmit, dataClassrooms = null, periodos = null}) => {
   return (
     <div>
       <Modal className={"modal-delete"} open={openModel} onClose={handleOpen} >
@@ -16,7 +17,8 @@ export const ModalDelete = ({openModel, handleOpen, onSubmit, dataClassrooms = n
           <BoldText children={"¿Esta seguro de que quieres anular esta reserva?"} />
         </div>
         <div className={"modal-delete-text"}>
-        La siguiente reserva sera anulada:
+        La siguiente reserva sera anulada: <br />
+        Aulas:
         </div>
 
         <div className={"modal-delete-classroom"}>
@@ -25,6 +27,15 @@ export const ModalDelete = ({openModel, handleOpen, onSubmit, dataClassrooms = n
                 <Classroom name={item.nombre} icon={garbageIcon} />
               ))
             : null}
+        </div>
+
+        <div className={"modal-delete-text"}>
+          Periodos:
+        </div>
+        <div className={"modal-delete-classroom"}>
+          {periodos.map((horario,index) =>
+                <ColoredTag>{horario.hora_inicio.substring(0,5)} - {horario.hora_fin.substring(0,5)}</ColoredTag>)}
+
         </div>
 
         <div className={"modal-delete-text"}>

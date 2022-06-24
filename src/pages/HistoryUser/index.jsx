@@ -55,6 +55,11 @@ export const HistoryUser = () => {
       setDataForModal(newData);
     }
 
+    const [periodosForModal, setPeriodosForModal] = useState([]);
+    const handlePeriodosForModal = (newPeriodos) => {
+      setPeriodosForModal(newPeriodos);
+    }
+
     const [itemDelete, setItemdDelete] = useState('');
     const handleItemDelete = (newItem) => {
       setItemdDelete(newItem);
@@ -66,7 +71,7 @@ export const HistoryUser = () => {
 
   return (
     <div className={"history-user-page"}>
-      <ModalDelete openModel={openModalW} handleOpen={handleOpenModalW} dataClassrooms={dataForModal} onSubmit={() => eliminar(itemDelete)}/>
+      <ModalDelete openModel={openModalW} handleOpen={handleOpenModalW} dataClassrooms={dataForModal} periodos={periodosForModal} onSubmit={() => eliminar(itemDelete)}/>
       <ModalMoreInfo openModel={false}/>
       <div className={"history-user-title"}>
         <TitlePage title={"Historial de reservas"} />
@@ -141,6 +146,7 @@ export const HistoryUser = () => {
               <img src={redGarbageIcom} alt="" className={"icono-basurero"}
               onClick={() => {handleDataForModal(item.aulas);
                               handleItemDelete(item.solicitud[0].id);
+                              handlePeriodosForModal(item.periodos)
                               handleOpenModalW() }} />
                )}
 
