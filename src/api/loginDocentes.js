@@ -9,7 +9,7 @@ export const loginDocentes = async (codSis, contrasenia) => {
     return data
 }
 
-export const registroDocentes = async (codSis, nombre, celular, email ,contrasenia) => {
+export const registroDocentes = async (codSis, nombre, celular="", email ,contrasenia) => {
 
     const { data } = await axios.post(url+'auth/activarDocente', {
         cod_SIS: parseInt(codSis),

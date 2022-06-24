@@ -111,6 +111,7 @@ useEffect( () => {
         validation = false;
       }
     }
+
     return validation;
   }
 
@@ -210,6 +211,7 @@ useEffect( () => {
       try {
         await registroDocentes(codSis, teachers, cellphone, email, password)
         alert('Solicitud de creacion de usuario enviada')
+        close();
       } catch (e) {
         alert('Algo salió mal, inténtalo más tarde')
       }
