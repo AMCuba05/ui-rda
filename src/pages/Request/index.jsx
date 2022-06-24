@@ -98,6 +98,9 @@ export const Request = () => {
         const finalReserva = [...nameValid, ...nameReserva]
         await actualizarAula(finalReserva, data.solicitud.datos_reserva_id)
         await aceptarReserva(data.solicitud.id)
+        alert('Se acepto la solicitud de reserva')
+        //await enviarMailRechazo(data.docentes[0].email)
+        navigate('/admin/pendientes', {replace: true})
       } else {
         await aceptarReserva(data.solicitud.id)
         alert('Se acepto la solicitud de reserva')
