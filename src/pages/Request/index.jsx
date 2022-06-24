@@ -129,8 +129,8 @@ export const Request = () => {
       const response = await obtenerAulasDisponibles({
         fecha:data.fecha,
         periodos:periodoLista,
-        capacidadMin: Math.floor(data.numero_estimado / data.aulas.length),
-        capacidadMax: Math.floor(data.numero_estimado / data.aulas.length) + 50
+        capacidadMin: Math.floor(data.numero_estimado ) > 100 ? 100 :  Math.floor(data.numero_estimado ),
+        capacidadMax: Math.floor(data.numero_estimado ) > 100 ? 200 :  Math.floor(data.numero_estimado ) + 50,
       })
 
       if (response.length == 0){

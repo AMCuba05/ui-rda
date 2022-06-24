@@ -53,7 +53,7 @@ export const Book = () => {
   const onChangePeriodo = e => {
     setPeriodo(e.target.value)
   }
-  
+
 
   useEffect(() => {
     void getPeriodo()
@@ -124,7 +124,7 @@ export const Book = () => {
         if (!periodo) {
           alert('Debe seleccionar al menos un Horario')
         }
-        if (codeGroup.length === 0) {
+        if (codeGroup.length < teachers.length) {
           alert('Debe seleccionar al menos un Grupo')
         }
         if (!fecha) {
