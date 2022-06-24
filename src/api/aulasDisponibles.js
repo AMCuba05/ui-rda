@@ -4,9 +4,7 @@ import { url } from './url';
 //const url = 'http://localhost:8000/';
 //const url = 'https://reserva-aulas-stage.herokuapp.com/';
 export const obtenerAulasDisponibles = async (body) => {
-    console.log(body)
     const { data } = await axios.post(url + 'aula/general' ,body)
-    console.log(data)
     return data
 }
 
@@ -23,10 +21,18 @@ export const sugerenciaAulas = async (params) => {
 }
 
 export const nombreAulas = async (params) => {
-    const { data } = await axios.post(url + 'aula/nombre' , {
-        fecha: params.fecha,
+    const { data } = await axios.post(url + 'aula/infoAula' , {
         nombreAula: params.nombreAula
     })
     console.log(data)
+    return data
+}
+
+export const sugerenciaNombreAulas = async (params) => {
+    const { data } = await axios.post(url + 'aula/nombresAulasDisponible' , {
+        nombreAula: params.nombreAula,
+        fecha: params.fecha,
+        periodos: params.periodos
+    })    
     return data
 }
