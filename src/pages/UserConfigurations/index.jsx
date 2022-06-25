@@ -21,29 +21,91 @@ export const UserConfigurations = () => {
   const [newEmail, setEmail] = useState()
   const [newPassword, setPass] = useState()
   const [newCel, setCel] = useState()
+
   const handleEmail = (newEmail) => {
     setEmail(newEmail)
-    console.log(newEmail)
   }
-  const handlePass = (newPass) => {
-    setPass(newPass)
-    console.log(newPass)
+  const handlePass = (newPassword) => {
+    setPass(newPassword)
   }
   const handleCel = (newCel) => {
     setCel(newCel)
-    console.log(newCel)
   }
   const modificar = async () =>{
-    const data = await actualizarDocente(currentUserSaved.id,newEmail,  newCel, newPassword);
-    const token = sessionStorage.getItem("token")
+    if(verificationCellphone(newCel) && verificationEmail(newEmail) && verificationPassword(newPassword)){
+      let nuevoValorEmail = newEmail !== currentUserSaved.email?newEmail:currentUserSaved.email;
+      let nuevoValorCelular = newCel !== currentUserSaved.celular && newCel != undefined?newCel:currentUserSaved.celular;
+      let nuevoValorPassword = newPassword;
 
-    const user = await currentUser(token)
-    console.log(user)
-    sessionStorage.setItem('user', JSON.stringify(user))
-    setCurrentUser(user)
-    //window.location.reload(false);
-    return data;
+      const data = await actualizarDocente(currentUserSaved.id,nuevoValorEmail,  nuevoValorCelular, nuevoValorPassword);
+      const token = sessionStorage.getItem("token")
+
+      const user = await currentUser(token)
+      sessionStorage.setItem('user', JSON.stringify(user))
+      setCurrentUser(user)
+      //window.location.reload(false);
+      window.alert("Cambios realizados correctamente");
+      return data;
+    }
   }
+  
+  const verificationCellphone = (newCel) => {
+    let validation = false;
+    let cellphonePattern = /^#?(([6|7]{1}[0-9]{6,6}))$/;
+    
+    if(newCel === undefined){
+      validation = true;
+    } else {
+      if(cellphonePattern.test(newCel)){
+        validation = true;
+      }else{
+        validation = false;
+        window.alert("Debes ingresar un numero de celular valido");
+      }
+    }
+    return validation;
+  }
+
+  const verificationEmail = (newEmail) => {
+    let validation = false;
+    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if(newEmail === undefined){
+      validation = true;
+    }
+    else if (newEmail === "") {
+      validation = false;
+      window.alert("Debes ingresar un correo electronico");
+    } else {
+      if (emailPattern.test(newEmail)) {
+        validation = true;
+      } else {
+        validation = false;
+        window.alert("Debes ingresar un correo electronico valido");
+      }
+    }
+    return validation;
+  };
+
+  const verificationPassword = (newPassword) => {
+    let validation = false;
+    
+    if(newPassword === undefined){
+      validation = true;
+    }
+    else if (newPassword === "") {
+      window.alert("Debes ingresar una nueva contrasena");
+      validation = false;
+    } else {
+      if (newPassword.length >= 8) {
+        validation = true;
+      } else {
+        validation = false;
+        window.alert("Debes ingresar una nueva contrasena valida");
+      }
+    }
+    return validation;
+  };
+  
   return (
     <div className={'user-configurations-page'}>
       <div>
