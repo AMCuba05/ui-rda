@@ -2,6 +2,7 @@ import { TitlePage } from "../../components/TitlePage";
 import { BoldText } from "../../components/BoldText";
 import { ColoredTag } from "../../components/ColoredTag";
 import { ToggleSwitch } from "../../components/ToggleSwitch";
+import { ToogleSwitchRed } from "../../components/ToogleSwitchRed";
 import FilterIcon from "../../assets/svg/filter.svg";
 import searchIcon from "../../assets/svg/SearchIcon.svg";
 import arrowIcon from "../../assets/svg/whiteRightArrow.svg";
@@ -40,23 +41,10 @@ export const SearchClassroomAdmin = () => {
             await getAulas()
         } else {
           const result = aulas.filter(aula => aula.nombre === filtro );
-            setAulas(result)
+              setAulas(result)
         }
     }
 
-    const changeStatus =  (id) => {
-      let divButton = document.getElementById(id);
-      let tagName = divButton.childNodes[0].className;
-      if (tagName === "tag-1"){
-        divButton.childNodes[0].classList.remove('tag-1');
-        divButton.childNodes[0].classList.add('tag-3');
-        divButton.childNodes[0].textContent = "Deshabilitado";
-      }else{
-        divButton.childNodes[0].classList.remove('tag-3');
-        divButton.childNodes[0].classList.add('tag-1');
-        divButton.childNodes[0].textContent = "Habilitado";
-      }
-    }
 
     useEffect(() => {
         if (filtro === ''){
@@ -87,7 +75,7 @@ export const SearchClassroomAdmin = () => {
             </div>
 
       <div className={"search-admin-title-filter"}>
-          
+
         </div>
       </div>
       <div className={"table-search-admin-header"}>
@@ -110,8 +98,18 @@ export const SearchClassroomAdmin = () => {
       </div>
       {aulas.map((item) =>
         <div className={"table-search-admin-item"}>
-        <div className={"align-flex" } onClick={() => changeStatus(item.id)}>
-          <ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1} />
+        <div className={"align-flex" } onClick={() =>  setTimeout(() => {
+                                                             getAulas()
+                                                            }, "1000")}>
+                                                               {
+
+item.disponible_para_uso === 1?
+<ToggleSwitch id = {item.id} color={item.disponible_para_uso === 1} />
+:
+<ToogleSwitchRed id = {item.id} color={item.disponible_para_uso === 1} />
+                                                               }
+
+
         </div>
         <div className={"align-flex"}>
           <ColoredTag> {item.nombre}</ColoredTag>
