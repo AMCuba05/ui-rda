@@ -12,6 +12,7 @@ import { RegistrationRequest } from "../pages/RegistrationRequest";
 import { HistoryUser } from "../pages/HistoryUser";
 import { HistoryAdmin } from "../pages/HistoryAdmin";
 import { UserConfigurations } from "../pages/UserConfigurations";
+import { Documentacion } from "../pages/Documentacion";
 
 export const AppRoutes = () => {
     return <Routes>
@@ -27,7 +28,7 @@ export const AppRoutes = () => {
         <Route exact path="/admin/solicitudRegistro" element={<RegistrationRequest/>}/>
         <Route exact path="/admin/history" element={<HistoryAdmin/>}/>
         <Route exact path="/admin/buscar" element={<SearchClassroomAdmin />} />
-
+        <Route exact path="documentacion" element={<Documentacion/>}/>
     </Routes>
 
 }
