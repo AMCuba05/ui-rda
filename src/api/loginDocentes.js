@@ -32,6 +32,6 @@ export const aceptarSolicitudesCreacion = async (id) => {
 }
 
 export const rechazarSolicitudesCreacion = async (id) => {
-    const { data } = await axios.put(url+`docente/verificar/${id}`)
+    const { data } = await axios.put(url+`docente/rechazar/${id}`)
     return data
 }
